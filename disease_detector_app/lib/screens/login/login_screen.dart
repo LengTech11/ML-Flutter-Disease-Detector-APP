@@ -33,7 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: AppSize.appbarHeight,
             ),
-            MySearchBar(),
             SizedBox(
               height: AppSize.lg,
             ),
