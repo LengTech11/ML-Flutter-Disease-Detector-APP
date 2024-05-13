@@ -1,3 +1,4 @@
+import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:disease_detector_app/config/constants.dart';
@@ -116,7 +117,7 @@ class _AccountPageState extends State<AccountPage> {
                   icon: Iconsax.sun_1,
                   text: 'Light Mode / Dark mode',
                   endWidget: ToggleThemeSwitcher(
-                      value: themeProvider.isDarkMode,
+                      value: HelperFunctions.isDarkMode(context),
                       onChanged: (value) {
                         setState(() {
                           final provider = Provider.of<ThemeProvider>(context,

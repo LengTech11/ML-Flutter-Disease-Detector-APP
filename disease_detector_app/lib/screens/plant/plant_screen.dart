@@ -44,8 +44,8 @@ class _PlantPageState extends State<PlantPage>
               date: DateTime(2020, 12, 1)))
     ];
     return Container(
-      padding:
-          EdgeInsets.only(top: kDefaultPadding, bottom: kDefaultPadding / 2),
+      padding: EdgeInsets.only(
+          top: kDefaultPadding / 2, bottom: kDefaultPadding / 5),
       child: Column(children: [
         Container(
           margin: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
@@ -67,7 +67,7 @@ class _PlantPageState extends State<PlantPage>
                       // Expanded(
                       //   child: SearchBar(),
                       // ),
-                      SizedBox(width: 20),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.5),
                       SortMenuBox(options: [
                         SortItem(text: 'Date'),
                         SortItem(text: 'Alphabet')
@@ -94,7 +94,7 @@ class _PlantPageState extends State<PlantPage>
                       // Expanded(
                       //   child: SearchBar(),
                       // ),
-                      SizedBox(width: 20),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.5),
                       SortMenuBox(options: [
                         SortItem(text: 'Latest'),
                         SortItem(text: 'Oldest')

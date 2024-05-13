@@ -1,7 +1,9 @@
+import 'package:disease_detector_app/screens/home/home_screen.dart';
+import 'package:disease_detector_app/screens/register/register_screen.dart';
+import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'config/themes/theme.dart';
-import 'pages/homePage.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,11 +27,11 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
               themeMode: themeProvider.themeMode,
               theme: AppTheme.lightTheme,
               darkTheme: AppTheme.darkTheme,
-              home: HomePage(),
+              home: RegisterScreen(),
               onGenerateRoute: (settings) {
                 switch (settings.name) {
-                  case HomePage.route:
-                    return MaterialPageRoute(builder: (_) => HomePage());
+                  case HomeScreen.route:
+                    return MaterialPageRoute(builder: (_) => (HomeScreen()));
                   //     case AccountPage.route:
                   //       return MaterialPageRoute(builder: (_) => AccountPage());
                   //     // default:
