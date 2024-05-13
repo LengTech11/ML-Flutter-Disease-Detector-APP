@@ -1,3 +1,4 @@
+import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:flutter/material.dart';
 
 class ThemeProvider extends ChangeNotifier {
@@ -19,47 +20,51 @@ class AppTheme {
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           border: InputBorder.none,
           floatingLabelBehavior: FloatingLabelBehavior.always),
-      appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF35a163)),
-      hintColor: const Color(0xFF35a163),
-      splashColor: const Color(0xFFE8EAED),
+      appBarTheme: const AppBarTheme(
+          backgroundColor: AppColor.primary, foregroundColor: AppColor.light),
+      hintColor: AppColor.primary,
+      splashColor: AppColor.light,
+      iconTheme: const IconThemeData(color: AppColor.dark),
       colorScheme: const ColorScheme(
-              primary: Color(0xFF35a163),
-              secondary: Color(0xFFF2F3F5),
-              surface: Colors.white,
-              background: Color(0xFFE3E5E8),
-              error: Color(0xFFE93E36),
-              onPrimary: Colors.white,
-              onSecondary: Color(0xFF737E8C),
-              onSurface: Colors.black,
-              onBackground: Color(0xFF2E3338),
-              onError: Color(0xFFE3E5E8),
+              primary: AppColor.primary,
+              secondary: AppColor.lightGrey,
+              surface: AppColor.white,
+              background: AppColor.light,
+              error: AppColor.error,
+              onPrimary: AppColor.white,
+              onSecondary: AppColor.lightGrey,
+              onSurface: AppColor.black,
+              onBackground: AppColor.dark,
+              onError: AppColor.light,
               brightness: Brightness.light)
-          .copyWith(background: const Color(0xFFFFFFFF)));
+          .copyWith(background: AppColor.white));
 
   static final darkTheme = ThemeData(
-      scaffoldBackgroundColor: const Color(0xFF202225),
+      scaffoldBackgroundColor: AppColor.dark,
       fontFamily: 'Poppins',
-      secondaryHeaderColor: const Color(0xFF6D7177),
+      secondaryHeaderColor: AppColor.darkGrey,
       inputDecorationTheme: const InputDecorationTheme(
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           border: InputBorder.none,
           floatingLabelBehavior: FloatingLabelBehavior.always),
-      appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF35a163)),
-      hintColor: const Color(0xFF35a163),
-      splashColor: const Color(0xFF34373C),
+      appBarTheme: const AppBarTheme(backgroundColor: AppColor.primary),
+      hintColor: AppColor.primary,
+      splashColor: AppColor.splashColor,
+      // iconButtonTheme: ,
+      iconTheme: const IconThemeData(color: AppColor.light),
       colorScheme: const ColorScheme(
-              primary: Color(0xFF35a163),
-              secondary: Color(0xFF2F3136),
-              surface: Color(0xff121212),
-              background: Color(0xFF202225),
-              error: Color(0xFFED4337),
-              onPrimary: Colors.white,
-              onSecondary: Color(0xFF72767D),
-              onSurface: Colors.white,
-              onBackground: Color(0xFFF8F5F9),
-              onError: Color(0xFF202225),
+              primary: AppColor.primary,
+              secondary: AppColor.secondary,
+              surface: AppColor.black,
+              background: AppColor.surface,
+              error: AppColor.error,
+              onPrimary: AppColor.lightGrey,
+              onSecondary: AppColor.grey,
+              onSurface: AppColor.white,
+              onBackground: AppColor.light,
+              onError: AppColor.onError,
               brightness: Brightness.dark)
-          .copyWith(background: const Color(0xFF36393F)));
+          .copyWith(background: AppColor.splashColor));
 
   // scaffoldBackgroundColor: Color(0xFF202225),
   // primaryColor: Color(0xFF35a163),

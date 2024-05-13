@@ -14,16 +14,16 @@ class CustomTabBar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(kDefaultBorderRaduis * 2),
-        color: Theme.of(context).colorScheme.secondary,
+        color: Theme.of(context).colorScheme.background,
       ),
       child: TabBar(
         controller: _tabController,
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(kDefaultBorderRaduis * 2),
-          color: Theme.of(context).colorScheme.secondary,
+          color: Theme.of(context).colorScheme.background,
         ),
         labelStyle: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-        unselectedLabelColor: Theme.of(context).colorScheme.onSecondary,
+        unselectedLabelColor: Theme.of(context).colorScheme.onBackground,
         tabs: [
           ...tabTexts.map((text) => Tab(
                 text: text,

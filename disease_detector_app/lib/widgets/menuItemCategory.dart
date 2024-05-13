@@ -1,3 +1,4 @@
+import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:flutter/material.dart';
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:iconsax/iconsax.dart';
@@ -59,7 +60,7 @@ class _MenuItemCategoryState extends State<MenuItemCategory>
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
           ),
           child: Material(
             color: Colors.transparent,
@@ -129,7 +130,7 @@ class SubMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 74,
       width: MediaQuery.of(context).size.width - kDefaultPadding,
       child: Material(
@@ -145,7 +146,7 @@ class SubMenuItem extends StatelessWidget {
                   horizontal: kDefaultPadding * 0.75),
               child: Row(
                 children: [
-                  Icon(this.icon),
+                  Icon(this.icon,),
                   SizedBox(width: 20),
                   Text(
                     this.text,

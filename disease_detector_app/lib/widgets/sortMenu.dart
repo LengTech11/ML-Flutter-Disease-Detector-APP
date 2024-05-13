@@ -1,3 +1,5 @@
+import 'package:disease_detector_app/config/themes/color.dart';
+
 import 'buttons.dart';
 import 'checkMark.dart';
 import 'dropDownBox.dart';
@@ -11,7 +13,7 @@ class SortMenuBox extends DropDownBox {
     required this.options,
   }) : super(
             key: key,
-            button: IconButtonWidget(icon: Iconsax.sort),
+            button: IconButtonWidget(icon: Iconsax.sort,color: AppColor.primary,),
             childWidth: 180);
   final List<SortItem> options;
   final double boxWidth = 180;
@@ -54,23 +56,23 @@ class SortMenuBoxState extends DropDownBoxState<SortMenuBox> {
               color: Theme.of(context).colorScheme.background,
               borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
         ),
-        Positioned(
-            bottom: -18,
-            child: Container(
-                padding: EdgeInsets.symmetric(
-                    vertical: kDefaultPadding * 0.3,
-                    horizontal: kDefaultPadding * 0.8),
-                child: Center(
-                  child: Text(
-                    'Sort by:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onPrimary),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
-                    borderRadius: BorderRadius.circular(kDefaultBorderRaduis))))
+        // Positioned(
+        //     bottom: -18,
+        //     child: Container(
+        //         padding: EdgeInsets.symmetric(
+        //             vertical: kDefaultPadding * 0.3,
+        //             horizontal: kDefaultPadding * 0.8),
+        //         child: Center(
+        //           child: Text(
+        //             'Sort by:',
+        //             style: TextStyle(
+        //                 fontWeight: FontWeight.bold,
+        //                 color: Theme.of(context).colorScheme.onPrimary),
+        //           ),
+        //         ),
+        //         decoration: BoxDecoration(
+        //             color: Theme.of(context).colorScheme.secondary,
+        //             borderRadius: BorderRadius.circular(kDefaultBorderRaduis))))
       ],
     );
   }
