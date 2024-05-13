@@ -17,7 +17,7 @@ class SplashScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset("assets/images/logo.png"),
+            Image.asset("assets/logo/logo.png"),
             // SizedBox(
             //   height: 24,
             // ),
