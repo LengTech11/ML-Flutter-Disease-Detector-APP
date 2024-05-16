@@ -5,11 +5,14 @@ import 'package:disease_detector_app/config/themes/theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:disease_detector_app/config/constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BottomNavigator extends StatefulWidget {
   const BottomNavigator(
-      {Key? key, this.selectedIndex = 0, this.onTabChange, required this.tabs})
-      : super(key: key);
+      {super.key,
+      this.selectedIndex = 0,
+      this.onTabChange,
+      required this.tabs});
 
   final int selectedIndex;
   final ValueChanged<int>? onTabChange;
@@ -41,9 +44,8 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Container(
-            // height: 50,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(140)),
+              borderRadius: BorderRadius.all(Radius.circular(140.r)),
               color: Theme.of(context).colorScheme.primary,
             ),
             margin: EdgeInsets.symmetric(
@@ -85,14 +87,13 @@ class _BottomNavigatorState extends State<BottomNavigator> {
 
 class TabButton extends StatefulWidget {
   const TabButton(
-      {Key? key,
+      {super.key,
       this.color,
       required this.icon,
       required this.text,
       this.activeColor,
       this.onPressed,
-      this.active})
-      : super(key: key);
+      this.active});
 
   final IconData icon;
   final String text;
@@ -132,25 +133,26 @@ class _TabButtonState extends State<TabButton> with TickerProviderStateMixin {
         .drive(CurveTween(
             curve: _expanded ? Curves.easeInCubic : Curves.easeInCubic.flipped))
         .value;
-    var _colorTween = ColorTween(
+    var colorTween = ColorTween(
         begin: dark
             ? AppTheme.darkTheme.iconTheme.color
             : AppTheme.darkTheme.iconTheme.color,
         end: widget.activeColor);
-    var _colorTweenAnimation = _colorTween.animate(CurvedAnimation(
+    var colorTweenAnimation = colorTween.animate(CurvedAnimation(
         parent: expandController,
         curve: _expanded ? Curves.easeInExpo : Curves.easeOutCirc));
 
     _expanded = !widget.active!;
-    if (_expanded)
+    if (_expanded) {
       expandController.reverse();
-    else
+    } else {
       expandController.forward();
+    }
 
-    Widget icon = Icon(widget.icon, color: _colorTweenAnimation.value);
+    Widget icon = Icon(widget.icon, color: colorTweenAnimation.value);
 
     return InkWell(
-      borderRadius: BorderRadius.all(Radius.circular(100)),
+      borderRadius: BorderRadius.all(Radius.circular(100.r)),
       onTap: widget.onPressed,
       child: AnimatedContainer(
         curve: Curves.easeOut,
@@ -159,7 +161,7 @@ class _TabButtonState extends State<TabButton> with TickerProviderStateMixin {
         duration: Duration(milliseconds: 400),
         decoration: BoxDecoration(
           color: _expanded ? AppColor.light.withOpacity(0) : AppColor.light,
-          borderRadius: BorderRadius.all(Radius.circular(100)),
+          borderRadius: BorderRadius.all(Radius.circular(100.r)),
         ),
         child: FittedBox(
           fit: BoxFit.fitHeight,
@@ -184,17 +186,19 @@ class _TabButtonState extends State<TabButton> with TickerProviderStateMixin {
                                       .value,
                               child: Padding(
                                 padding: EdgeInsets.only(
-                                    left: 16 -
-                                        (8 *
+                                        left: 16 -
+                                            (8 *
+                                                expandController
+                                                    .drive(CurveTween(
+                                                        curve:
+                                                            Curves.easeOutSine))
+                                                    .value),
+                                        right: 8 *
                                             expandController
                                                 .drive(CurveTween(
                                                     curve: Curves.easeOutSine))
-                                                .value),
-                                    right: 8 *
-                                        expandController
-                                            .drive(CurveTween(
-                                                curve: Curves.easeOutSine))
-                                            .value),
+                                                .value)
+                                    .w,
                                 child: Text(
                                   widget.text,
                                   style: TextStyle(

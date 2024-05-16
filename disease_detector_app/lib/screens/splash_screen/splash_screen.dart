@@ -18,10 +18,7 @@ class SplashScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset("assets/logo/logo.png"),
-            // SizedBox(
-            //   height: 24,
-            // ),
-            Text("EYES DISEASES",
+            Text("DISEASES",
                 style: dark
                     ? MyTextTheme.darkTextTheme.headlineLarge
                     : MyTextTheme.lightTextTheme.headlineLarge),

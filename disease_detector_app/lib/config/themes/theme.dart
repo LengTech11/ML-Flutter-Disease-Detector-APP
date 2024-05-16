@@ -1,5 +1,8 @@
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../utils/custom_text_theme/custom_text_theme.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.system;
@@ -15,9 +18,11 @@ class AppTheme {
   static final lightTheme = ThemeData(
       scaffoldBackgroundColor: const Color(0xFFE3E5E8),
       fontFamily: 'Poppins',
-      secondaryHeaderColor: const Color(0xFF707B89),
-      inputDecorationTheme: const InputDecorationTheme(
-          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      textTheme: MyTextTheme.lightTextTheme,
+      secondaryHeaderColor: AppColor.grey,
+      inputDecorationTheme: InputDecorationTheme(
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
           border: InputBorder.none,
           floatingLabelBehavior: FloatingLabelBehavior.always),
       appBarTheme: const AppBarTheme(
@@ -41,10 +46,12 @@ class AppTheme {
 
   static final darkTheme = ThemeData(
       scaffoldBackgroundColor: AppColor.dark,
+      textTheme: MyTextTheme.darkTextTheme,
       fontFamily: 'Poppins',
       secondaryHeaderColor: AppColor.darkGrey,
-      inputDecorationTheme: const InputDecorationTheme(
-          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      inputDecorationTheme: InputDecorationTheme(
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
           border: InputBorder.none,
           floatingLabelBehavior: FloatingLabelBehavior.always),
       appBarTheme: const AppBarTheme(backgroundColor: AppColor.primary),
@@ -65,11 +72,4 @@ class AppTheme {
               onError: AppColor.onError,
               brightness: Brightness.dark)
           .copyWith(background: AppColor.splashColor));
-
-  // scaffoldBackgroundColor: Color(0xFF202225),
-  // primaryColor: Color(0xFF35a163),
-  // backgroundColor: Color(0xFF2F3136),
-  // splashColor: Color(0xFF34373C),
-  // colorScheme: ColorScheme.dark(),
-  // iconTheme: IconThemeData(color: Color(0xFF6E7279)));
 }

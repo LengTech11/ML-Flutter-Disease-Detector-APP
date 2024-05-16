@@ -1,4 +1,5 @@
 
+import 'package:disease_detector_app/config/themes/app_size.dart';
 import 'package:flutter/material.dart';
 
 import '../config/themes/color.dart';
@@ -12,15 +13,14 @@ class MyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {},
+      style: ElevatedButton.styleFrom(
+          backgroundColor: dark ? AppColor.primary : AppColor.primary),
       child: Text(
         name,
         style: dark
-            ? TextStyle(fontSize: 22, fontWeight: FontWeight.w500, color: AppColor.white)
-            : TextStyle(fontSize: 22, fontWeight: FontWeight.w500, color: AppColor.white),
+            ? TextStyle(fontSize: AppSize.fontLg, fontWeight: FontWeight.w500, color: AppColor.white)
+            : TextStyle(fontSize: AppSize.fontLg, fontWeight: FontWeight.w500, color: AppColor.white),
       ),
-      style: ElevatedButton.styleFrom(
-          // foregroundColor: dark ? ,
-          backgroundColor: dark ? AppColor.primary : AppColor.primary),
     );
   }
 }

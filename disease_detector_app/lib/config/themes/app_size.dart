@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppSize{
   AppSize._();
@@ -18,9 +19,13 @@ class AppSize{
   static double iconXl = 32.0;
 
   /// font size
-  static double fontSm = 12.0;
-  static double fontMd = 16.0;
-  static double fontLg = 18.0;
+  static double fontXXs = 12.0.sp;
+  static double fontXs = 14.0.sp;
+  static double fontSm = 16.0.sp;
+  static double fontMd = 18.0.sp;
+  static double fontLg = 24.0.sp;
+  static double fontXl = 26.0.sp;
+  static double fontXXl = 32.0.sp;
 
   /// Button size
 

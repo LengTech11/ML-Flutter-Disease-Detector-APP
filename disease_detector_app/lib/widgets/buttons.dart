@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:disease_detector_app/config/constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ButtonWidget extends StatelessWidget {
   const ButtonWidget(
-      {Key? key, required this.text, required this.onPressed, this.color})
-      : super(key: key);
+      {super.key, required this.text, required this.onPressed, this.color});
   final Widget text;
   final Color? color;
   final VoidCallback onPressed;
@@ -12,33 +12,32 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 40,
+        height: 40.h,
         decoration: BoxDecoration(
-            color: (this.color != null)
-                ? this.color
+            color: (color != null)
+                ? color
                 : Theme.of(context).colorScheme.secondary,
-            borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
+            borderRadius: BorderRadius.circular(kDefaultBorderRadius)),
         child: Material(
             color: Colors.transparent,
             child: InkWell(
                 splashColor: Colors.transparent,
-                borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
+                borderRadius: BorderRadius.circular(kDefaultBorderRadius),
                 onTap: () {
-                  this.onPressed();
+                  onPressed();
                 },
                 child: Container(
                   alignment: Alignment.center,
-                  child: this.text,
                   padding:
                       EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+                  child: text,
                 ))));
   }
 }
 
 class SecondaryButton extends StatelessWidget {
   const SecondaryButton(
-      {Key? key, required this.text, required this.onPressed, this.color})
-      : super(key: key);
+      {super.key, required this.text, required this.onPressed, this.color});
   final String text;
   final Color? color;
   final VoidCallback onPressed;
@@ -48,29 +47,29 @@ class SecondaryButton extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             color: Colors.transparent,
-            borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
+            borderRadius: BorderRadius.circular(kDefaultBorderRadius)),
         child: Material(
             color: Colors.transparent,
             child: InkWell(
                 splashColor: Colors.transparent,
-                borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
+                borderRadius: BorderRadius.circular(kDefaultBorderRadius),
                 onTap: () {
-                  this.onPressed();
+                  onPressed();
                 },
                 child: Container(
                   alignment: Alignment.center,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
                   child: Text(
-                    this.text,
+                    text,
                     style: TextStyle(
-                        color: (this.color != null)
-                            ? this.color
+                        color: (color != null)
+                            ? color
                             : Theme.of(context)
                                 .colorScheme
                                 .onBackground
                                 .withAlpha(100)),
                   ),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
                 ))));
   }
 }
@@ -78,17 +77,17 @@ class SecondaryButton extends StatelessWidget {
 // ignore: must_be_immutable
 class IconButtonWidget extends StatefulWidget {
   IconButtonWidget({
-    Key? key,
+    super.key,
     this.onPressed,
     this.color,
     required this.icon,
-  }) : super(key: key);
+  });
   final Color? color;
   final IconData icon;
   final Function? onPressed;
   late Function onTap;
   set setonTap(func) {
-    this.onTap = func;
+    onTap = func;
   }
 
   @override

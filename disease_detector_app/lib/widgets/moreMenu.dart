@@ -1,16 +1,17 @@
+import 'package:disease_detector_app/config/themes/app_size.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-
 import 'dropDownBox.dart';
 import 'package:flutter/material.dart';
 import 'package:disease_detector_app/config/constants.dart';
 
 class MoreMenuBox extends DropDownBox {
   MoreMenuBox({
-    Key? key,
+    super.key,
     required this.options,
-  }) : super(key: key, button: MoreButton(), childWidth: 120);
+  }) : super(button: MoreButton(), childWidth: 120);
   final List<MoreItem> options;
-  final double boxWidth = 120;
+  final double boxWidth = 120.w;
 
   @override
   MoreMenuBoxState createState() => MoreMenuBoxState();
@@ -20,37 +21,37 @@ class MoreMenuBoxState extends DropDownBoxState<MoreMenuBox> {
   int selectedIndex = 0;
   @override
   Widget buildChildWidget(AnimationController animationController,
-      OverlayEntry _overlayEntry, BuildContext context) {
+      OverlayEntry overlayEntry, BuildContext context) {
     return Container(
       width: widget.boxWidth,
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: widget.options
-              .map((_filterItem) => MoreItem(
-                    text: _filterItem.text,
-                    onPressed: () {},
-                    red: _filterItem.red,
-                  ))
-              .toList()),
       decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-                blurRadius: 10,
+                blurRadius: 10.r,
                 color: Theme.of(context).scaffoldBackgroundColor)
           ],
-          color: Theme.of(context).backgroundColor,
-          borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
+          color: Theme.of(context).colorScheme.background,
+          borderRadius: BorderRadius.circular(kDefaultBorderRadius)),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: widget.options
+              .map((filterItem) => MoreItem(
+                    text: filterItem.text,
+                    onPressed: () {},
+                    red: filterItem.red,
+                  ))
+              .toList()),
     );
   }
 }
 
 class MoreItem extends StatelessWidget {
   const MoreItem({
-    Key? key,
+    super.key,
     required this.text,
     this.onPressed,
     this.red = false,
-  }) : super(key: key);
+  });
   final String text;
   final bool red;
   final VoidCallback? onPressed;
@@ -59,9 +60,9 @@ class MoreItem extends StatelessWidget {
     return Material(
         color: Colors.transparent,
         child: InkWell(
-            borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
+            borderRadius: BorderRadius.circular(kDefaultBorderRadius),
             onTap: () {
-              this.onPressed!();
+              onPressed!();
             },
             child: Container(
                 padding: EdgeInsets.symmetric(
@@ -70,15 +71,15 @@ class MoreItem extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      this.text,
+                      text,
                       style: TextStyle(
-                        color: this.red
-                            ? Theme.of(context).errorColor
+                        color: red
+                            ? Theme.of(context).colorScheme.error
                             : Theme.of(context).colorScheme.onBackground,
-                        fontSize: 16,
+                        fontSize: AppSize.fontSm,
                       ),
                     ),
-                    Spacer()
+                    const Spacer()
                   ],
                 ))));
   }
@@ -87,24 +88,26 @@ class MoreItem extends StatelessWidget {
 //ignore: must_be_immutable
 class MoreButton extends StatelessWidget {
   late Function onTap;
+
+  MoreButton({super.key});
   set setonTap(func) {
-    this.onTap = func;
+    onTap = func;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 30,
-        width: 30,
+    return SizedBox(
+        height: 30.h,
+        width: 30.w,
         child: Material(
             color: Colors.transparent,
             child: InkWell(
                 splashColor: Colors.transparent,
-                borderRadius: BorderRadius.circular(kDefaultBorderRaduis / 2),
+                borderRadius: BorderRadius.circular(kDefaultBorderRadius / 2),
                 onTap: () {
-                  this.onTap();
+                  onTap();
                 },
-                child: Icon(
+                child: const Icon(
                   Iconsax.more_24,
                 ))));
   }

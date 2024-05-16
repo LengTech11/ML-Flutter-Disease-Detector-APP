@@ -1,3 +1,4 @@
+import 'package:disease_detector_app/config/themes/app_size.dart';
 import 'package:flutter/material.dart';
 import 'package:disease_detector_app/config/constants.dart';
 
@@ -13,16 +14,16 @@ class CustomTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(kDefaultBorderRaduis * 2),
+        borderRadius: BorderRadius.circular(kDefaultBorderRadius * 2),
         color: Theme.of(context).colorScheme.background,
       ),
       child: TabBar(
         controller: _tabController,
         indicator: BoxDecoration(
-          borderRadius: BorderRadius.circular(kDefaultBorderRaduis * 2),
+          borderRadius: BorderRadius.circular(kDefaultBorderRadius * 2),
           color: Theme.of(context).colorScheme.background,
         ),
-        labelStyle: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+        labelStyle: TextStyle(fontSize: AppSize.fontSm, fontWeight: FontWeight.bold),
         unselectedLabelColor: Theme.of(context).colorScheme.onBackground,
         tabs: [
           ...tabTexts.map((text) => Tab(

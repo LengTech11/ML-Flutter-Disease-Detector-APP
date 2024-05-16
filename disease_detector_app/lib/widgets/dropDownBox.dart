@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DropDownBox extends StatefulWidget {
-  const DropDownBox({Key? key, required this.button, required this.childWidth})
-      : super(key: key);
+  const DropDownBox({super.key, required this.button, required this.childWidth});
   final button;
   final double childWidth;
 
@@ -18,7 +17,7 @@ class DropDownBoxState<T extends DropDownBox> extends State<T>
   @override
   void initState() {
     super.initState();
-    animationController = new AnimationController(
+    animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 300),
     )..addListener(() {
@@ -43,7 +42,7 @@ class DropDownBoxState<T extends DropDownBox> extends State<T>
   late OverlayEntry _overlayEntry;
 
   Widget buildChildWidget(AnimationController animationController,
-      OverlayEntry _overlayEntry, BuildContext context) {
+      OverlayEntry overlayEntry, BuildContext context) {
     return Container();
   }
 
