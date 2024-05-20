@@ -3,8 +3,7 @@ import 'package:disease_detector_app/config/constants.dart';
 
 class ButtonWidget extends StatelessWidget {
   const ButtonWidget(
-      {Key? key, required this.text, required this.onPressed, this.color})
-      : super(key: key);
+      {super.key, required this.text, required this.onPressed, this.color});
   final Widget text;
   final Color? color;
   final VoidCallback onPressed;
@@ -12,10 +11,9 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 40,
         decoration: BoxDecoration(
-            color: (this.color != null)
-                ? this.color
+            color: (color != null)
+                ? color
                 : Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
         child: Material(
@@ -24,21 +22,20 @@ class ButtonWidget extends StatelessWidget {
                 splashColor: Colors.transparent,
                 borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
                 onTap: () {
-                  this.onPressed();
+                  onPressed();
                 },
                 child: Container(
                   alignment: Alignment.center,
-                  child: this.text,
                   padding:
                       EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+                  child: text,
                 ))));
   }
 }
 
 class SecondaryButton extends StatelessWidget {
   const SecondaryButton(
-      {Key? key, required this.text, required this.onPressed, this.color})
-      : super(key: key);
+      {super.key, required this.text, required this.onPressed, this.color});
   final String text;
   final Color? color;
   final VoidCallback onPressed;
@@ -55,22 +52,22 @@ class SecondaryButton extends StatelessWidget {
                 splashColor: Colors.transparent,
                 borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
                 onTap: () {
-                  this.onPressed();
+                  onPressed();
                 },
                 child: Container(
                   alignment: Alignment.center,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
                   child: Text(
-                    this.text,
+                    text,
                     style: TextStyle(
-                        color: (this.color != null)
-                            ? this.color
+                        color: (color != null)
+                            ? color
                             : Theme.of(context)
                                 .colorScheme
                                 .onBackground
                                 .withAlpha(100)),
                   ),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
                 ))));
   }
 }
@@ -78,21 +75,21 @@ class SecondaryButton extends StatelessWidget {
 // ignore: must_be_immutable
 class IconButtonWidget extends StatefulWidget {
   IconButtonWidget({
-    Key? key,
+    super.key,
     this.onPressed,
     this.color,
     required this.icon,
-  }) : super(key: key);
+  });
   final Color? color;
   final IconData icon;
   final Function? onPressed;
   late Function onTap;
   set setonTap(func) {
-    this.onTap = func;
+    onTap = func;
   }
 
   @override
-  _IconButtonWidgetState createState() => _IconButtonWidgetState();
+  State<IconButtonWidget> createState() => _IconButtonWidgetState();
 }
 
 class _IconButtonWidgetState extends State<IconButtonWidget> {
@@ -117,7 +114,7 @@ class _IconButtonWidgetState extends State<IconButtonWidget> {
               color: Colors.transparent,
               child: InkWell(
                   splashColor: Colors.transparent,
-                  customBorder: CircleBorder(),
+                  customBorder: const CircleBorder(),
                   onTap: () {
                     widget.onTap();
                   },

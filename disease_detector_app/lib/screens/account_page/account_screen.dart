@@ -1,19 +1,20 @@
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:disease_detector_app/config/themes/theme.dart';
 
-class AccountPage extends StatefulWidget {
-  const AccountPage({Key? key}) : super(key: key);
+class AccountScreen extends StatefulWidget {
+  const AccountScreen({super.key});
 
   @override
-  _AccountPageState createState() => _AccountPageState();
+  State<AccountScreen> createState() => _AccountScreenState();
 }
 
-class _AccountPageState extends State<AccountPage> {
+class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +26,7 @@ class _AccountPageState extends State<AccountPage> {
       child: Column(
         children: [
           profileInfo(context),
-          SizedBox(height: 30),
+          SizedBox(height: 30.h),
           profileMenuItems(context),
         ],
       ),
@@ -34,25 +35,25 @@ class _AccountPageState extends State<AccountPage> {
 
   Container profileInfo(BuildContext context) {
     return Container(
-      height: 100,
+      height: 100.h,
       padding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20.r),
         color: Theme.of(context).colorScheme.background,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            height: 80, //140
-            width: 80,
+            height: 80.h, //140
+            width: 80.h,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                width: 5,
+                width: 5.w,
                 color: Colors.transparent,
               ),
-              image: DecorationImage(
+              image: const DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage('assets/images/me.jpg'),
               ),
@@ -62,8 +63,8 @@ class _AccountPageState extends State<AccountPage> {
             width: kDefaultPadding * 0.75,
           ),
           Expanded(
-            child: Container(
-              height: 80,
+            child: SizedBox(
+              height: 80.h,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -71,26 +72,24 @@ class _AccountPageState extends State<AccountPage> {
                   Text(
                     'Welcome',
                     style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         color: Theme.of(context).secondaryHeaderColor),
                   ),
                   Text('Leng Tech',
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
+                          TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold))
                 ],
               ),
             ),
           ),
-          Container(
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-                onTap: () {},
-                child: Container(
-                    padding: EdgeInsets.all(kDefaultPadding * 0.5),
-                    child: Icon(Icons.logout)),
-              ),
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
+              onTap: () {},
+              child: Container(
+                  padding: EdgeInsets.all(kDefaultPadding * 0.5),
+                  child: const Icon(Icons.logout)),
             ),
           )
         ],
@@ -129,13 +128,11 @@ class _AccountPageState extends State<AccountPage> {
                 SubMenuItem(
                   icon: Iconsax.language_circle,
                   text: 'Languages',
-                  endWidget: Container(
-                    child: Text('English',
-                        style: TextStyle(
-                          color: Theme.of(context).secondaryHeaderColor,
-                          fontSize: 16,
-                        )),
-                  ),
+                  endWidget: Text('English',
+                      style: TextStyle(
+                        color: Theme.of(context).secondaryHeaderColor,
+                        fontSize: 16.sp,
+                      )),
                 ),
               ],
               prefix: Iconsax.setting_2,

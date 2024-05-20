@@ -1,14 +1,12 @@
 import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../config/themes/app_size.dart';
 import '../../config/themes/color.dart';
 import '../../utils/custom_text_theme/custom_text_theme.dart';
-import '../../utils/device/device_utility.dart';
 import '../../utils/helper/helper_function.dart';
 import '../../widgets/my_button.dart';
 import '../../widgets/my_text_form_field.dart';
-import '../../widgets/searchBar.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -76,8 +74,8 @@ class _LoginScreenState extends State<LoginScreen> {
               height: AppSize.xl,
             ),
             Container(
-                margin: EdgeInsets.symmetric(horizontal: 16),
-                height: 50,
+                margin: EdgeInsets.symmetric(horizontal: 16.w),
+                height: 50.h,
                 width: MediaQuery.of(context).size.width,
                 child: MyButton(dark: dark, name: "Login")),
             SizedBox(
@@ -101,14 +99,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                              builder: (context) => const HomeScreen()));
                     },
                     child: Text(
                       "Sign Up",
                       style: TextStyle(
                           color: AppColor.primary,
                           fontWeight: FontWeight.w600,
-                          fontSize: 18),
+                          fontSize: 18.sp),
                     ))
               ],
             )

@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../config/themes/color.dart';
 
@@ -12,15 +12,21 @@ class MyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {},
-      child: Text(
-        name,
-        style: dark
-            ? TextStyle(fontSize: 22, fontWeight: FontWeight.w500, color: AppColor.white)
-            : TextStyle(fontSize: 22, fontWeight: FontWeight.w500, color: AppColor.white),
-      ),
       style: ElevatedButton.styleFrom(
           // foregroundColor: dark ? ,
           backgroundColor: dark ? AppColor.primary : AppColor.primary),
+      child: Text(
+        name,
+        style: dark
+            ? TextStyle(
+                fontSize: 22.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColor.white)
+            : TextStyle(
+                fontSize: 22.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColor.white),
+      ),
     );
   }
 }
