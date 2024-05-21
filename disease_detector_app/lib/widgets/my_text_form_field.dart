@@ -1,7 +1,6 @@
 import 'package:disease_detector_app/config/themes/app_size.dart';
 import 'package:flutter/material.dart';
-
-import '../config/themes/color.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../utils/custom_text_theme/custom_text_theme.dart';
 
 class MyTextFormField extends StatelessWidget {
@@ -26,7 +25,7 @@ class MyTextFormField extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: AppSize.lg),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(30.r),
         color: Theme.of(context).colorScheme.onSecondary,
       ),
       child: TextFormField(

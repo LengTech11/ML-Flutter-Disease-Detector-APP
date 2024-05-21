@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/widgets/divider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'buttons.dart';
 import 'glass.dart';
 
 class DialogWidget extends StatelessWidget {
   const DialogWidget(
-      {Key? key, required this.title, required this.text, required this.child})
-      : super(key: key);
+      {super.key,
+      required this.title,
+      required this.text,
+      required this.child});
   final String title;
   final String text;
   final Widget child;
@@ -20,8 +23,8 @@ class DialogWidget extends StatelessWidget {
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: Container(
-        height: 200,
+      child: SizedBox(
+        height: 200.h,
         child: Column(
           children: [
             Glass(
@@ -29,27 +32,8 @@ class DialogWidget extends StatelessWidget {
               borderRadius: BorderRadius.vertical(
                   top: Radius.circular(kDefaultBorderRaduis)),
               child: Container(
-                height: 110,
+                height: 110.h,
                 alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 230,
-                      alignment: Alignment.center,
-                      child: Text(
-                        this.title,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Text(
-                      this.text,
-                      style: TextStyle(fontSize: 13),
-                    )
-                  ],
-                ),
                 decoration: BoxDecoration(
                     color: Theme.of(context)
                         .colorScheme
@@ -57,6 +41,25 @@ class DialogWidget extends StatelessWidget {
                         .withOpacity(0.5),
                     borderRadius: BorderRadius.vertical(
                         top: Radius.circular(kDefaultBorderRaduis))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 230.w,
+                      alignment: Alignment.center,
+                      child: Text(
+                        title,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Text(
+                      text,
+                      style: TextStyle(fontSize: 13),
+                    )
+                  ],
+                ),
               ),
             ),
             Glass(
@@ -64,17 +67,17 @@ class DialogWidget extends StatelessWidget {
                 borderRadius: BorderRadius.vertical(
                     bottom: Radius.circular(kDefaultBorderRaduis)),
                 child: Container(
-                    height: 50,
+                    height: 50.h,
                     padding:
                         EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
-                    child: this.child,
                     decoration: BoxDecoration(
                         color: Theme.of(context)
                             .colorScheme
                             .background
                             .withOpacity(0.7),
                         borderRadius: BorderRadius.vertical(
-                            bottom: Radius.circular(kDefaultBorderRaduis)))))
+                            bottom: Radius.circular(kDefaultBorderRaduis))),
+                    child: child))
           ],
         ),
       ),
@@ -83,8 +86,7 @@ class DialogWidget extends StatelessWidget {
 }
 
 class DeleteDialog extends StatelessWidget {
-  const DeleteDialog({Key? key, required this.onPressed, required this.title})
-      : super(key: key);
+  const DeleteDialog({super.key, required this.onPressed, required this.title});
 
   final String title;
   final VoidCallback onPressed;
@@ -92,7 +94,7 @@ class DeleteDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DialogWidget(
-        title: this.title,
+        title: title,
         text: "You can't undo this action",
         child: Row(
           children: [
@@ -105,7 +107,7 @@ class DeleteDialog extends StatelessWidget {
                 text: 'Delete',
                 color: Theme.of(context).colorScheme.error,
                 onPressed: () {
-                  this.onPressed();
+                  onPressed();
                   Navigator.pop(context);
                 },
               ),

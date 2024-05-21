@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:disease_detector_app/config/constants.dart';
 
 import 'moreMenu.dart';
 
 class HistoryPlants extends StatefulWidget {
-  const HistoryPlants({Key? key, required this.plantList}) : super(key: key);
+  const HistoryPlants({super.key, required this.plantList});
   final List<PlantView> plantList;
 
   @override
-  _HistoryPlantsState createState() => _HistoryPlantsState();
+  State<HistoryPlants> createState() => _HistoryPlantsState();
 }
 
 class _HistoryPlantsState extends State<HistoryPlants> {
@@ -18,18 +19,18 @@ class _HistoryPlantsState extends State<HistoryPlants> {
     return ListView.separated(
       itemCount: widget.plantList.length,
       separatorBuilder: (context, index) => SizedBox(
-        height: 15,
+        height: 15.h,
       ),
       itemBuilder: (context, index) {
-        PlantView _plantCard = widget.plantList[index];
+        PlantView plantCard = widget.plantList[index];
         return ClipRRect(
           borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
           child: Dismissible(
             background: removeWidget(),
             secondaryBackground: addWidget(),
-            key: ValueKey(_plantCard),
+            key: ValueKey(plantCard),
             child: PlantTile(
-              plantCard: _plantCard,
+              plantCard: plantCard,
               packed: true,
             ),
             onDismissed: (DismissDirection direction) {
@@ -47,16 +48,16 @@ class _HistoryPlantsState extends State<HistoryPlants> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
       alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
+          color: Theme.of(context).colorScheme.error),
       child: Text(
         'Remove',
         style: TextStyle(
             color: Theme.of(context).colorScheme.onError,
-            fontSize: 32,
+            fontSize: 32.sp,
             fontWeight: FontWeight.bold),
       ),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-          color: Theme.of(context).colorScheme.error),
     );
   }
 
@@ -64,26 +65,26 @@ class _HistoryPlantsState extends State<HistoryPlants> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
       alignment: Alignment.centerRight,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
+          color: Theme.of(context).colorScheme.primary),
       child: Text(
         'Add',
         style: TextStyle(
             color: Theme.of(context).colorScheme.onError,
-            fontSize: 32,
+            fontSize: 32.sp,
             fontWeight: FontWeight.bold),
       ),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-          color: Theme.of(context).colorScheme.primary),
     );
   }
 }
 
 class MyPlants extends StatefulWidget {
-  const MyPlants({Key? key, required this.plantList}) : super(key: key);
+  const MyPlants({super.key, required this.plantList});
   final List<PlantView> plantList;
 
   @override
-  _MyPlantsState createState() => _MyPlantsState();
+  State<MyPlants> createState() => _MyPlantsState();
 }
 
 class _MyPlantsState extends State<MyPlants> {
@@ -92,37 +93,46 @@ class _MyPlantsState extends State<MyPlants> {
     return ListView.separated(
       itemCount: widget.plantList.length,
       separatorBuilder: (context, index) => SizedBox(
-        height: 15,
+        height: 15.sp,
       ),
       itemBuilder: (context, index) {
-        PlantView _plantCard = widget.plantList[index];
+        PlantView plantCard = widget.plantList[index];
         return ClipRRect(
             borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-            child: PlantTile(plantCard: _plantCard));
+            child: PlantTile(plantCard: plantCard));
       },
     );
   }
 }
 
 class PlantTile extends StatelessWidget {
-  const PlantTile({Key? key, required PlantView plantCard, this.packed = false})
-      : _plantCard = plantCard,
-        super(key: key);
+  const PlantTile(
+      {super.key, required PlantView plantCard, this.packed = false})
+      : _plantCard = plantCard;
 
   final PlantView _plantCard;
   final bool packed;
 
   @override
   Widget build(BuildContext context) {
-    DateFormat _format = DateFormat.yMMMd();
+    DateFormat format = DateFormat.yMMMd();
     return Container(
       padding: EdgeInsets.all(kDefaultPadding * 0.6),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: Theme.of(context)
+              .colorScheme
+              .secondaryContainer
+              .withOpacity(0.23),
+          blurRadius: 6.0.r,
+        ),
+      ], color: Theme.of(context).colorScheme.background),
       child: Stack(children: [
         Row(
           children: [
             Container(
-              height: this.packed ? 95 : 130, //140
-              width: this.packed ? 95 : 130,
+              height: packed ? 95.h : 130.h, //140
+              width: packed ? 95.h : 130.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
                 image: DecorationImage(
@@ -132,21 +142,20 @@ class PlantTile extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 20,
+              width: 20.w,
             ),
             Container(
-              height: this.packed ? 95 : 130,
+              height: packed ? 95.h : 130.h,
               padding: EdgeInsets.symmetric(
-                  vertical: this.packed
-                      ? kDefaultPadding * 0.1
-                      : kDefaultPadding * 0.3),
+                  vertical:
+                      packed ? kDefaultPadding * 0.1 : kDefaultPadding * 0.3),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     _plantCard.species,
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.onBackground),
                   ),
@@ -155,15 +164,6 @@ class PlantTile extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                         vertical: kDefaultPadding * 0.2,
                         horizontal: kDefaultPadding * 0.5),
-                    child: Text(
-                      _plantCard.condition,
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: _plantCard.condition == 'Healthy'
-                              ? Theme.of(context).colorScheme.secondary
-                              : Theme.of(context).colorScheme.error,
-                          fontWeight: FontWeight.bold),
-                    ),
                     decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.circular(kDefaultBorderRaduis),
@@ -171,21 +171,30 @@ class PlantTile extends StatelessWidget {
                                 ? Theme.of(context).colorScheme.secondary
                                 : Theme.of(context).colorScheme.error)
                             .withOpacity(0.1)),
+                    child: Text(
+                      _plantCard.condition,
+                      style: TextStyle(
+                          fontSize: 12.sp,
+                          color: _plantCard.condition == 'Healthy'
+                              ? Theme.of(context).colorScheme.secondary
+                              : Theme.of(context).colorScheme.error,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  Spacer(),
-                  Text(_format.format(_plantCard.date)),
+                  const Spacer(),
+                  Text(format.format(_plantCard.date)),
                 ],
               ),
             )
           ],
         ),
-        this.packed
-            ? Center()
+        packed
+            ? const Center()
             : Positioned(
                 right: 0,
                 top: kDefaultPadding * 0.3,
                 child: MoreMenuBox(
-                  options: [
+                  options: const [
                     MoreItem(text: 'Rename'),
                     MoreItem(
                       text: 'Delete',
@@ -194,15 +203,6 @@ class PlantTile extends StatelessWidget {
                   ],
                 ))
       ]),
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-          color: Theme.of(context)
-              .colorScheme
-              .secondaryContainer
-              .withOpacity(0.23),
-          blurRadius: 6.0,
-        ),
-      ], color: Theme.of(context).colorScheme.background),
     );
   }
 }

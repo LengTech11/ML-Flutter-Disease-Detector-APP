@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DropDownBox extends StatefulWidget {
-  const DropDownBox({Key? key, required this.button, required this.childWidth})
-      : super(key: key);
-  final button;
+  const DropDownBox({super.key, required this.button, required this.childWidth});
+  final  button;
   final double childWidth;
 
   @override
@@ -18,9 +18,9 @@ class DropDownBoxState<T extends DropDownBox> extends State<T>
   @override
   void initState() {
     super.initState();
-    animationController = new AnimationController(
+    animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 400),
     )..addListener(() {
         setState(() {});
       });
@@ -43,7 +43,7 @@ class DropDownBoxState<T extends DropDownBox> extends State<T>
   late OverlayEntry _overlayEntry;
 
   Widget buildChildWidget(AnimationController animationController,
-      OverlayEntry _overlayEntry, BuildContext context) {
+      OverlayEntry overlayEntry, BuildContext context) {
     return Container();
   }
 
@@ -66,7 +66,7 @@ class DropDownBoxState<T extends DropDownBox> extends State<T>
                       ))),
               Positioned(
                   left: offset.dx - widget.childWidth + size.width,
-                  top: offset.dy + size.height + 10,
+                  top: offset.dy + size.height + 10.h,
                   child: Material(
                       type: MaterialType.transparency,
                       child: FadeTransition(

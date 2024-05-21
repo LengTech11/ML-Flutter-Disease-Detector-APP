@@ -3,6 +3,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:disease_detector_app/config/constants.dart';
 
 class MySearchBar extends StatelessWidget {
+  const MySearchBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -10,7 +12,7 @@ class MySearchBar extends StatelessWidget {
         color: Theme.of(context).colorScheme.onSecondary,
         borderRadius: BorderRadius.circular(kDefaultBorderRaduis * 2),
       ),
-      child: TextField(
+      child: const TextField(
         decoration: InputDecoration(
             hintText: "Search", prefixIcon: Icon(Iconsax.search_normal4)),
       ),
