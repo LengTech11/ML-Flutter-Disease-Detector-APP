@@ -1,7 +1,5 @@
-
-import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../config/themes/app_size.dart';
 import '../../config/themes/color.dart';
 import '../../utils/custom_text_theme/custom_text_theme.dart';
@@ -18,7 +16,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   TextEditingController editingController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
@@ -72,8 +69,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             height: AppSize.xl,
           ),
           Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
-              height: 50,
+              margin: EdgeInsets.symmetric(horizontal: 16.w),
+              height: 50.h,
               width: MediaQuery.of(context).size.width,
               child: MyButton(dark: dark, name: "Sign Up")),
           SizedBox(
@@ -105,7 +102,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     style: TextStyle(
                         color: AppColor.primary,
                         fontWeight: FontWeight.w500,
-                        fontSize: 18),
+                        fontSize: 18.sp),
                   ))
             ],
           )

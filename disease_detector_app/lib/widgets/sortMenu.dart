@@ -1,4 +1,5 @@
 import 'package:disease_detector_app/config/themes/color.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'buttons.dart';
 import 'checkMark.dart';
@@ -9,14 +10,16 @@ import 'package:disease_detector_app/config/constants.dart';
 
 class SortMenuBox extends DropDownBox {
   SortMenuBox({
-    Key? key,
+    super.key,
     required this.options,
   }) : super(
-            key: key,
-            button: IconButtonWidget(icon: Iconsax.sort,color: AppColor.primary,),
-            childWidth: 180);
+            button: IconButtonWidget(
+              icon: Iconsax.sort,
+              color: AppColor.primary,
+            ),
+            childWidth: 180.w);
   final List<SortItem> options;
-  final double boxWidth = 180;
+  final double boxWidth = 180.w;
 
   @override
   SortMenuBoxState createState() => SortMenuBoxState();
@@ -26,7 +29,7 @@ class SortMenuBoxState extends DropDownBoxState<SortMenuBox> {
   int selectedIndex = 0;
   @override
   Widget buildChildWidget(AnimationController animationController,
-      OverlayEntry _overlayEntry, BuildContext context) {
+      OverlayEntry overlayEntry, BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.topCenter,
@@ -34,27 +37,27 @@ class SortMenuBoxState extends DropDownBoxState<SortMenuBox> {
         Container(
           width: widget.boxWidth,
           padding: EdgeInsets.only(bottom: kDefaultPadding / 2),
-          child: Column(
-              children: widget.options
-                  .map((_filterItem) => SortItem(
-                      text: _filterItem.text,
-                      active:
-                          selectedIndex == widget.options.indexOf(_filterItem),
-                      onPressed: () async {
-                        selectedIndex = widget.options.indexOf(_filterItem);
-                        debugPrint(selectedIndex.toString());
-                        await animationController.reverse();
-                        _overlayEntry.remove();
-                      }))
-                  .toList()),
           decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                    blurRadius: 10,
+                    blurRadius: 10.r,
                     color: Theme.of(context).scaffoldBackgroundColor)
               ],
               color: Theme.of(context).colorScheme.background,
               borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
+          child: Column(
+              children: widget.options
+                  .map((filterItem) => SortItem(
+                      text: filterItem.text,
+                      active:
+                          selectedIndex == widget.options.indexOf(filterItem),
+                      onPressed: () async {
+                        selectedIndex = widget.options.indexOf(filterItem);
+                        debugPrint(selectedIndex.toString());
+                        await animationController.reverse();
+                        overlayEntry.remove();
+                      }))
+                  .toList()),
         ),
         // Positioned(
         //     bottom: -18,
@@ -80,8 +83,7 @@ class SortMenuBoxState extends DropDownBoxState<SortMenuBox> {
 
 class SortItem extends StatelessWidget {
   const SortItem(
-      {Key? key, required this.text, this.onPressed, this.active = false})
-      : super(key: key);
+      {super.key, required this.text, this.onPressed, this.active = false});
   final String text;
   final bool active;
   final VoidCallback? onPressed;
@@ -92,26 +94,26 @@ class SortItem extends StatelessWidget {
         child: InkWell(
             borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
             onTap: () {
-              this.onPressed!();
+              onPressed!();
             },
             child: Container(
                 padding: EdgeInsets.symmetric(
                     vertical: kDefaultPadding * 0.75,
                     horizontal: kDefaultPadding * 0.5),
                 child: Row(children: [
-                  this.active
-                      ? CheckMark()
+                  active
+                      ? const CheckMark()
                       : SizedBox(
-                          width: 20,
+                          width: 20.w,
                         ),
-                  SizedBox(width: 10),
+                  SizedBox(width: 10.w),
                   Text(
-                    this.text,
+                    text,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                     ),
                   ),
-                  Spacer()
+                  const Spacer()
                 ]))));
   }
 }

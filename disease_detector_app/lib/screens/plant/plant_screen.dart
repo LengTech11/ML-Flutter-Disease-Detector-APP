@@ -3,15 +3,16 @@ import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/widgets/dialog.dart';
 import 'package:disease_detector_app/widgets/divider.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class PlantPage extends StatefulWidget {
-  const PlantPage({Key? key}) : super(key: key);
+class PlantScreen extends StatefulWidget {
+  const PlantScreen({super.key});
 
   @override
-  _PlantPageState createState() => _PlantPageState();
+  State<PlantScreen> createState() => _PlantScreenState();
 }
 
-class _PlantPageState extends State<PlantPage>
+class _PlantScreenState extends State<PlantScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -29,7 +30,7 @@ class _PlantPageState extends State<PlantPage>
 
   @override
   Widget build(BuildContext context) {
-    List<PlantView> _plantList = [
+    List<PlantView> plantList = [
       PlantView(
           imageUrl: 'assets/images/image_1.jpg',
           species: 'Tomato',
@@ -51,7 +52,7 @@ class _PlantPageState extends State<PlantPage>
           margin: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
           child: CustomTabBar(
             tabController: _tabController,
-            tabTexts: ['My Plants', 'History'],
+            tabTexts: const ['My Plants', 'History'],
           ),
         ),
         Expanded(
@@ -61,14 +62,14 @@ class _PlantPageState extends State<PlantPage>
               child: Column(
                 children: [
                   Container(
-                    height: 54,
+                    height: 54.h,
                     margin: EdgeInsets.symmetric(vertical: kDefaultPadding),
                     child: Row(children: [
                       // Expanded(
                       //   child: SearchBar(),
                       // ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.5),
-                      SortMenuBox(options: [
+                      SortMenuBox(options: const [
                         SortItem(text: 'Date'),
                         SortItem(text: 'Alphabet')
                       ])
@@ -77,7 +78,7 @@ class _PlantPageState extends State<PlantPage>
                   Expanded(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-                      child: MyPlants(plantList: _plantList),
+                      child: MyPlants(plantList: plantList),
                     ),
                   ),
                 ],
@@ -88,21 +89,21 @@ class _PlantPageState extends State<PlantPage>
               child: Column(
                 children: [
                   Container(
-                    height: 54,
+                    height: 54.h,
                     margin: EdgeInsets.only(top: kDefaultPadding),
                     child: Row(children: [
                       // Expanded(
                       //   child: SearchBar(),
                       // ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.5),
-                      SortMenuBox(options: [
+                      SortMenuBox(options: const [
                         SortItem(text: 'Latest'),
                         SortItem(text: 'Oldest')
                       ])
                     ]),
                   ),
                   Container(
-                      height: 34,
+                      height: 34.h,
                       margin:
                           EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
                       child: ClipRRect(
@@ -121,7 +122,7 @@ class _PlantPageState extends State<PlantPage>
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
                               SizedBox(
-                                width: 10,
+                                width: 10.w,
                               ),
                               ButtonWidget(
                                 text: Text('Potato',
@@ -133,7 +134,7 @@ class _PlantPageState extends State<PlantPage>
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
                               SizedBox(
-                                width: 10,
+                                width: 10.w,
                               ),
                               ButtonWidget(
                                 text: Text('Tomato',
@@ -144,7 +145,7 @@ class _PlantPageState extends State<PlantPage>
                                 onPressed: () {},
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
-                              DividerWidget(),
+                              const DividerWidget(),
                               ButtonWidget(
                                   text: Text('Clear All',
                                       style: TextStyle(
@@ -158,7 +159,7 @@ class _PlantPageState extends State<PlantPage>
                                         builder: (BuildContext context) {
                                           return DeleteDialog(
                                               onPressed: () {
-                                                _plantList.clear();
+                                                plantList.clear();
                                               },
                                               title:
                                                   'Do you want to clear history?');
@@ -169,7 +170,7 @@ class _PlantPageState extends State<PlantPage>
                   Expanded(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-                      child: HistoryPlants(plantList: _plantList),
+                      child: HistoryPlants(plantList: plantList),
                     ),
                   ),
                 ],

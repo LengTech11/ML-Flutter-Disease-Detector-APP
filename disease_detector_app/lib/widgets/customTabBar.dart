@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:disease_detector_app/config/constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTabBar extends StatelessWidget {
   const CustomTabBar(
@@ -22,7 +23,7 @@ class CustomTabBar extends StatelessWidget {
           borderRadius: BorderRadius.circular(kDefaultBorderRaduis * 2),
           color: Theme.of(context).colorScheme.background,
         ),
-        labelStyle: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+        labelStyle: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold),
         unselectedLabelColor: Theme.of(context).colorScheme.onBackground,
         tabs: [
           ...tabTexts.map((text) => Tab(

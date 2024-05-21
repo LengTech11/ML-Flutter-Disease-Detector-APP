@@ -1,22 +1,22 @@
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:flutter/material.dart';
 import 'package:disease_detector_app/config/constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class MenuItemCategory extends StatefulWidget {
   const MenuItemCategory(
-      {Key? key,
+      {super.key,
       required this.prefix,
       required this.text,
-      required this.subitems})
-      : super(key: key);
+      required this.subitems});
 
   final IconData prefix;
   final String text;
   final List<SubMenuItem> subitems;
 
   @override
-  _MenuItemCategoryState createState() => _MenuItemCategoryState();
+  State<MenuItemCategory> createState() => _MenuItemCategoryState();
 }
 
 class _MenuItemCategoryState extends State<MenuItemCategory>
@@ -27,9 +27,9 @@ class _MenuItemCategoryState extends State<MenuItemCategory>
   @override
   void initState() {
     super.initState();
-    animationController = new AnimationController(
+    animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 400),
     )..addListener(() {
         setState(() {});
       });
@@ -45,18 +45,18 @@ class _MenuItemCategoryState extends State<MenuItemCategory>
   Widget build(BuildContext context) {
     return AnimatedContainer(
       curve: Curves.easeOut,
-      duration: Duration(milliseconds: 400),
-      height: (_expanded ? widget.subitems.length * 74 : 0) + 74,
+      duration: const Duration(milliseconds: 400),
+      height: (_expanded ? widget.subitems.length * 74.w : 0) + 74.w,
       decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
       child: Stack(children: [
         AnimatedPositioned(
-            duration: Duration(milliseconds: 400),
+            duration: const Duration(milliseconds: 400),
+            top: _expanded ? 74.w : 10.w,
             child: Column(
               children: [...widget.subitems],
-            ),
-            top: _expanded ? 74 : 10),
+            )),
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
@@ -87,14 +87,14 @@ class _MenuItemCategoryState extends State<MenuItemCategory>
                           curve: Curves.easeOut,
                         )),
                         child: Icon(widget.prefix)),
-                    SizedBox(width: 20),
+                    SizedBox(width: 20.w),
                     Text(
                       widget.text,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 16.sp,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     RotationTransition(
                         turns:
                             Tween(begin: 0.0, end: 0.5).animate(CurvedAnimation(
@@ -103,7 +103,7 @@ class _MenuItemCategoryState extends State<MenuItemCategory>
                         )),
                         child: Icon(
                           Iconsax.arrow_down_1,
-                          size: 22,
+                          size: 22.sp,
                         ))
                   ],
                 ),
@@ -118,11 +118,11 @@ class _MenuItemCategoryState extends State<MenuItemCategory>
 
 class SubMenuItem extends StatelessWidget {
   const SubMenuItem({
-    Key? key,
+    super.key,
     required this.text,
     required this.icon,
     required this.endWidget,
-  }) : super(key: key);
+  });
 
   final Widget endWidget;
   final IconData icon;
@@ -131,7 +131,7 @@ class SubMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 74,
+      height: 74.h,
       width: MediaQuery.of(context).size.width - kDefaultPadding,
       child: Material(
         color: Colors.transparent,
@@ -146,7 +146,9 @@ class SubMenuItem extends StatelessWidget {
                   horizontal: kDefaultPadding * 0.75),
               child: Row(
                 children: [
-                  Icon(this.icon,),
+                  Icon(
+                    this.icon,
+                  ),
                   SizedBox(width: 20),
                   Text(
                     this.text,
