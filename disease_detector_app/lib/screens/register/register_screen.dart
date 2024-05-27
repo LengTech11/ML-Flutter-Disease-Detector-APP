@@ -1,7 +1,10 @@
+import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../config/constants.dart';
 import '../../config/themes/app_size.dart';
 import '../../config/themes/color.dart';
+import '../../firebase_helpers/firebase_auth/firebase_auth_helpers.dart';
 import '../../utils/custom_text_theme/custom_text_theme.dart';
 import '../../utils/helper/helper_function.dart';
 import '../../widgets/my_button.dart';
@@ -18,6 +21,8 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController editingController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
@@ -43,6 +48,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
               style: dark
                   ? MyTextTheme.darkTextTheme.headlineLarge
                   : MyTextTheme.lightTextTheme.headlineLarge,
+            ),
+            SizedBox(
+              height: AppSize.lg,
+            ),
+            MyTextFormField(
+              dark: dark,
+              hint: "Enter your First Name",
+              controller: firstNameController,
+              keyBoardType: TextInputType.text,
+              textInputAction: TextInputAction.next,
+              visible: false,
+            ),
+            SizedBox(
+              height: AppSize.lg,
+            ),
+            MyTextFormField(
+              dark: dark,
+              hint: "Enter your Last Name",
+              controller: lastNameController,
+              keyBoardType: TextInputType.text,
+              textInputAction: TextInputAction.next,
+              visible: false,
             ),
             SizedBox(
               height: AppSize.lg,
@@ -87,22 +114,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: MyButton(
                     dark: dark,
                     name: "Sign Up",
-                    onPress: () {
-                      _formKey.currentState!.validate();
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+                    onPress: () async {
+                      String name =
+                          "${firstNameController.text} ${lastNameController.text}";
+                      bool isValidated = signUpVaildation(
+                          editingController.text, passwordController.text);
+                      if (isValidated) {
+                        bool isLogined = await FirebaseAuthHelper.instance
+                            .signUp(name, editingController.text,
+                                passwordController.text, context);
+                        if (isLogined) {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()),
+                              (route) => false);
+                        }
                       }
-                      // bool isValidated = signUpVaildation(
-                      //     editingController.text, passwordController.text);
-                      // if (isValidated) {
-                      //   Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //           builder: (context) => LoginScreen()));
-                      // }
                     })),
             SizedBox(
               height: AppSize.xl,
