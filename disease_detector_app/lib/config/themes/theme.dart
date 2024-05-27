@@ -31,15 +31,13 @@ class AppTheme {
               primary: AppColor.primary,
               secondary: AppColor.lightGrey,
               surface: AppColor.white,
-              background: AppColor.light,
               error: AppColor.error,
               onPrimary: AppColor.white,
               onSecondary: AppColor.lightGrey,
               onSurface: AppColor.black,
-              onBackground: AppColor.dark,
               onError: AppColor.light,
               brightness: Brightness.light)
-          .copyWith(background: AppColor.white));
+          .copyWith(surface: AppColor.lightGrey));
 
   static final darkTheme = ThemeData(
       scaffoldBackgroundColor: AppColor.dark,
@@ -58,14 +56,12 @@ class AppTheme {
       colorScheme: const ColorScheme(
               primary: AppColor.primary,
               secondary: AppColor.secondary,
-              surface: AppColor.black,
-              background: AppColor.surface,
+              surface: AppColor.splashColor,
               error: AppColor.error,
               onPrimary: AppColor.lightGrey,
               onSecondary: AppColor.grey,
               onSurface: AppColor.white,
-              onBackground: AppColor.light,
               onError: AppColor.onError,
               brightness: Brightness.dark)
-          .copyWith(background: AppColor.splashColor));
+          .copyWith(surface: AppColor.splashColor));
 }

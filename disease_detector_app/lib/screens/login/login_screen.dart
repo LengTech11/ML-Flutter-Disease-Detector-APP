@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 hint: "Username or Email",
                 controller: editingController,
                 keyBoardType: TextInputType.text,
-                textInputAction: TextInputAction.next),
+                textInputAction: TextInputAction.next, visible: false,),
             SizedBox(
               height: AppSize.xl,
             ),
@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 hint: "Password",
                 controller: passwordController,
                 keyBoardType: TextInputType.text,
-                textInputAction: TextInputAction.next),
+                textInputAction: TextInputAction.next, visible: false,),
             SizedBox(
               height: AppSize.sm,
             ),
@@ -77,7 +77,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 margin: EdgeInsets.symmetric(horizontal: 16.w),
                 height: 50.h,
                 width: MediaQuery.of(context).size.width,
-                child: MyButton(dark: dark, name: "Login")),
+                child: MyButton(
+                  dark: dark,
+                  name: "Login",
+                  onPress: () {},
+                )),
             SizedBox(
               height: AppSize.lg,
             ),

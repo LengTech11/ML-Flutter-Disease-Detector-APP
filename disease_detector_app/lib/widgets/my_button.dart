@@ -6,12 +6,18 @@ import '../config/themes/color.dart';
 class MyButton extends StatelessWidget {
   final String name;
   final bool dark;
-  const MyButton({super.key, required this.dark, required this.name});
+  final void Function()? onPress;
+  const MyButton({
+    super.key,
+    required this.dark,
+    required this.name,
+    required this.onPress,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPress,
       style: ElevatedButton.styleFrom(
           // foregroundColor: dark ? ,
           backgroundColor: dark ? AppColor.primary : AppColor.primary),
