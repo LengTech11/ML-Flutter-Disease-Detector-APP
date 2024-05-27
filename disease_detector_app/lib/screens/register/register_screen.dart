@@ -19,95 +19,129 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController editingController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return Scaffold(
-      body: SingleChildScrollView(
-          child: Column(
-        children: [
-          SizedBox(
-            height: AppSize.appbarHeight,
-          ),
-          SizedBox(
-            height: AppSize.lg,
-          ),
-          Text(
-            "WELCOME",
-            style: dark
-                ? MyTextTheme.darkTextTheme.headlineLarge
-                : MyTextTheme.lightTextTheme.headlineLarge,
-          ),
-          SizedBox(
-            height: AppSize.lg,
-          ),
-          MyTextFormField(
+      // key: _formKey,
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+            child: Column(
+          children: [
+            SizedBox(
+              height: AppSize.appbarHeight,
+            ),
+            SizedBox(
+              height: AppSize.lg,
+            ),
+            Text(
+              "WELCOME",
+              style: dark
+                  ? MyTextTheme.darkTextTheme.headlineLarge
+                  : MyTextTheme.lightTextTheme.headlineLarge,
+            ),
+            SizedBox(
+              height: AppSize.lg,
+            ),
+            MyTextFormField(
               dark: dark,
               hint: "Enter your Email",
               controller: editingController,
               keyBoardType: TextInputType.text,
-              textInputAction: TextInputAction.next),
-          SizedBox(
-            height: AppSize.lg,
-          ),
-          MyTextFormField(
+              textInputAction: TextInputAction.next,
+              visible: false,
+            ),
+            SizedBox(
+              height: AppSize.lg,
+            ),
+            MyTextFormField(
               dark: dark,
               hint: "Enter Password",
               controller: passwordController,
               keyBoardType: TextInputType.text,
-              textInputAction: TextInputAction.next),
-          SizedBox(
-            height: AppSize.xl,
-          ),
-          MyTextFormField(
+              textInputAction: TextInputAction.next,
+              visible: false,
+            ),
+            SizedBox(
+              height: AppSize.xl,
+            ),
+            MyTextFormField(
               dark: dark,
               hint: "Confirm Password",
               controller: confirmController,
               keyBoardType: TextInputType.text,
-              textInputAction: TextInputAction.done),
-          SizedBox(
-            height: AppSize.xl,
-          ),
-          Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.w),
-              height: 50.h,
-              width: MediaQuery.of(context).size.width,
-              child: MyButton(dark: dark, name: "Sign Up")),
-          SizedBox(
-            height: AppSize.xl,
-          ),
-          SizedBox(
-            height: AppSize.md,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Already have an account?",
-                style: dark
-                    ? MyTextTheme.darkTextTheme.titleMedium
-                    : MyTextTheme.lightTextTheme.titleMedium,
-              ),
-              SizedBox(
-                width: AppSize.xs,
-              ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
-                  },
-                  child: Text(
-                    "Log In",
-                    style: TextStyle(
-                        color: AppColor.primary,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18.sp),
-                  ))
-            ],
-          )
-        ],
-      )),
+              textInputAction: TextInputAction.done,
+              visible: false,
+            ),
+            SizedBox(
+              height: AppSize.xl,
+            ),
+            Container(
+                margin: EdgeInsets.symmetric(horizontal: 16.w),
+                height: 50.h,
+                width: MediaQuery.of(context).size.width,
+                child: MyButton(
+                    dark: dark,
+                    name: "Sign Up",
+                    onPress: () {
+                      _formKey.currentState!.validate();
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
+                      }
+                      // bool isValidated = signUpVaildation(
+                      //     editingController.text, passwordController.text);
+                      // if (isValidated) {
+                      //   Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //           builder: (context) => LoginScreen()));
+                      // }
+                    })),
+            SizedBox(
+              height: AppSize.xl,
+            ),
+            SizedBox(
+              height: AppSize.md,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Already have an account?",
+                  style: dark
+                      ? MyTextTheme.darkTextTheme.titleMedium
+                      : MyTextTheme.lightTextTheme.titleMedium,
+                ),
+                SizedBox(
+                  width: AppSize.xs,
+                ),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()));
+                    },
+                    child: Text(
+                      "Log In",
+                      style: TextStyle(
+                          color: AppColor.primary,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18.sp),
+                    ))
+              ],
+            )
+          ],
+        )),
+      ),
     );
   }
 }
