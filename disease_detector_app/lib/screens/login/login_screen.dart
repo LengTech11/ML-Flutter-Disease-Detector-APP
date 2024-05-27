@@ -10,6 +10,7 @@ import '../../utils/custom_text_theme/custom_text_theme.dart';
 import '../../utils/helper/helper_function.dart';
 import '../../widgets/my_button.dart';
 import '../../widgets/my_text_form_field.dart';
+import '../../widgets/outlined_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
