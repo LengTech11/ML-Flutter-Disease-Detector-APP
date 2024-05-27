@@ -1,8 +1,11 @@
 import 'package:disease_detector_app/screens/home/home_screen.dart';
+import 'package:disease_detector_app/screens/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../config/constants.dart';
 import '../../config/themes/app_size.dart';
 import '../../config/themes/color.dart';
+import '../../firebase_helpers/firebase_auth/firebase_auth_helpers.dart';
 import '../../utils/custom_text_theme/custom_text_theme.dart';
 import '../../utils/helper/helper_function.dart';
 import '../../widgets/my_button.dart';
@@ -19,102 +22,157 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController editingController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: AppSize.appbarHeight,
-            ),
-            SizedBox(
-              height: AppSize.lg,
-            ),
-            Text(
-              "LOGIN",
-              style: dark
-                  ? MyTextTheme.darkTextTheme.headlineLarge
-                  : MyTextTheme.lightTextTheme.headlineLarge,
-            ),
-            SizedBox(
-              height: AppSize.xl,
-            ),
-            MyTextFormField(
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: AppSize.appbarHeight,
+              ),
+              SizedBox(
+                height: AppSize.lg,
+              ),
+              Text(
+                "LOGIN",
+                style: dark
+                    ? MyTextTheme.darkTextTheme.headlineLarge
+                    : MyTextTheme.lightTextTheme.headlineLarge,
+              ),
+              SizedBox(
+                height: AppSize.xl,
+              ),
+              MyTextFormField(
                 dark: dark,
                 hint: "Username or Email",
                 controller: editingController,
                 keyBoardType: TextInputType.text,
-                textInputAction: TextInputAction.next, visible: false,),
-            SizedBox(
-              height: AppSize.xl,
-            ),
-            MyTextFormField(
+                textInputAction: TextInputAction.next,
+                visible: false,
+              ),
+              SizedBox(
+                height: AppSize.xl,
+              ),
+              MyTextFormField(
                 dark: dark,
                 hint: "Password",
                 controller: passwordController,
                 keyBoardType: TextInputType.text,
-                textInputAction: TextInputAction.next, visible: false,),
-            SizedBox(
-              height: AppSize.sm,
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                "Forgot Password?",
-                style: dark
-                    ? MyTextTheme.darkTextTheme.titleMedium
-                    : MyTextTheme.lightTextTheme.titleMedium,
+                textInputAction: TextInputAction.next,
+                visible: false,
               ),
-            ),
-            SizedBox(
-              height: AppSize.xl,
-            ),
-            Container(
-                margin: EdgeInsets.symmetric(horizontal: 16.w),
-                height: 50.h,
-                width: MediaQuery.of(context).size.width,
-                child: MyButton(
-                  dark: dark,
-                  name: "Login",
-                  onPress: () {},
-                )),
-            SizedBox(
-              height: AppSize.lg,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Don’t have an account?",
+              SizedBox(
+                height: AppSize.sm,
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Forgot Password?",
                   style: dark
                       ? MyTextTheme.darkTextTheme.titleMedium
                       : MyTextTheme.lightTextTheme.titleMedium,
                 ),
-                SizedBox(
-                  width: AppSize.xs,
-                ),
-                TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomeScreen()));
+              ),
+              SizedBox(
+                height: AppSize.xl,
+              ),
+              Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16.w),
+                  height: 50.h,
+                  width: MediaQuery.of(context).size.width,
+                  child: MyButton(
+                    dark: dark,
+                    name: "Login",
+                    onPress: () async {
+                      showLoaderDialog(context);
+                      if (_formKey.currentState!.validate()) {
+                        print("Email: ${editingController.text}");
+                        print("Password: ${passwordController.text}");
+                        bool isValidated = loginVaildation(
+                            editingController.text, passwordController.text);
+                        if (isValidated) {
+                          bool isLogin = await FirebaseAuthHelper.instance
+                              .login(editingController.text,
+                                  passwordController.text, context);
+                          Navigator.of(context, rootNavigator: true).pop();
+                          if (isLogin) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()));
+                          }
+                        }
+                      }
+
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return HomeScreen();
+                        }));
+                      }
                     },
-                    child: Text(
-                      "Sign Up",
-                      style: TextStyle(
-                          color: AppColor.primary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.sp),
-                    ))
-              ],
-            )
-          ],
+                  )),
+              SizedBox(
+                height: AppSize.md,
+              ),
+              Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16.w),
+                  height: 50.h,
+                  width: MediaQuery.of(context).size.width,
+                  child: MyButton(
+                      dark: dark,
+                      name: "Login With Google",
+                      onPress: () async {
+                        if (await FirebaseAuthHelper.instance
+                            .siginWithGoogle(context)) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()));
+                        }
+                      })),
+              SizedBox(
+                height: AppSize.lg,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don’t have an account?",
+                    style: dark
+                        ? MyTextTheme.darkTextTheme.titleMedium
+                        : MyTextTheme.lightTextTheme.titleMedium,
+                  ),
+                  SizedBox(
+                    width: AppSize.xs,
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RegisterScreen()));
+                      },
+                      child: Text(
+                        "Sign Up",
+                        style: TextStyle(
+                            color: AppColor.primary,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18.sp),
+                      ))
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

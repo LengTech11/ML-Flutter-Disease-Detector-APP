@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1072879903076",
+    "project_id": "eyes-diseases-detector",
+    "storage_bucket": "eyes-diseases-detector.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072879903076:android:ae2810265d963b44bf1a71",
+        "android_client_info": {
+          "package_name": "com.example.disease_detector_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072879903076-pdcvvbn9e7bq24huki37vr8d30frjriq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYjSdNrq0PVmv4RMLc2atycqNAYhcnLVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072879903076-pdcvvbn9e7bq24huki37vr8d30frjriq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1072879903076-qkb37rl3dju3pb5a67f2i7bt4lh84548.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.edd.example.eyesDiseasesDetection"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
