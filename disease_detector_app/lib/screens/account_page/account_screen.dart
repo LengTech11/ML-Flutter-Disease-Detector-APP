@@ -1,5 +1,8 @@
+import 'package:disease_detector_app/firebase_helpers/firebase_auth/firebase_auth_helpers.dart';
+import 'package:disease_detector_app/screens/login/login_screen.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:disease_detector_app/config/constants.dart';
@@ -76,8 +79,8 @@ class _AccountScreenState extends State<AccountScreen> {
                         color: Theme.of(context).secondaryHeaderColor),
                   ),
                   Text('Leng Tech',
-                      style:
-                          TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold))
+                      style: TextStyle(
+                          fontSize: 18.sp, fontWeight: FontWeight.bold))
                 ],
               ),
             ),
@@ -86,7 +89,26 @@ class _AccountScreenState extends State<AccountScreen> {
             color: Colors.transparent,
             child: InkWell(
               borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-              onTap: () {},
+              onTap: () async {
+                try {
+                  showLoaderDialog(context);
+                  await FirebaseAuthHelper.instance.handleSignOut();
+                  FirebaseAuthHelper.instance.signOut();
+                  Navigator.of(context, rootNavigator: true).pop();
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                      (route) => false);
+                } catch (e) {
+                  if (e is PlatformException) {
+                    // Handle the PlatformException
+                    print('Failed to disconnect: ${e.message}');
+                  } else {
+                    // Re-throw any other exceptions
+                    rethrow;
+                  }
+                }
+              },
               child: Container(
                   padding: EdgeInsets.all(kDefaultPadding * 0.5),
                   child: const Icon(Icons.logout)),

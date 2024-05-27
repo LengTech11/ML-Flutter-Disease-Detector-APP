@@ -104,19 +104,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   passwordController.text, context);
                           Navigator.of(context, rootNavigator: true).pop();
                           if (isLogin) {
-                            Navigator.pushReplacement(
+                            Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomeScreen()));
+                                    builder: (context) => HomeScreen()),
+                                (route) => false);
                           }
                         }
-                      }
-
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return HomeScreen();
-                        }));
                       }
                     },
                   )),
