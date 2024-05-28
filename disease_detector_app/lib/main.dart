@@ -45,14 +45,6 @@ class _MyAppState extends State<MyApp> {
                 darkTheme: AppTheme.darkTheme,
                 home: const LoginScreen(),
               );
-              // onGenerateRoute: (settings) {
-              //   switch (settings.name) {
-              //     case HomeScreen.route:
-              //       return MaterialPageRoute(
-              //           builder: (_) => (const HomeScreen()));
-              //   }
-              //   return null;
-              // });
             },
             // child: ,
           );
