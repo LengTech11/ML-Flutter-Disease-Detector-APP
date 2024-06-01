@@ -16,6 +16,8 @@ void showMessage(String message) {
   );
 }
 
+final appPadding = EdgeInsets.symmetric(horizontal: 8.w);
+
 showLoaderDialog(BuildContext context) {
   AlertDialog alert = AlertDialog(
     content: Builder(builder: (context) {
