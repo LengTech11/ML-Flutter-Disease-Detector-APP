@@ -1,4 +1,3 @@
-import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:flutter/material.dart';
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
