@@ -1,37 +1,31 @@
-import 'package:disease_detector_app/screens/login/login_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'config/themes/theme.dart';
 import 'firebase_options.dart';
+import 'screens/onboarding/onboarding_view.dart';
 
 Future<void> main() async {
-  // final WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
-  // await binding.ensureInitialized();
-
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // await Firebase.initializeApp(options: DefaultFirebaseConfig.platformOptions);
+
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
 
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => ThemeProvider(),
-        builder: (context, _) {
-          final themeProvider = Provider.of<ThemeProvider>(context);
+      create: (context) => ThemeProvider(),
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) {
           return ScreenUtilInit(
             designSize: const Size(430, 932),
             minTextAdapt: true,
@@ -39,15 +33,16 @@ class _MyAppState extends State<MyApp> {
             builder: (context, child) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                title: 'PlantAi',
+                title: 'VisionCareAI',
                 themeMode: themeProvider.themeMode,
                 theme: AppTheme.lightTheme,
                 darkTheme: AppTheme.darkTheme,
-                home: const LoginScreen(),
+                home: const OnboardingView(),
               );
             },
-            // child: ,
           );
-        });
+        },
+      ),
+    );
   }
 }
