@@ -7,33 +7,40 @@ class OutlineButton extends StatelessWidget {
       {super.key,
       required this.onPressed,
       required this.title,
-      required this.dark});
+      required this.dark,
+      this.icon});
   final void Function() onPressed;
   final String title;
   final bool dark;
+  final Icon? icon;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       clipBehavior: Clip.hardEdge,
       onPressed: onPressed,
-      child: Text(title,
-          style: dark
-              ? TextStyle(
-                  fontSize: 22.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.primary)
-              : TextStyle(
-                  fontSize: 22.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.primary)),
       style: ElevatedButton.styleFrom(
         alignment: Alignment.center,
         overlayColor: AppColor.primary.withOpacity(0.8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(29.r),
-          side: BorderSide(color: AppColor.primary, width: 1.2),
+          side: BorderSide(color: AppColor.primary, width: 1.8.w),
         ),
+      ),
+      child: Row(
+        children: [
+          Container(child: icon),
+          Text(title,
+              style: dark
+                  ? TextStyle(
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.primary)
+                  : TextStyle(
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.primary)),
+        ],
       ),
     );
   }
