@@ -1,7 +1,9 @@
 import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:disease_detector_app/screens/register/register_screen.dart';
+import 'package:disease_detector_app/widgets/outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
 import '../../config/constants.dart';
 import '../../config/themes/app_size.dart';
 import '../../config/themes/color.dart';
@@ -24,6 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
+  bool isPassword = false;
+
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
@@ -42,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: AppSize.lg,
               ),
               Text(
-                "LOGIN",
+                "Welcome Back",
                 style: dark
                     ? MyTextTheme.darkTextTheme.headlineLarge
                     : MyTextTheme.lightTextTheme.headlineLarge,
@@ -52,7 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               MyTextFormField(
                 dark: dark,
-                hint: "Username or Email",
+                prefixIcon: Icon(Icons.email_rounded),
+                hint: "Email",
                 controller: editingController,
                 keyBoardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
@@ -63,11 +68,29 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               MyTextFormField(
                 dark: dark,
+                prefixIcon: Icon(Iconsax.password_check),
+                visible: isPassword,
+                suffix: isPassword
+                    ? IconButton(
+                        icon: Icon(Icons.visibility_off),
+                        onPressed: () {
+                          setState(() {
+                            isPassword = !isPassword;
+                          });
+                        },
+                      )
+                    : IconButton(
+                        icon: Icon(Icons.visibility),
+                        onPressed: () {
+                          setState(() {
+                            isPassword = !isPassword;
+                          });
+                        },
+                      ),
                 hint: "Password",
                 controller: passwordController,
                 keyBoardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
-                visible: false,
               ),
               SizedBox(
                 height: AppSize.sm,
@@ -121,10 +144,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   margin: EdgeInsets.symmetric(horizontal: 16.w),
                   height: 50.h,
                   width: MediaQuery.of(context).size.width,
-                  child: MyButton(
+                  child: OutlineButton(
                       dark: dark,
-                      name: "Login With Google",
-                      onPress: () async {
+                      title: "Sign-In With Google",
+                      onPressed: () async {
                         if (await FirebaseAuthHelper.instance
                             .siginWithGoogle(context)) {
                           Navigator.push(
