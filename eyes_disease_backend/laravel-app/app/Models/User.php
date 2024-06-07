@@ -44,4 +44,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    static public function getUser()
+    {
+        return self::select('users.*');
+    }
+
 }
