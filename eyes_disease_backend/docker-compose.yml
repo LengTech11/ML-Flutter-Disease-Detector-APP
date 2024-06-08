@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
 
   laravel-docker:
@@ -6,7 +8,7 @@ services:
     volumes:
       - ./laravel-app:/var/www/html
     ports:
-      - 9000:80
+      - 9998:80
   
   mysql_db:
     image: mysql:latest
@@ -14,11 +16,24 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: eyes_detector
     ports:
-    - 3306:3306
+      - 3306:3306
   
   phpmyadmin:
     image: phpmyadmin:latest
     ports:
-      - 9001:80
+      - 9999:80
     environment:
-      - PMA_ARBITRARY=1
+      PMA_ARBITRARY: 1
+
+  nodejs:
+    image: node:latest
+    volumes:
+      - ./laravel-app:/var/www/html
+    working_dir: /var/www/html
+    command: bash -c "npm install && npm run dev"
+
+  web-server:
+    image: httpd
+    ports:
+      - "80:80"
+      - "5173:5173"
