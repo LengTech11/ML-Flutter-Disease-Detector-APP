@@ -12,9 +12,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ mix('resources/css/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('resources/js/charts.js') }}">
+    <link rel="stylesheet" href="{{ mix('resources/js/app.js')}}">
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
 
@@ -31,7 +31,7 @@
             @yield('content')
 
             @include('layouts.footer')
-            <p class="text-center text-sm text-gray-500 my-10">
+            <p class="text-center text-sm text-gray-500 my-5">
                 &copy; 2024
                 <a href="https://themesberg.com" class="hover:underline" target="_blank">VisionCareAI</a>. All rights reserved.
             </p>
