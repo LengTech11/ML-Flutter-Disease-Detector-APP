@@ -1,11 +1,3 @@
-import './bootstrap';
-
-import Alpine from 'alpinejs';
-
-window.Alpine = Alpine;
-
-Alpine.start();
-
 import ApexCharts from 'apexcharts';
 
 if (document.getElementById('main-chart')) {
@@ -87,5 +79,4 @@ if (document.getElementById('main-chart')) {
 	const chart = new ApexCharts(document.getElementById('main-chart'), options)
 	chart.render();
 }
-
 
