@@ -1,4 +1,5 @@
 import 'package:disease_detector_app/config/themes/color.dart';
+import 'package:disease_detector_app/screens/home/image_upload_screen.dart';
 import 'package:disease_detector_app/screens/plant/plant_screen.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentPage = 0;
   final List pages = [
-    const Center(child: Text('1')),
-    const Center(
-      child: Text('Camera'),
-    ),
+    const ImageUploadScreen(),
     const PlantScreen(),
     const AccountScreen()
   ];
