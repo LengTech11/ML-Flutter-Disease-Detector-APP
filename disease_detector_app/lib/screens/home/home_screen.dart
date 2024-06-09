@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Builder(builder: (context) {
       return Scaffold(
           backgroundColor: dark ? AppColor.dark : AppColor.light,
-          // appBar: AppBar(),
+          appBar: AppBar(),
           body: pages[currentPage],
           bottomNavigationBar: BottomNavigator(
               onTabChange: (currentIndex) {
@@ -37,12 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
               },
               tabs: const [
-                TabButton(
-                  color: AppColor.white,
-                  activeColor: AppColor.light,
-                  icon: Iconsax.home,
-                  text: 'Home',
-                ),
                 TabButton(
                   color: AppColor.white,
                   activeColor: AppColor.light,
