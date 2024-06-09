@@ -32,15 +32,15 @@ class _PlantScreenState extends State<PlantScreen>
   Widget build(BuildContext context) {
     List<PlantView> plantList = [
       PlantView(
-          imageUrl: 'assets/images/image_1.jpg',
-          species: 'Tomato',
+          imageUrl: 'assets/images/image_1.jpeg',
+          species: 'cataract',
           condition: 'Healthy',
           date: DateTime(2021, 4, 5)),
       ...List.generate(
           10,
           (index) => PlantView(
-              imageUrl: 'assets/images/image_2.jpg',
-              species: 'Tomato',
+              imageUrl: 'assets/images/image_2.jpeg',
+              species: 'cataract',
               condition: 'Cancer',
               date: DateTime(2020, 12, 1)))
     ];
@@ -52,7 +52,7 @@ class _PlantScreenState extends State<PlantScreen>
           margin: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
           child: CustomTabBar(
             tabController: _tabController,
-            tabTexts: const ['My Plants', 'History'],
+            tabTexts: const ['Eye Diseases', 'History'],
           ),
         ),
         Expanded(
@@ -137,7 +137,7 @@ class _PlantScreenState extends State<PlantScreen>
                                 width: 10.w,
                               ),
                               ButtonWidget(
-                                text: Text('Tomato',
+                                text: Text('cataract',
                                     style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
