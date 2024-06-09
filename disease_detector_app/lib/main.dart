@@ -1,5 +1,7 @@
 
+import 'package:disease_detector_app/firebase_helpers/firebase_auth/firebase_auth_helpers.dart';
 import 'package:disease_detector_app/provider/provider.dart';
+import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +18,15 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+
+  WidgetsFlutterBinding.ensureInitialized();
+  // Stripe.publishableKey =
+  // "pk_test_51MWx8OAVMyklfe3CsjEzA1CiiY0XBTlHYbZ8jQlGtVFIwQi4aNeGv8J1HUw4rgSavMTLzTwgn0XRlwoTVRFXyu2h00mRUeWmAf";
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
 
   runApp(
     MultiProvider(
@@ -46,7 +57,15 @@ class MyApp extends StatelessWidget {
                 themeMode: themeProvider.themeMode,
                 theme: AppTheme.lightTheme,
                 darkTheme: AppTheme.darkTheme,
-                home: OnboardingView(),
+                home: StreamBuilder(
+                  stream: FirebaseAuthHelper.instance.getAuthChange,
+                  builder: (context, snapshot) {
+                    if(snapshot.hasData){
+                      return HomeScreen();
+                    }
+                    return OnboardingView();
+                  }
+                ),
               );
             },
           );

@@ -20,27 +20,21 @@ class TileButton extends StatefulWidget {
 }
 
 class _TileButtonState extends State<TileButton> {
-
-
-
-
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return InkWell(
-      onTap:  widget.onpress,
-      onDoubleTap: (){
-        print("1111111111111111111111111111111111111111");
-      },
+      // splashColor: Colors.lightBlue,
+      onTap: widget.onpress,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
           color: Theme.of(context).colorScheme.surface,
-        ),  
+        ),
         child: MenuItem(
           dark: dark,
           prefix: widget.prefix,
-          text: "${widget.title}",
+          text: widget.title,
         ),
       ),
     );

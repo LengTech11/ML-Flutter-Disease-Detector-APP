@@ -1,7 +1,5 @@
 import 'package:disease_detector_app/config/constants.dart';
-import 'package:disease_detector_app/firebase_helpers/firebase_auth/firebase_auth_helpers.dart';
 import 'package:disease_detector_app/provider/provider.dart';
-import 'package:disease_detector_app/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +24,9 @@ class _profileInfoState extends State<profileInfo> {
       ),
       child: Consumer<AppProvider>(
         builder: (ctx, user, _) {
+          if (user.getUserInformation == null) {
+            user.getUserInfoFirebase();
+          }
           return Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -49,7 +50,6 @@ class _profileInfoState extends State<profileInfo> {
                                       )),
                                   borderRadius: BorderRadius.circular(200),
                                 ),
-                                // child: Image.network(),
                               ),
                             ));
                   });

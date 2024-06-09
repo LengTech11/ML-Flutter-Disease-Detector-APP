@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/firebase_helpers/firebase_firestore_helper/firebase_firestore_helper.dart';
 import 'package:disease_detector_app/firebase_helpers/firebase_storage_helper/firebase_storage_helper.dart';
+import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 import '../model/user_model/user_model.dart';
 
