@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
-  bool isPassword = false;
+  bool isPassword = true;
 
   @override
   Widget build(BuildContext context) {

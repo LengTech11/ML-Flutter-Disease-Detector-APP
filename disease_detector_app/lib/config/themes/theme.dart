@@ -33,7 +33,7 @@ class AppTheme {
               surface: AppColor.white,
               error: AppColor.error,
               onPrimary: AppColor.white,
-              onSecondary: AppColor.lightGrey,
+              onSecondary: AppColor.grey,
               onSurface: AppColor.black,
               onError: AppColor.light,
               brightness: Brightness.light)

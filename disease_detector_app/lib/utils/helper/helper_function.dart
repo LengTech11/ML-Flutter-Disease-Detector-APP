@@ -32,4 +32,8 @@ class HelperFunctions {
   static bool isDarkMode(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark;
   }
+
+  static void debug(String titile){
+    print("+++++++++++++++++++++++++++++++++ ${titile} +++++++++++++++++++++++++++++++++");
+  }
 }
