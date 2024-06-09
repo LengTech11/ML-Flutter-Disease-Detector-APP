@@ -26,38 +26,42 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return Builder(builder: (context) {
-      return SafeArea(
-        child: Scaffold(
-            backgroundColor: dark ? AppColor.dark : AppColor.light,
-            // appBar: AppBar(),
-            body: pages[currentPage],
-            bottomNavigationBar: BottomNavigator(
-                onTabChange: (currentIndex) {
-                  setState(() {
-                    currentPage = currentIndex;
-                  });
-                },
-                tabs: const [
-                  TabButton(
-                    color: AppColor.white,
-                    activeColor: AppColor.light,
-                    icon: Iconsax.camera,
-                    text: 'Camera',
-                  ),
-                  TabButton(
-                    color: AppColor.white,
-                    activeColor: AppColor.light,
-                    icon: Iconsax.home,
-                    text: 'My Plants',
-                  ),
-                  TabButton(
-                    color: AppColor.white,
-                    activeColor: AppColor.black,
-                    icon: Iconsax.profile_circle4,
-                    text: 'Profile',
-                  )
-                ])),
-      );
+      return Scaffold(
+          backgroundColor: dark ? AppColor.dark : AppColor.light,
+          // appBar: AppBar(),
+          body: pages[currentPage],
+          bottomNavigationBar: BottomNavigator(
+              onTabChange: (currentIndex) {
+                setState(() {
+                  currentPage = currentIndex;
+                });
+              },
+              tabs: const [
+                TabButton(
+                  color: AppColor.white,
+                  activeColor: AppColor.light,
+                  icon: Iconsax.home,
+                  text: 'Home',
+                ),
+                TabButton(
+                  color: AppColor.white,
+                  activeColor: AppColor.light,
+                  icon: Iconsax.camera,
+                  text: 'Camera',
+                ),
+                TabButton(
+                  color: AppColor.white,
+                  activeColor: AppColor.light,
+                  icon: Iconsax.home,
+                  text: 'My Plants',
+                ),
+                TabButton(
+                  color: AppColor.white,
+                  activeColor: AppColor.black,
+                  icon: Iconsax.profile_circle4,
+                  text: 'Profile',
+                )
+              ]));
     });
   }
 }
