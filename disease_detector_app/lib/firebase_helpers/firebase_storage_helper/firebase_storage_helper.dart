@@ -13,5 +13,12 @@ class FirebaseStorageHelper {
     String imageUrl = await taskSnapshot.ref.getDownloadURL();
     return imageUrl;
   }
+
+  // Future<String> getImage() async{
+
+  //   return 
+  // }
+
+
 }
 
