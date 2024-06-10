@@ -49,4 +49,9 @@ class AppProvider with ChangeNotifier {
 
     notifyListeners();
   }
+
+  void clearUser() {
+    _userModel = null;
+    notifyListeners();
+  }
 }
