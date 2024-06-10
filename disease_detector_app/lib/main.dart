@@ -54,13 +54,14 @@ class MyApp extends StatelessWidget {
               theme: AppTheme.lightTheme,
               darkTheme: AppTheme.darkTheme,
               home: StreamBuilder(
-                  stream: FirebaseAuthHelper.instance.getAuthChange,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return const HomeScreen();
-                    }
-                    return const OnboardingView();
-                  }),
+                stream: FirebaseAuthHelper.instance.getAuthChange,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return const HomeScreen();
+                  }
+                  return const OnboardingView();
+                },
+              ),
             );
           },
         );
