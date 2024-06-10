@@ -5,14 +5,14 @@ import 'package:disease_detector_app/widgets/divider.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class PlantScreen extends StatefulWidget {
-  const PlantScreen({super.key});
+class DiseaseScreen extends StatefulWidget {
+  const DiseaseScreen({super.key});
 
   @override
-  State<PlantScreen> createState() => _PlantScreenState();
+  State<DiseaseScreen> createState() => _DiseaseScreenState();
 }
 
-class _PlantScreenState extends State<PlantScreen>
+class _DiseaseScreenState extends State<DiseaseScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -113,7 +113,7 @@ class _PlantScreenState extends State<PlantScreen>
                             scrollDirection: Axis.horizontal,
                             children: [
                               ButtonWidget(
-                                text: Text('Apple',
+                                text: Text('glaucoma',
                                     style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -125,7 +125,7 @@ class _PlantScreenState extends State<PlantScreen>
                                 width: 10.w,
                               ),
                               ButtonWidget(
-                                text: Text('Potato',
+                                text: Text('diabetic_retinopathy',
                                     style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
