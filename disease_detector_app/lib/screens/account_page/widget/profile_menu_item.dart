@@ -32,27 +32,31 @@ class _profileInfoState extends State<profileInfo> {
             children: [
               InkWell(
                 onTap: () {
-                  setState(() {
-                    showDialog(
-                        context: context,
-                        builder: (context) => Dialog(
-                              insetPadding: EdgeInsets.all(0),
-                              shape: RoundedRectangleBorder(),
-                              backgroundColor: Colors.transparent,
-                              child: Container(
-                                width: 320.w,
-                                height: 320.h,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                        "${user.getUserInformation?.profileImg}",
-                                      )),
-                                  borderRadius: BorderRadius.circular(200),
+                  // setState(() {
+                  if (user.getUserInformation?.profileImg != null) {
+                    setState(() {
+                      showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                                insetPadding: EdgeInsets.all(0),
+                                shape: RoundedRectangleBorder(),
+                                backgroundColor: Colors.transparent,
+                                child: Container(
+                                  width: 320.w,
+                                  height: 320.h,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                          "${user.getUserInformation?.profileImg}",
+                                        )),
+                                    borderRadius: BorderRadius.circular(200),
+                                  ),
                                 ),
-                              ),
-                            ));
-                  });
+                              ));
+                    });
+                  }
+                  // });
                 },
                 child: Container(
                     height: 90.h, //140
