@@ -11,8 +11,15 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+<<<<<<< HEAD
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+=======
+    <link rel="stylesheet" href="{{ mix('resources/css/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('resources/js/charts.js') }}">
+    <link rel="stylesheet" href="{{ mix('resources/js/app.js')}}">
+
+>>>>>>> 9ba4be2ef00d78ffe045e9395ffb5c965395adda
 
 </head>
 
