@@ -47,7 +47,22 @@ class User extends Authenticatable
 
     static public function getUser()
     {
-        return self::select('users.*');
+        return self::select('users.*')
+                        ->where('user_role', "=" , 2)
+                        ->orderBy('id', 'desc')
+                        ->get();
+    }
+
+    static public function getSingleUser($id)
+    {
+        return self::find($id);
+    }
+
+    static public function getTotalUser()
+    {
+        return self::select('users.*')
+                        ->where('user_role', "=", 2)
+                        ->count();
     }
 
 }

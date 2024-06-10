@@ -1,20 +1,3 @@
-import './bootstrap';
-
-import Alpine from 'alpinejs';
-
-window.Alpine = Alpine;
-
-Alpine.start();
-
-<<<<<<< HEAD
-import {
-    Modal,
-    Ripple,
-    initTWE,
-  } from "tw-elements";
-
-  initTWE({ Modal, Ripple });
-=======
 import ApexCharts from 'apexcharts';
 
 if (document.getElementById('main-chart')) {
@@ -96,6 +79,4 @@ if (document.getElementById('main-chart')) {
 	const chart = new ApexCharts(document.getElementById('main-chart'), options)
 	chart.render();
 }
->>>>>>> 9ba4be2ef00d78ffe045e9395ffb5c965395adda
-
 
