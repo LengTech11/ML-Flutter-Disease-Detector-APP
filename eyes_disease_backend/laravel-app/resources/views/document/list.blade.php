@@ -42,12 +42,12 @@
                                 </button>
                             </div>
                             <form action="" method="POST" enctype="multipart/form-data">
-                                {{ csrf_field() }}
+                                @csrf
                                 <!-- Modal body -->
                                 <div class="p-6 space-y-2">
                                     <div class="input-group mb-3 mt-3">
                                         <p class=" mb-3"><Span style="color: red; font-weight:500">Note: </Span>We only accept files with extensions including .pdf, .docx, .xls, .xlsx, and .ppt.</p>
-                                        <input class="bg-gray-50 border border-gray-300 rounded-lg focus:ring-cyan-600 w-full" type="file" name="name" accept=".xlsx, .xls, .docx, .pdf, .ppt" required>
+                                        <input class="bg-gray-50 border border-gray-300 rounded-lg focus:ring-cyan-600 w-full" type="file" name="name" id="name" accept=".xlsx, .xls, .docx, .pdf, .ppt" required>
                                     </div>
                                 </div>
 

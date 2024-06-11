@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
@@ -21,13 +22,15 @@ class DocumentController extends Controller
             if($request->hasFile('name')) {
                 $file = $request->file('name');
                 $filename = $file->getClientOriginalName();
-                $file->move('upload/document', $filename);
+                // $file->move('upload/document', $filename);
+                Storage::putFileAs('upload/document', $file, $filename);
                 dd($filename);
                 $doc->title = $filename;
             }
             $doc->save();
         return redirect('document/list');
     }
+
 
     public function formatFileSize($bytes, $decimals = 1)
     {
