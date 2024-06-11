@@ -3,6 +3,7 @@ import 'package:disease_detector_app/screens/register/register_screen.dart';
 import 'package:disease_detector_app/widgets/outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../config/constants.dart';
 import '../../config/themes/app_size.dart';
@@ -146,7 +147,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: MediaQuery.of(context).size.width,
                   child: OutlineButton(
                       dark: dark,
-                      title: "Sign-In With Google",
+                      icon: SvgPicture.asset("assets/icons/google.svg", height: 32.h),
+                      title: "Continue with Google",
                       onPressed: () async {
                         if (await FirebaseAuthHelper.instance
                             .siginWithGoogle(context)) {

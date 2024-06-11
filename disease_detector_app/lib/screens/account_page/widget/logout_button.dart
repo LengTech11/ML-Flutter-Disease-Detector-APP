@@ -34,7 +34,6 @@ class _LogoutButtonState extends State<LogoutButton> {
                   (route) => false);
             } catch (e) {
               if (e is PlatformException) {
-                // Handle the PlatformException
                 print('Failed to disconnect: ${e.message}');
               } else {
                 // Re-throw any other exceptions

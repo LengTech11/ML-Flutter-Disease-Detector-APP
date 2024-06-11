@@ -12,7 +12,7 @@ class OutlineButton extends StatelessWidget {
   final void Function() onPressed;
   final String title;
   final bool dark;
-  final Icon? icon;
+  final Widget? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +28,16 @@ class OutlineButton extends StatelessWidget {
         ),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(child: icon),
+          SizedBox(
+            width: 8.w,
+          ),
           Text(title,
               style: dark
                   ? TextStyle(
-                      fontSize: 22.sp,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColor.primary)
                   : TextStyle(
