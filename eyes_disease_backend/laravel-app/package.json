@@ -18,11 +18,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
-<<<<<<< HEAD
         "apexcharts": "^3.49.1",
         "tw-elements": "^2.0.0"
-=======
-        "apexcharts": "^3.49.1"
->>>>>>> 9ba4be2ef00d78ffe045e9395ffb5c965395adda
     }
 }
