@@ -41,13 +41,13 @@
                                     </span>
                                 </button>
                             </div>
-                            <form action="" method="POST" enctype="multipart/form-data">
+                            <form action="{{route('import.document')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <!-- Modal body -->
                                 <div class="p-6 space-y-2">
                                     <div class="input-group mb-3 mt-3">
                                         <p class=" mb-3"><Span style="color: red; font-weight:500">Note: </Span>We only accept files with extensions including .pdf, .docx, .xls, .xlsx, and .ppt.</p>
-                                        <input class="bg-gray-50 border border-gray-300 rounded-lg focus:ring-cyan-600 w-full" type="file" name="name" id="name" accept=".xlsx, .xls, .docx, .pdf, .ppt" required>
+                                        <input class="bg-gray-50 border border-gray-300 rounded-lg focus:ring-cyan-600 w-full" type="file" name="title" id="title" accept=".xlsx, .xls, .docx, .pdf, .ppt" required>
                                     </div>
                                 </div>
 
@@ -59,7 +59,7 @@
                                         data-twe-modal-dismiss data-twe-ripple-init data-twe-ripple-color="light">
                                         Close
                                     </button>
-                                    <button type="submit"
+                                    <button type="submit" name="form_type" value="import"
                                         class="ms-1 inline-block rounded bg-cyan-600 hover:bg-cyan-700 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:shadow-primary-2 focus:bg-cyan-700 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-cyan-700 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
                                         Import
                                     </button>
@@ -197,9 +197,6 @@
                                     <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                                         Size
                                     </th>
-                                    <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
-                                        Status
-                                    </th>
                                     <th scope="col" class="p-4">
                                     </th>
                                 </tr>
@@ -233,11 +230,6 @@
                                             @endphp
                                             {{ $formattedSize }}
                                         </td>
-                                        <td class="p-4 whitespace-nowrap text-base font-normal text-gray-900">
-                                            <div class="flex items-center">
-                                                <div class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div> Active
-                                            </div>
-                                        </td>
                                         <td class="p-4 whitespace-nowrap space-x-2">
                                             <button type="button" data-twe-toggle="modal"
                                                 data-twe-target="#editUser{{ $value->id }}"
@@ -266,6 +258,83 @@
                                             </button>
                                         </td>
                                     </tr>
+
+                                    <!--edit user modal-->
+                                    <div class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                                        id="editUser{{ $value->id }}" data-twe-modal-init tabindex="-1"
+                                        aria-modal="true">
+                                        <div data-twe-modal-dialog-ref
+                                            class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[600px]">
+                                            <div
+                                                class="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-4 outline-none dark:bg-surface-dark">
+                                                <div
+                                                    class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 p-4 dark:border-white/10">
+                                                    <!-- Modal title -->
+                                                    <h5 class="text-xl font-medium leading-normal text-surface dark:text-white"
+                                                        id="addUserModalTitle">
+                                                        edit User
+                                                    </h5>
+                                                    <!-- Close button -->
+                                                    <button type="button"
+                                                        class="box-content rounded-none border-none text-neutral-500 hover:text-neutral-800 hover:no-underline focus:text-neutral-800 focus:opacity-100 focus:shadow-none focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus:text-neutral-300"
+                                                        data-twe-modal-dismiss aria-label="Close">
+                                                        <span class="[&>svg]:h-6 [&>svg]:w-6">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                viewBox="0 0 24 24" stroke-width="1.5"
+                                                                stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    d="M6 18L18 6M6 6l12 12" />
+                                                            </svg>
+                                                        </span>
+                                                    </button>
+                                                </div>
+
+                                                <form action="" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <!-- Modal body -->
+                                                    <div class="p-6 ">
+                                                        <div class="grid grid-cols-6 gap-6">
+                                                            <div class="col-span-6 sm:col-span-3">
+                                                                <label for="title"
+                                                                    class="text-sm font-medium text-gray-900 block mb-2">Title
+                                                                    </label>
+                                                                <input type="text" name="title" id="title"
+                                                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                                                    value="{{ old('title', $value->title) }}">
+                                                            </div>
+                                                            <div class="col-span-6 sm:col-span-3">
+                                                                <label for="description"
+                                                                    class="text-sm font-medium text-gray-900 block mb-2">Description
+                                                                    </label>
+                                                                <input type="text" name="description" id="description"
+                                                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                                                    value="{{ old('description', $value->description) }}"
+                                                                    >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Modal footer -->
+                                                    <div
+                                                        class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 p-4 dark:border-white/10">
+                                                        <button type="button"
+                                                            class="inline-block rounded bg-cyan-600 px-6 mx-2 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-cyan-700 focus:bg-primary-accent-200 focus:outline-none focus:ring-0 active:bg-primary-accent-200 dark:bg-primary-300 dark:hover:bg-primary-400 dark:focus:bg-primary-400 dark:active:bg-primary-400"
+                                                            data-twe-modal-dismiss data-twe-ripple-init
+                                                            data-twe-ripple-color="light">
+                                                            Close
+                                                        </button>
+                                                        <input type="hidden" name="id"
+                                                            value="{{ $value->id }}">
+                                                        <button type="submit" name="form_type" value="rename"
+                                                            class="ms-1 inline-block rounded bg-cyan-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-cyan-700 hover:shadow-primary-2 focus:bg-cyan-700 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-cyan-700 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                                                            data-twe-ripple-init data-twe-ripple-color="light">
+                                                            Save changes
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <!--delete user modal-->
                                     <div class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
@@ -301,9 +370,9 @@
                                                             </path>
                                                         </svg>
                                                         <h3 class="text-xl font-normal text-gray-500 mt-5 mb-6">Are you
-                                                            sure you want to delete this user?
+                                                            sure you want to delete document?
                                                         </h3>
-                                                        <a href="{{url('user/list/'.$value->id)}}"
+                                                        <a href="{{url('document/delete/'.$value->id)}}"
                                                             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2">
                                                             Yes, I'm sure
                                                         </a>
@@ -344,7 +413,7 @@
                     </svg>
                 </a>
                 <span class="text-sm font-normal text-gray-500">Showing <span
-                        class="text-gray-900 font-semibold">1-20</span> of <span class="text-gray-900 font-semibold">
+                        class="text-gray-900 font-semibold">1-20</span> of {{$totalDocument}}<span class="text-gray-900 font-semibold">
                         </span></span>
             </div>
             <div class="flex items-center space-x-3">
@@ -371,222 +440,5 @@
             </div>
         </div>
 
-        <!-- Edit User Modal -->
-        <div class="hidden overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full"
-            id="editUser{{ $value->id }}" data-twe-modal-init tabindex="-1" aria-modal="true">
-            <div data-twe-modal-dialog-ref class="relative w-full max-w-2xl px-4 h-full md:h-auto">
-                <!-- Modal content -->
-                <div class="bg-white rounded-lg shadow relative">
-                    <!-- Modal header -->
-                    <div class="flex items-start justify-between p-5 border-b rounded-t">
-                        <h3 class="text-xl font-semibold">
-                            Edit user
-                        </h3>
-                        <button type="button"
-                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                            data-modal-toggle="user-modal">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="p-6 space-y-6">
-                        <form action="#">
-                            <div class="grid grid-cols-6 gap-6">
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="first-name" class="text-sm font-medium text-gray-900 block mb-2">First
-                                        Name</label>
-                                    <input type="text" name="first-name" id="first-name"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="Bonnie" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="last-name" class="text-sm font-medium text-gray-900 block mb-2">Last
-                                        Name</label>
-                                    <input type="text" name="last-name" id="last-name"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="Green" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="email"
-                                        class="text-sm font-medium text-gray-900 block mb-2">Email</label>
-                                    <input type="email" name="email" id="email"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="example@company.com" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="phone-number" class="text-sm font-medium text-gray-900 block mb-2">Phone
-                                        Number</label>
-                                    <input type="number" name="phone-number" id="phone-number"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="e.g. +(12)3456 789" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="department"
-                                        class="text-sm font-medium text-gray-900 block mb-2">Department</label>
-                                    <input type="text" name="department" id="department"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="Development" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="company"
-                                        class="text-sm font-medium text-gray-900 block mb-2">Company</label>
-                                    <input type="number" name="company" id="company"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="123456" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="current-password"
-                                        class="text-sm font-medium text-gray-900 block mb-2">Current Password</label>
-                                    <input type="password" name="current-password" id="current-password"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="••••••••" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="new-password" class="text-sm font-medium text-gray-900 block mb-2">New
-                                        Password</label>
-                                    <input type="password" name="new-password" id="new-password"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="••••••••" required>
-                                </div>
-                            </div>
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="items-center p-6 border-t border-gray-200 rounded-b">
-                        <button
-                            class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                            type="submit">Save all</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add User Modal -->
-        <div class="hidden overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full"
-            id="addUser" data-twe-modal-init tabindex="-1" aria-modal="true">
-            <div data-twe-modal-dialog-ref class="relative w-full max-w-2xl px-4 h-full md:h-auto">
-                <!-- Modal content -->
-                <div class="bg-white rounded-lg shadow relative">
-                    <!-- Modal header -->
-                    <div class="flex items-start justify-between p-5 border-b rounded-t">
-                        <h3 class="text-xl font-semibold">
-                            Add new user
-                        </h3>
-                        <button type="button"
-                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                            data-twe-toggle="addUser">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="p-6 space-y-6">
-                        <form action="#">
-                            <div class="grid grid-cols-6 gap-6">
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="first-name" class="text-sm font-medium text-gray-900 block mb-2">First
-                                        Name</label>
-                                    <input type="text" name="first-name" id="first-name"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="Bonnie" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="last-name" class="text-sm font-medium text-gray-900 block mb-2">Last
-                                        Name</label>
-                                    <input type="text" name="last-name" id="last-name"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="Green" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="email"
-                                        class="text-sm font-medium text-gray-900 block mb-2">Email</label>
-                                    <input type="email" name="email" id="email"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="example@company.com" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="phone-number" class="text-sm font-medium text-gray-900 block mb-2">Phone
-                                        Number</label>
-                                    <input type="number" name="phone-number" id="phone-number"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="e.g. +(12)3456 789" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="department"
-                                        class="text-sm font-medium text-gray-900 block mb-2">Department</label>
-                                    <input type="text" name="department" id="department"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="Development" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="company"
-                                        class="text-sm font-medium text-gray-900 block mb-2">Company</label>
-                                    <input type="number" name="company" id="company"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                        placeholder="123456" required>
-                                </div>
-                            </div>
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="items-center p-6 border-t border-gray-200 rounded-b">
-                        <button
-                            class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                            type="submit">Add user</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Delete User Modal -->
-        <div class="hidden overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full"
-            id="delete-user-modal">
-            <div class="relative w-full max-w-md px-4 h-full md:h-auto">
-                <!-- Modal content -->
-                <div class="bg-white rounded-lg shadow relative">
-                    <!-- Modal header -->
-                    <div class="flex justify-end p-2">
-                        <button type="button"
-                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                            data-modal-toggle="delete-user-modal">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="p-6 pt-0 text-center">
-                        <svg class="w-20 h-20 text-red-600 mx-auto" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <h3 class="text-xl font-normal text-gray-500 mt-5 mb-6">Are you sure you want to delete this user?
-                        </h3>
-                        <a href="#"
-                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2">
-                            Yes, I'm sure
-                        </a>
-                        <a href="#"
-                            class="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center"
-                            data-modal-toggle="delete-user-modal">
-                            No, cancel
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </main>
 @endsection
