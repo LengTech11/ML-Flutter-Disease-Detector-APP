@@ -23,9 +23,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/user/list', [UserController::class, 'list']);
     Route::post('/user/list', [UserController::class, 'insert']);
-    Route::get('/user/list/{$id}', [UserController::class, 'delete']);
+    Route::get('/user/delete/{id}', [UserController::class, 'delete']);
     Route::get('/document/list', [DocumentController::class, 'list']);
-    Route::post('/document/list', [DocumentController::class, 'import']);
+    Route::post('/document/list', [DocumentController::class, 'import'])->name('import.document');
+    Route::get('/document/delete/{id}', [DocumentController::class, 'delete']);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

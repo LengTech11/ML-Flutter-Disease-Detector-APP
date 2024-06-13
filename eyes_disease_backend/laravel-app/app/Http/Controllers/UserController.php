@@ -57,11 +57,11 @@ class UserController extends Controller
         }
     }
 
-    public function delete(Request $request, $id)
+    public function delete($id)
     {
         $user = User::getSingleUser($id);
         $user->delete();
-        
+
         return redirect('user/list');
     }
 }
