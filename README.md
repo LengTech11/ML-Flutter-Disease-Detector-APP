@@ -30,7 +30,7 @@ Ensure you have the following installed on your system:
 
 1. Clone the repository:
     ```bash
-    [git clone https://github.com/yourusername/your-repo.git](https://github.com/LengTech11/VisionCareAI-Detect-Consult)
+    git clone https://github.com/LengTech11/VisionCareAI-Detect-Consult
     ```
 
 2. Install dependencies:
