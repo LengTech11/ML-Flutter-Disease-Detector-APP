@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,27 +15,20 @@ class ApiController extends Controller
         try
         {
             $validator = Validator::make($request->all(), [
-                'first_name' => 'required',
-                'last_name' => 'required',
-                'email' => 'required|email|unique:users,email',
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email|max:255',
                 'age' => 'required|integer',
                 'gender' => 'required|integer',
-                'password' => 'required',
+                'password' => 'required|string|min:8',
             ]);
 
             if ($validator->fails()) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'validation error',
-                    'error' => $validator->errors(),
-                ],422);
-            }
-
-            if (!Auth::attempt($request->only(['email', 'password']))) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'invalid login details',
-                ]);
+                    'message' => 'Validation error',
+                    'errors' => $validator->errors(),
+                ], 422);
             }
 
             $user = User::create([
@@ -50,14 +42,14 @@ class ApiController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'user created successfully',
+                'message' => 'User created successfully',
                 'token' => $user->createToken('API TOKEN')->plainTextToken
-            ],200);
-        }catch(\Trowable $th){
+            ], 201);
+        } catch (\Throwable $th) {
             return response()->json([
                 'status' => 'error',
                 'message' => $th->getMessage(),
-            ],500);
+            ], 500);
         }
     }
 
@@ -67,36 +59,36 @@ class ApiController extends Controller
         {
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
-                'password' => 'required',
+                'password' => 'required|string|min:8',
             ]);
 
             if ($validator->fails()) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'validation error',
-                    'error' => $validator->errors(),
-                ],422);
+                    'message' => 'Validation error',
+                    'errors' => $validator->errors(),
+                ], 422);
             }
 
             if (!Auth::attempt($request->only('email', 'password'))) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'invalid login details',
-                ]);
+                    'message' => 'Invalid login details',
+                ], 401);
             }
 
             $user = User::where('email', $request->email)->first();
             return response()->json([
                 'status' => 'success',
-                'message' => 'User logged In successfully',
-                'token' => $user->createToken('API TOEKN')->plainTextToken
-            ],200);
+                'message' => 'User logged in successfully',
+                'token' => $user->createToken('API TOKEN')->plainTextToken
+            ], 200);
 
-        }catch(\Trowable $th){
+        } catch (\Throwable $th) {
             return response()->json([
                 'status' => 'error',
                 'message' => $th->getMessage(),
-            ],500);
+            ], 500);
         }
     }
 
@@ -108,7 +100,6 @@ class ApiController extends Controller
             'status' => 'success',
             'message' => 'User profile',
             'data' => $userData,
-        ],200);
+        ], 200);
     }
 }
-
