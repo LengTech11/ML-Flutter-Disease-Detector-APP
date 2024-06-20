@@ -1,6 +1,5 @@
-import 'package:disease_detector_app/firebase_helpers/firebase_auth/firebase_auth_helpers.dart';
-import 'package:disease_detector_app/provider/provider.dart';
-import 'package:disease_detector_app/screens/home/home_screen.dart';
+import 'package:disease_detector_app/api_service/client/dio_http_client.dart';
+import 'package:disease_detector_app/view_model/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +16,6 @@ Future<void> main() async {
   );
 
   WidgetsFlutterBinding.ensureInitialized();
-  // Stripe.publishableKey =
-  // "pk_test_51MWx8OAVMyklfe3CsjEzA1CiiY0XBTlHYbZ8jQlGtVFIwQi4aNeGv8J1HUw4rgSavMTLzTwgn0XRlwoTVRFXyu2h00mRUeWmAf";
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -35,8 +32,20 @@ Future<void> main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    BaseHttpClient.init();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,22 +57,12 @@ class MyApp extends StatelessWidget {
           splitScreenMode: true,
           builder: (context, child) {
             return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'VisionCareAI',
-              themeMode: themeProvider.themeMode,
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
-              home:  OnboardingView()
-              // StreamBuilder(
-              //   stream: FirebaseAuthHelper.instance.getAuthChange,
-              //   builder: (context, snapshot) {
-              //     if (snapshot.hasData) {
-              //       return const HomeScreen();
-              //     }
-              //     return const;
-              //   },
-              // ),
-            );
+                debugShowCheckedModeBanner: false,
+                title: 'VisionCareAI',
+                themeMode: themeProvider.themeMode,
+                theme: AppTheme.lightTheme,
+                darkTheme: AppTheme.darkTheme,
+                home: const OnboardingView());
           },
         );
       },
