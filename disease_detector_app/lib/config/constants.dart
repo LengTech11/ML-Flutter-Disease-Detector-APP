@@ -45,6 +45,34 @@ showLoaderDialog(BuildContext context) {
   );
 }
 
+showErrorMsg(BuildContext context, String msg, bool dark) {
+  AlertDialog alert = AlertDialog(
+    backgroundColor: dark ? AppColor.dark : AppColor.light,
+    alignment: Alignment.center,
+    title: Center(
+      child: Text(
+        msg,
+        style: dark
+            ? MyTextTheme.darkTextTheme.labelLarge
+            : MyTextTheme.lightTextTheme.labelLarge,
+      ),
+    ),
+    actions: [
+      ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text("ok"))
+    ],
+  );
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
 String getMessageFromErrorCode(String errorCode) {
   switch (errorCode) {
