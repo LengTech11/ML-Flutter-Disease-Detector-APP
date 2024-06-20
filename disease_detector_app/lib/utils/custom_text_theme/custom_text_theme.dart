@@ -37,7 +37,7 @@ class MyTextTheme {
 
     /// label
     labelLarge: const TextStyle().copyWith(
-        fontSize: 18.0.sp,
+        fontSize: 16.0.sp,
         fontWeight: FontWeight.normal,
         color: AppColor.black,
         letterSpacing: 0.2),
@@ -81,7 +81,7 @@ class MyTextTheme {
 
     /// label
     labelLarge: const TextStyle().copyWith(
-        fontSize: 18.0.sp,
+        fontSize: 16.0.sp,
         fontWeight: FontWeight.normal,
         color: AppColor.white,
         letterSpacing: 0.2),
