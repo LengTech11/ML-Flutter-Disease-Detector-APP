@@ -49,7 +49,7 @@ class BaseApiService {
       }
       if (customToken != null) {
         httpOption.headers!['Authorization'] =
-            "Bearer 5|9z1sh1ch22NLjRuJygpAn9DxKgeI0g5Niq9vl6Yoc7148952";
+            "Bearer ${AppConstant.USER_TOKEN}";
       }
       httpOption.headers!.addAll(headers);
       query ??= {};

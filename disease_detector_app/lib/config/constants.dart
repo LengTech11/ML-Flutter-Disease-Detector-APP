@@ -1,3 +1,5 @@
+import 'package:disease_detector_app/config/themes/color.dart';
+import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,7 +14,7 @@ void showMessage(String message) {
     msg: message,
     backgroundColor: Colors.red,
     textColor: Colors.white,
-    fontSize: 16.0,
+    fontSize: 16.0.sp,
   );
 }
 
@@ -22,19 +24,13 @@ showLoaderDialog(BuildContext context) {
   AlertDialog alert = AlertDialog(
     content: Builder(builder: (context) {
       return SizedBox(
-        width: 100,
-        child: Column(
+        width: 60.w,
+        child: const Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const CircularProgressIndicator(
-              color: Color(0xffe16555),
+            CircularProgressIndicator(
+              color: AppColor.primary,
             ),
-            const SizedBox(
-              height: 18.0,
-            ),
-            Container(
-                margin: const EdgeInsets.only(left: 7),
-                child: const Text("Loading...")),
           ],
         ),
       );
@@ -48,6 +44,7 @@ showLoaderDialog(BuildContext context) {
     },
   );
 }
+
 
 String getMessageFromErrorCode(String errorCode) {
   switch (errorCode) {
