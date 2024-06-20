@@ -1,5 +1,5 @@
 import 'package:disease_detector_app/config/themes/color.dart';
-import 'package:disease_detector_app/provider/provider.dart';
+import 'package:disease_detector_app/view_model/provider.dart';
 import 'package:disease_detector_app/screens/account_page/widget/change_password.dart';
 import 'package:disease_detector_app/screens/account_page/widget/logout_button.dart';
 import 'package:disease_detector_app/screens/account_page/widget/profile_menu_item.dart';
@@ -41,17 +41,15 @@ class _AccountScreenState extends State<AccountScreen> {
           SizedBox(
             height: 20.h,
           ),
-          profileInfo(),
+          const profileInfo(),
           SizedBox(height: 16.h),
           profileMenuItems(context),
           SizedBox(
             height: 16.h,
           ),
-          ChangePasswordButton(
-            
-          ),
+          const ChangePasswordButton(),
           SizedBox(height: 16.h),
-          LogoutButton(),
+          const LogoutButton(),
         ],
       ),
     );
@@ -59,7 +57,6 @@ class _AccountScreenState extends State<AccountScreen> {
 
   Container profileMenuItems(BuildContext context) {
     Provider.of<ThemeProvider>(context);
-    final dark = HelperFunctions.isDarkMode(context);
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
