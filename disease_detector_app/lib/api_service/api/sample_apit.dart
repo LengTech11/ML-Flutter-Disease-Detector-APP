@@ -17,7 +17,7 @@ class SampleApiService {
         method: HttpMethod.GET,
         requiredToken: true,
         autoRefreshToken: true,
-        query: query,
+        data: query,
         onSuccess: (response) {
           // return SampleModel.fromJson(response.data);
           return "";

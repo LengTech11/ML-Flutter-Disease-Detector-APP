@@ -18,7 +18,7 @@ class LoginApiService {
           'Accept-Encoding': 'Accept-Encoding',
           'Connection': 'keep-alive'
         },
-        query: query,
+        data: query,
         onSuccess: (response) {
           return LoginResponseModel.fromJson(response.data);
         });
