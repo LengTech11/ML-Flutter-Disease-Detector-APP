@@ -1,3 +1,6 @@
+import 'package:disease_detector_app/api_service/api/login_api.dart';
+import 'package:disease_detector_app/config/app_constants/app_constants.dart';
+import 'package:disease_detector_app/model/login_model/login_response_model.dart';
 import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:disease_detector_app/screens/register/register_screen.dart';
 import 'package:disease_detector_app/widgets/outlined_button.dart';
@@ -22,12 +25,34 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController editingController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
   bool isPassword = true;
+  bool isShowLoading = false;
+
+  LoginApiService loginApiService = LoginApiService();
+
+  Future<void> login(
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
+    final dark = HelperFunctions.isDarkMode(context);
+    try {
+      LoginResponseModel response =
+          await loginApiService.postLogin(email: email, password: password);
+      AppConstant.USER_TOKEN = response.token;
+      if (!context.mounted) return;
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+    } catch (e) {
+      HelperFunctions.debug(e.toString());
+      Navigator.pop(context);
+      showErrorMsg(context, e.toString(), dark);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 dark: dark,
                 prefixIcon: Icon(Icons.email_rounded),
                 hint: "Email",
-                controller: editingController,
+                controller: emailController,
                 keyBoardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
                 visible: false,
@@ -116,24 +141,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     dark: dark,
                     name: "Login",
                     onPress: () async {
-                      showLoaderDialog(context);
                       if (_formKey.currentState!.validate()) {
-                        print("Email: ${editingController.text}");
-                        print("Password: ${passwordController.text}");
                         bool isValidated = loginVaildation(
-                            editingController.text, passwordController.text);
+                            emailController.text, passwordController.text);
                         if (isValidated) {
-                          bool isLogin = await FirebaseAuthHelper.instance
-                              .login(editingController.text,
-                                  passwordController.text, context);
-                          Navigator.of(context, rootNavigator: true).pop();
-                          if (isLogin) {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomeScreen()),
-                                (route) => false);
-                          }
+                          showLoaderDialog(context);
+                          await login(
+                              email: emailController.text,
+                              password: passwordController.text,
+                              context: context);
                         }
                       }
                     },
@@ -147,7 +163,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: MediaQuery.of(context).size.width,
                   child: OutlineButton(
                       dark: dark,
-                      icon: SvgPicture.asset("assets/icons/google.svg", height: 32.h),
+                      icon: SvgPicture.asset("assets/icons/google.svg",
+                          height: 32.h),
                       title: "Continue with Google",
                       onPressed: () async {
                         if (await FirebaseAuthHelper.instance
