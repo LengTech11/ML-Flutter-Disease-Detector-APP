@@ -1,4 +1,5 @@
 import 'package:disease_detector_app/api_service/client/dio_http_client.dart';
+import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:disease_detector_app/view_model/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,6 +26,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => AppProvider()),
+        ChangeNotifierProvider(create: (_) => UserProfileProvider()),
         // Add more providers as needed
       ],
       child: const MyApp(),
