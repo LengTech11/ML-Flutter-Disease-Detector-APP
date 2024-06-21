@@ -123,7 +123,7 @@ bool loginVaildation(String email, String password) {
   }
 }
 
-bool signUpVaildation(String email, String password) {
+bool signUpVaildation(String email, String password, String confirmPassword) {
   if (email.isEmpty && password.isEmpty) {
     showMessage("All Fields are empty");
     return false;
@@ -132,6 +132,12 @@ bool signUpVaildation(String email, String password) {
     return false;
   } else if (password.isEmpty) {
     showMessage("Password is Empty");
+    return false;
+  } else if (confirmPassword.isEmpty) {
+    showMessage("Please Confirm Password");
+    return false;
+  } else if (password != confirmPassword) {
+    showMessage("Confirm Password is not Correct");
     return false;
   } else {
     return true;
