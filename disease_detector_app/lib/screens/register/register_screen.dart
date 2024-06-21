@@ -61,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       required String firstName,
       required String lastName,
       required String age,
-      required int gender,
+      required int? gender,
       required BuildContext context}) async {
     final dark = HelperFunctions.isDarkMode(context);
     try {
@@ -73,6 +73,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           phonNumber: phoneNumber,
           age: int.parse(age),
           gender: gender);
+
+      HelperFunctions.debug('dfjkdsajfdk');
       AppConstant.USER_TOKEN = response.token;
       if (!context.mounted) return;
       Navigator.pushReplacement(
@@ -163,9 +165,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           width: AppSize.xs,
                         ),
-                        DropDownMenuItem(
-                          controller: genderController,
-                          selected: selectedGender,
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: AppSize.sm, vertical: 6.h),
+                          child: DropdownMenu<GenderLabel>(
+                            width: DeviceUtils.getScreenWidth(context) * 0.4,
+                            controller: genderController,
+                            requestFocusOnTap: false,
+                            label: const Text('Gender'),
+                            onSelected: (GenderLabel? gender) {
+                              setState(() {
+                                DeviceUtils.hideKeyboard(context);
+                                selectedGender = gender;
+                                print(selectedGender);
+                              });
+                            },
+                            dropdownMenuEntries: GenderLabel.values
+                                .map<DropdownMenuEntry<GenderLabel>>(
+                                    (GenderLabel gender) {
+                              return DropdownMenuEntry<GenderLabel>(
+                                value: gender,
+                                label: gender.label,
+                                style: MenuItemButton.styleFrom(),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ],
                     ),
@@ -251,7 +275,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             name: "Sign Up",
                             onPress: () async {
                               if (_formKey.currentState!.validate()) {
-                                final bool isValidated = signUpVaildation(
+                                bool isValidated = signUpVaildation(
                                     emailController.text,
                                     passwordController.text,
                                     confirmController.text);
@@ -265,7 +289,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       firstName: firstNameController.text,
                                       lastName: lastNameController.text,
                                       age: ageController.text,
-                                      gender: selectedGender!.value);
+                                      gender: selectedGender?.value);
                                 }
                               }
                             })),

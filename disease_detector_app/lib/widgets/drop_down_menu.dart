@@ -29,6 +29,7 @@ class _DropDownMenuItemState extends State<DropDownMenuItem> {
           setState(() {
             DeviceUtils.hideKeyboard(context);
             widget.selected = gender;
+            print(widget.selected);
           });
         },
         dropdownMenuEntries: GenderLabel.values

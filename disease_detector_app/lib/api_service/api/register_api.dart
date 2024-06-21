@@ -10,7 +10,7 @@ class RegisterApiService {
       required String phonNumber,
       required String password,
       required int age,
-      required int gender}) async {
+      required int? gender}) async {
     Map<String, dynamic> query = {
       "first_name": firstName,
       "last_name": lastName,
