@@ -1,9 +1,9 @@
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
-import 'package:disease_detector_app/model/login_model/login_response_model.dart';
+import 'package:disease_detector_app/model/register_model/register_response_model.dart';
 import '../base_api_service.dart';
 
 class RegisterApiService {
-  Future<LoginResponseModel> postRegister(
+  Future<RegisterResponseModel> postRegister(
       {required String firstName,
       required String lastName,
       required String email,
@@ -34,7 +34,7 @@ class RegisterApiService {
         },
         data: query,
         onSuccess: (response) {
-          return LoginResponseModel.fromJson(response.data);
+          return RegisterResponseModel.fromJson(response.data);
         });
   }
 }

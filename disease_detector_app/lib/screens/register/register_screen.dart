@@ -1,3 +1,6 @@
+import 'package:disease_detector_app/api_service/api/register_api.dart';
+import 'package:disease_detector_app/config/app_constants/app_constants.dart';
+import 'package:disease_detector_app/model/register_model/register_response_model.dart';
 import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +9,6 @@ import 'package:iconsax/iconsax.dart';
 import '../../config/constants.dart';
 import '../../config/themes/app_size.dart';
 import '../../config/themes/color.dart';
-import '../../firebase_helpers/firebase_auth/firebase_auth_helpers.dart';
 import '../../utils/custom_text_theme/custom_text_theme.dart';
 import '../../utils/helper/helper_function.dart';
 import '../../widgets/my_button.dart';
@@ -21,7 +23,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController editingController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -32,11 +34,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool isPassword = true;
   bool isCnfPassword = true;
 
+  bool isShowLoading = false;
+
+  RegisterApiService registerApiService = RegisterApiService();
+
+  Future<void> register(
+      {required String email,
+      required String password,
+      required String phoneNumber,
+      required String firstName,
+      required String lastName,
+      required int age,
+      required int gender,
+      required BuildContext context}) async {
+    final dark = HelperFunctions.isDarkMode(context);
+    try {
+      RegisterResponseModel response = await registerApiService.postRegister(
+          email: email,
+          password: password,
+          firstName: firstName,
+          lastName: lastName,
+          phonNumber: phoneNumber,
+          age: age,
+          gender: gender);
+      AppConstant.USER_TOKEN = response.token;
+      if (!context.mounted) return;
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+    } catch (e) {
+      HelperFunctions.debug(e.toString());
+      Navigator.pop(context);
+      showErrorMsg(context, e.toString(), dark);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return Scaffold(
-      // key: _formKey,
       body: Form(
         key: _formKey,
         child: Center(
@@ -46,9 +81,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // SizedBox(
-                  //   height: AppSize.appbarHeight,
-                  // ),
                   SizedBox(
                     height: AppSize.lg,
                   ),
@@ -74,7 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(
                         width: DeviceUtils.getScreenWidth(context) * 0.45,
                         child: MyTextFormField(
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.person,
                           ),
                           dark: dark,
@@ -92,7 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         width: DeviceUtils.getScreenWidth(context) * 0.45,
                         child: MyTextFormField(
                           dark: dark,
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.person,
                           ),
                           hint: "Last Name",
@@ -109,9 +141,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   MyTextFormField(
                     dark: dark,
-                    prefixIcon: Icon(Icons.email_rounded),
+                    prefixIcon: const Icon(Icons.email_rounded),
                     hint: "Email",
-                    controller: editingController,
+                    controller: emailController,
                     keyBoardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     visible: false,
@@ -121,11 +153,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   MyTextFormField(
                     dark: dark,
-                    prefixIcon: Icon(Iconsax.password_check),
+                    prefixIcon: const Icon(Iconsax.password_check),
                     visible: isPassword,
                     suffix: isPassword
                         ? IconButton(
-                            icon: Icon(Icons.visibility_off),
+                            icon: const Icon(Icons.visibility_off),
                             onPressed: () {
                               setState(() {
                                 isPassword = !isPassword;
@@ -133,7 +165,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                           )
                         : IconButton(
-                            icon: Icon(Icons.visibility),
+                            icon: const Icon(Icons.visibility),
                             onPressed: () {
                               setState(() {
                                 isPassword = !isPassword;
@@ -150,11 +182,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   MyTextFormField(
                     dark: dark,
-                    prefixIcon: Icon(Iconsax.password_check),
+                    prefixIcon: const Icon(Iconsax.password_check),
                     visible: isCnfPassword,
                     suffix: isCnfPassword
                         ? IconButton(
-                            icon: Icon(Icons.visibility_off),
+                            icon: const Icon(Icons.visibility_off),
                             onPressed: () {
                               setState(() {
                                 isCnfPassword = !isCnfPassword;
@@ -162,7 +194,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                           )
                         : IconButton(
-                            icon: Icon(Icons.visibility),
+                            icon: const Icon(Icons.visibility),
                             onPressed: () {
                               setState(() {
                                 isCnfPassword = !isCnfPassword;
@@ -185,21 +217,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           dark: dark,
                           name: "Sign Up",
                           onPress: () async {
-                            String name =
-                                "${firstNameController.text} ${lastNameController.text}";
-                            bool isValidated = signUpVaildation(
-                                editingController.text,
-                                passwordController.text);
-                            if (isValidated) {
-                              bool isLogined = await FirebaseAuthHelper.instance
-                                  .signUp(name, editingController.text,
-                                      passwordController.text, context);
-                              if (isLogined) {
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomeScreen()),
-                                    (route) => false);
+                            if (_formKey.currentState!.validate()) {
+                              final bool isValidated = signUpVaildation(
+                                  emailController.text,
+                                  passwordController.text,
+                                  confirmController.text);
+                              if (isValidated) {
+                                showLoaderDialog(context);
+                                await register(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                    context: context,
+                                    phoneNumber: '',
+                                    firstName: firstNameController.text,
+                                    lastName: lastNameController.text,
+                                    age: 0,
+                                    gender: 1);
                               }
                             }
                           })),
