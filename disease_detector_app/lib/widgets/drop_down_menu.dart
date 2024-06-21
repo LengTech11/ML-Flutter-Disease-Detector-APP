@@ -9,7 +9,7 @@ class DropDownMenuItem extends StatefulWidget {
   DropDownMenuItem(
       {super.key, required this.controller, required this.selected});
   final TextEditingController controller;
-  Object selected;
+  Object? selected;
 
   @override
   State<DropDownMenuItem> createState() => _DropDownMenuItemState();
@@ -28,7 +28,7 @@ class _DropDownMenuItemState extends State<DropDownMenuItem> {
         onSelected: (GenderLabel? gender) {
           setState(() {
             DeviceUtils.hideKeyboard(context);
-            widget.selected = gender!;
+            widget.selected = gender;
           });
         },
         dropdownMenuEntries: GenderLabel.values

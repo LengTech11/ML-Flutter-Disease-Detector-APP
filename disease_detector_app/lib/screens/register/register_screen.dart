@@ -165,7 +165,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         DropDownMenuItem(
                           controller: genderController,
-                          selected: selectedGender!,
+                          selected: selectedGender,
                         ),
                       ],
                     ),
