@@ -3,7 +3,6 @@ import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/model/register_model/register_response_model.dart';
 import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
-import 'package:disease_detector_app/widgets/drop_down_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -73,12 +72,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           phonNumber: phoneNumber,
           age: int.parse(age),
           gender: gender);
-
-      HelperFunctions.debug('dfjkdsajfdk');
       AppConstant.USER_TOKEN = response.token;
       if (!context.mounted) return;
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          (route) => false);
     } catch (e) {
       HelperFunctions.debug(e.toString());
       Navigator.pop(context);
@@ -177,7 +176,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               setState(() {
                                 DeviceUtils.hideKeyboard(context);
                                 selectedGender = gender;
-                                print(selectedGender);
                               });
                             },
                             dropdownMenuEntries: GenderLabel.values
@@ -264,7 +262,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       textInputAction: TextInputAction.done,
                     ),
                     SizedBox(
-                      height: AppSize.md,
+                      height: AppSize.xl,
                     ),
                     Container(
                         margin: EdgeInsets.symmetric(horizontal: 16.w),
