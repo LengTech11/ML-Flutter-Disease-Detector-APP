@@ -30,6 +30,9 @@ class MyTextFormField extends StatelessWidget {
       padding:
           EdgeInsets.symmetric(horizontal: AppSize.sm, vertical: AppSize.xs),
       child: TextFormField(
+        onTapOutside: (even) {
+          FocusScope.of(context).unfocus();
+        },
         keyboardType: keyBoardType,
         textInputAction: textInputAction,
         maxLines: 1,
