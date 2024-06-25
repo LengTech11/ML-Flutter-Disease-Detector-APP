@@ -1,8 +1,10 @@
+import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
 import '../../config/themes/color.dart';
-import 'onboarding_items.dart';
 import '../login/login_screen.dart';
+import 'onboarding_items.dart';
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
@@ -18,9 +20,10 @@ class _OnboardingViewState extends State<OnboardingView> {
 
   @override
   Widget build(BuildContext context) {
+    final bool dark = HelperFunctions.isDarkMode(context);
     return Scaffold(
       bottomSheet: Container(
-        color: Colors.white,
+        color: dark ? AppColor.dark : AppColor.light,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: isLastPage ? getStarted() : buildBottomNavigation(),
       ),
