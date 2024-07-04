@@ -53,7 +53,7 @@ class User extends Authenticatable
     static public function getUser()
     {
         return self::select('users.*')
-                        ->where('user_role', "=" , 2)
+                        ->where('user_role', "=" , 0)
                         ->orderBy('id', 'desc')
                         ->get();
     }
@@ -66,7 +66,7 @@ class User extends Authenticatable
     static public function getTotalUser()
     {
         return self::select('users.*')
-                        ->where('user_role', "=", 2)
+                        ->where('user_role', "=", 0)
                         ->count();
     }
 

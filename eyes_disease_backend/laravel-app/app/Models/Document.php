@@ -10,6 +10,14 @@ class Document extends Model
 {
     use HasFactory;
 
+    protected $table = 'documents';
+    protected $fillable = ['title', 'description', 'disease_id'];
+
+    public function disease()
+    {
+        return $this->belongsTo(Disease::class);
+    }
+
     static public function getSingleDocument($id)
     {
         return self::find($id);

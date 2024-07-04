@@ -76,6 +76,7 @@
                 </div>
                 <div class="flow-root">
                     <ul role="list" class="divide-y divide-gray-200">
+                        @foreach ($getRecord->take(5) as $value)
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-shrink-0">
@@ -85,97 +86,23 @@
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-sm font-medium text-gray-900 truncate">
-                                        Neil Sims
+                                        {{$value->first_name}} {{$value->last_name}}
                                     </p>
                                     <p class="text-sm text-gray-500 truncate">
-                                        email@windster.com
+                                        {{$value->email}}
                                     </p>
                                 </div>
                                 <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                                    Male
+                                    @if($value->gender == 1)
+                                        Male
+                                    @elseif($value->gender == 2)
+                                        Female
+                                    @else N/A
+                                    @endif
                                 </div>
                             </div>
                         </li>
-                        <li class="py-3 sm:py-4">
-                            <div class="flex items-center space-x-4">
-                                <div class="flex-shrink-0">
-                                    <img class="h-8 w-8 rounded-full"
-                                        src="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0="
-                                        alt="Neil image">
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <p class="text-sm font-medium text-gray-900 truncate">
-                                        Bonnie Green
-                                    </p>
-                                    <p class="text-sm text-gray-500 truncate">
-                                        email@windster.com
-                                    </p>
-                                </div>
-                                <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                                    Female
-                                </div>
-                            </div>
-                        </li>
-                        <li class="py-3 sm:py-4">
-                            <div class="flex items-center space-x-4">
-                                <div class="flex-shrink-0">
-                                    <img class="h-8 w-8 rounded-full"
-                                        src="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0="
-                                        alt="Neil image">
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <p class="text-sm font-medium text-gray-900 truncate">
-                                        Michael Gough
-                                    </p>
-                                    <p class="text-sm text-gray-500 truncate">
-                                        email@windster.com
-                                    </p>
-                                </div>
-                                <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                                    Male
-                                </div>
-                            </div>
-                        </li>
-                        <li class="py-3 sm:py-4">
-                            <div class="flex items-center space-x-4">
-                                <div class="flex-shrink-0">
-                                    <img class="h-8 w-8 rounded-full"
-                                        src="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0="
-                                        alt="Neil image">
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <p class="text-sm font-medium text-gray-900 truncate">
-                                        Thomes Lean
-                                    </p>
-                                    <p class="text-sm text-gray-500 truncate">
-                                        email@windster.com
-                                    </p>
-                                </div>
-                                <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                                    Male
-                                </div>
-                            </div>
-                        </li>
-                        <li class="pt-3 sm:pt-4 pb-0">
-                            <div class="flex items-center space-x-4">
-                                <div class="flex-shrink-0">
-                                    <img class="h-8 w-8 rounded-full"
-                                        src="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0="
-                                        alt="Neil image">
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <p class="text-sm font-medium text-gray-900 truncate">
-                                        Lana Byrd
-                                    </p>
-                                    <p class="text-sm text-gray-500 truncate">
-                                        email@windster.com
-                                    </p>
-                                </div>
-                                <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                                    Male
-                                </div>
-                            </div>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

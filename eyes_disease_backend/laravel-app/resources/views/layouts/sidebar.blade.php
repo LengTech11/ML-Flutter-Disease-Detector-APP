@@ -44,6 +44,18 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href=" {{url('disease/list')}} "
+                            class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                              </svg>
+
+
+
+                            <span class="ml-3 flex-1 whitespace-nowrap">Diseases</span>
+                        </a>
+                    </li>
 
                     <li>
                         <a href=" {{url('document/list')}} "
@@ -55,6 +67,8 @@
                             <span class="ml-3 flex-1 whitespace-nowrap">Documents</span>
                         </a>
                     </li>
+
+
                 </ul>
                 <div class="space-y-2 pt-2">
                     <form method="POST" action="{{ route('logout') }}">

@@ -192,7 +192,7 @@
                                         Title
                                     </th>
                                     <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
-                                        Description
+                                        Disease
                                     </th>
                                     <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                                         Size
@@ -221,7 +221,11 @@
                                                 <a href="{{ asset('storage/document/'.$value->title) }}" class="text-decoration-none text-base font-semibold text-gray-900">{{ $value->title }}</a>
                                             </div>
                                         </td>
-                                        <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900"> {{$value->description}}
+                                        <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
+                                            @php
+                                                $disease = $getDiseaseRecord->firstWhere('id', $value->disease_id);
+                                            @endphp
+                                            {{ $disease ? $disease->title : 'N/A' }}
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
                                             @php
@@ -303,13 +307,19 @@
                                                                     value="{{ old('title', $value->title) }}">
                                                             </div>
                                                             <div class="col-span-6 sm:col-span-3">
-                                                                <label for="description"
-                                                                    class="text-sm font-medium text-gray-900 block mb-2">Description
-                                                                    </label>
-                                                                <input type="text" name="description" id="description"
+                                                                <label class="text-sm font-medium text-gray-900 block mb-2">
+                                                                    Disease</label>
+                                                                <select name="disease_id" id="disease_id"
                                                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                                                    value="{{ old('description', $value->description) }}"
                                                                     >
+                                                                    <option value="" selected>Select Disease</option>
+                                                                    @foreach($getDiseaseRecord as $disease)
+                                                                    <option class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                                                        value="{{ $disease->id }}" @if($value->disease_id == $disease->id) selected @endif>
+                                                                        {{ $disease->title }}
+                                                                    </option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </div>

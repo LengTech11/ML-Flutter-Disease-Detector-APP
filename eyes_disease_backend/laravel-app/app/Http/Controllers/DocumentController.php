@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Document;
+use App\Models\Disease;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,6 +14,7 @@ class DocumentController extends Controller
     {
         $data['getRecord'] = Document::getDocument();
         $data['totalDocument'] = Document::getTotalDocument();
+        $data['getDiseaseRecord'] = Disease::getDisease();
 
         return view('document/list', $data);
     }
@@ -41,6 +43,7 @@ class DocumentController extends Controller
                 $doc->title = $newName;
                 $doc->description = trim($request->description);
             }
+            $doc->disease_id = trim($request->disease_id);
             $doc->save();
             return redirect('document/list');
         }

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\DocumentController;
 
 
@@ -27,6 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/document/list', [DocumentController::class, 'list']);
     Route::post('/document/list', [DocumentController::class, 'import'])->name('import.document');
     Route::get('/document/delete/{id}', [DocumentController::class, 'delete']);
+    Route::get('/disease/list', [DiseaseController::class, 'list']);
+    Route::post('/disease/list', [DiseaseController::class, 'insert']);
+    Route::get('/disease/delete/{id}', [DiseaseController::class, 'delete']);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

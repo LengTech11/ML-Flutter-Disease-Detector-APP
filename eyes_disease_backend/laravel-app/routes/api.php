@@ -22,3 +22,8 @@ Route::group([
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
+
+
+Route::get('/diseases', [ApiController::class, 'showDisease']);
+
+Route::get('/documents', [ApiController::class, 'showDocument']);

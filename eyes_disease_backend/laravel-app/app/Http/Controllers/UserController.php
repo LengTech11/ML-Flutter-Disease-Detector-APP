@@ -4,12 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function list()
+    public function list(Request $request)
     {
-        $data['getRecord'] = User::getUser();
+
+        // $data['getRecord'] = User::select('users.*')
+        //                             ->where('user_role', 0)
+        //                             ->orderBy('id', 'desc')
+        //                             ->paginate(5);
+        $search = $request->input('search');
+        $query = User::select('users.*')
+                        ->where('user_role', 0);
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('first_name', 'like', '%'.$search.'%')
+                    ->orWhere('last_name', 'like', '%'.$search.'%')
+                    ->orWhere('email', 'like', '%'.$search.'%');
+            });
+        }
+        $data['getRecord'] = $query->orderBy('id', 'desc')->paginate(5);
+
         $data['totalUser'] = User::getTotalUser();
 
         return view('user/list', $data);
@@ -30,8 +48,12 @@ class UserController extends Controller
             $user->age = trim($request->age);
             $user->phone_number = trim($request->phone_number);
             $user->gender = trim($request->gender);
-            $user->user_role = 2;
+            $user->password = Hash::make('00000000');
+            $user->user_role = 0;
             $user->save();
+
+            // Set flash message
+            $request->session()->flash('success', 'Account has been saved.');
 
             return redirect('user/list');
         }
@@ -47,13 +69,7 @@ class UserController extends Controller
 
             $user->save();
 
-            return redirect('user/list');
-        }
-        elseif (($request->input('form_type') === 'delete')) {
-            $user = User::getSingleUser($id);
-            $user->delete();
-
-            return redirect('user/list');
+            return redirect('user/list')->with('success', 'Account has been edited.');
         }
     }
 
@@ -62,6 +78,6 @@ class UserController extends Controller
         $user = User::getSingleUser($id);
         $user->delete();
 
-        return redirect('user/list');
+        return redirect('user/list')->with('success', 'Account has been deleted.');
     }
 }
