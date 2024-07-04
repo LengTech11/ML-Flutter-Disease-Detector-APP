@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
                 'age' => $faker->numberBetween(18, 65),
                 'phone_number' => $faker->phoneNumber,
                 'gender' => $faker->randomElement([1, 2]),
-                'user_role' => 2,
+                'user_role' => 0,
                 'password' => Hash::make('password'),
             ]);
         }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Document;
+use App\Models\Disease;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -102,4 +104,25 @@ class ApiController extends Controller
             'data' => $userData,
         ], 200);
     }
+
+    public function showDisease()
+    {
+        $diseases = Disease::select('title', 'description')->get();
+        return response()->json($diseases);
+    }
+
+    public function showDocument()
+    {
+        $documents = Document::with('disease')->get();
+        $documents = $documents->map(function ($document) {
+            return [
+                'file_name' => $document->title,
+                // 'description' => $document->description,
+                'url' => asset('storage/document/' . rawurlencode($document->title)),
+                'disease' => $document->disease ? $document->disease->title : null
+            ];
+        });
+        return response()->json($documents);
+    }
+    
 }
