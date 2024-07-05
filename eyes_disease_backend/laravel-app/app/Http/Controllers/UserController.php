@@ -52,10 +52,7 @@ class UserController extends Controller
             $user->user_role = 0;
             $user->save();
 
-            // Set flash message
-            $request->session()->flash('success', 'Account has been saved.');
-
-            return redirect('user/list');
+            return redirect('user/list')->with('success', 'Account has been saved.');
         }
         elseif ($request->input('form_type') === 'edit') {
 

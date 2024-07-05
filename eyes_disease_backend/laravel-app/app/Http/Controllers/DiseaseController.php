@@ -25,7 +25,7 @@ class DiseaseController extends Controller
             $disease->description = trim($request->description);
             $disease->save();
 
-            return redirect('disease/list');
+            return redirect('disease/list')->with('success', 'Disease has been saved.');
         }
         elseif ($request->input('form_type') === 'edit') {
 
@@ -34,7 +34,7 @@ class DiseaseController extends Controller
             $disease->description = trim($request->description);
 
             $disease->save();
-            return redirect('disease/list');
+            return redirect('disease/list')->with('success', 'Disease has been edited.');
         }
     }
 
@@ -43,6 +43,6 @@ class DiseaseController extends Controller
         $disease = Disease::getSingleDisease($id);
         $disease->delete();
 
-        return redirect('disease/list');
+        return redirect('disease/list')->with('success', 'Disease has been deleted.');
     }
 }

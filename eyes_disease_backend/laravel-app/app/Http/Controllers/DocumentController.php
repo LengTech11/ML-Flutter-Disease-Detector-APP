@@ -31,7 +31,7 @@ class DocumentController extends Controller
                 $doc->title = $filename;
             }
             $doc->save();
-            return redirect('document/list');
+            return redirect('document/list')->with('success', 'Document has been saved.');
         }
         elseif($request->input('form_type') === 'rename')
         {
@@ -45,7 +45,7 @@ class DocumentController extends Controller
             }
             $doc->disease_id = trim($request->disease_id);
             $doc->save();
-            return redirect('document/list');
+            return redirect('document/list')->with('success', 'Document has been edited.');
         }
     }
 
@@ -58,7 +58,7 @@ class DocumentController extends Controller
             File::delete('storage/document/'.$name);
         }
         $doc->delete();
-        return redirect('document/list');
+        return redirect('document/list')->with('success', 'Document has been deleted.');
     }
 
 
