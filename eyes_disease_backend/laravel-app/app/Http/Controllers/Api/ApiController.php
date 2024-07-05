@@ -109,22 +109,30 @@ class ApiController extends Controller
 
     public function showDisease()
     {
-        $diseases = Disease::select('title', 'description')->get();
-        return response()->json($diseases);
+        $diseases = Disease::select('id', 'title', 'description')->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $diseases
+        ], 200);
     }
 
     public function showDocument()
     {
-        $documents = Document::with('disease')->get();
-        $documents = $documents->map(function ($document) {
+        $doc = Document::with('disease')->get();
+        $doc = $doc->map(function ($doc) {
             return [
-                'file_name' => $document->title,
-                // 'description' => $document->description,
-                'url' => asset('storage/document/' . rawurlencode($document->title)),
-                'disease' => $document->disease ? $document->disease->title : null
+                'id' => $doc->id,
+                'file_name' => $doc->title,
+                'url' => asset('storage/document/' . rawurlencode($doc->title)),
+                'disease' => $doc->disease ? $doc->disease->title : null
             ];
         });
-        return response()->json($documents);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $doc
+        ], 200);
     }
 
 }
