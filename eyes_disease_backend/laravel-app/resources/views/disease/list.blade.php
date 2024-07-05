@@ -1,4 +1,5 @@
 @extends('layouts/app')
+@include('message')
 
 @section('content')
     <main>
