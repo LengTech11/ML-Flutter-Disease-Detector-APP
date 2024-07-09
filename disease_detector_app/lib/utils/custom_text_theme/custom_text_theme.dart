@@ -9,12 +9,17 @@ class MyTextTheme {
   static TextTheme lightTextTheme = TextTheme(
     /// headline
     headlineLarge: const TextStyle().copyWith(
-        fontSize: 32.0.sp,
+        fontSize: 48.0.sp,
         fontWeight: FontWeight.bold,
         color: AppColor.dark,
         letterSpacing: 0.2),
     headlineMedium: const TextStyle().copyWith(
-        fontSize: 26.0.sp,
+        fontSize: 40.0.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColor.dark,
+        letterSpacing: 0.2),
+    headlineSmall: const TextStyle().copyWith(
+        fontSize: 33.0.sp,
         fontWeight: FontWeight.w600,
         color: AppColor.dark,
         letterSpacing: 0.2),
@@ -29,11 +34,11 @@ class MyTextTheme {
 
     /// body
     bodyLarge: const TextStyle().copyWith(
-        fontSize: 14.0.sp, fontWeight: FontWeight.w500, color: AppColor.dark),
+        fontSize: 16.0.sp, fontWeight: FontWeight.w600, color: AppColor.dark),
     bodyMedium: const TextStyle().copyWith(
-        fontSize: 14.0.sp, fontWeight: FontWeight.normal, color: AppColor.dark),
+        fontSize: 16.0.sp, fontWeight: FontWeight.normal, color: AppColor.dark),
     bodySmall: const TextStyle().copyWith(
-        fontSize: 14.0.sp, fontWeight: FontWeight.w500, color: AppColor.dark),
+        fontSize: 13.0.sp, fontWeight: FontWeight.w500, color: AppColor.dark),
 
     /// label
     labelLarge: const TextStyle().copyWith(
@@ -42,7 +47,7 @@ class MyTextTheme {
         color: AppColor.black,
         letterSpacing: 0.2),
     labelMedium: const TextStyle().copyWith(
-        fontSize: 14.0.sp,
+        fontSize: 16.0.sp,
         fontWeight: FontWeight.w500,
         color: AppColor.grey,
         letterSpacing: 0.2),
@@ -86,7 +91,7 @@ class MyTextTheme {
         color: AppColor.white,
         letterSpacing: 0.2),
     labelMedium: const TextStyle().copyWith(
-        fontSize: 14.0.sp,
+        fontSize: 16.0.sp,
         fontWeight: FontWeight.w500,
         color: AppColor.lightGrey,
         letterSpacing: 0.2),

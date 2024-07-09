@@ -6,6 +6,7 @@ import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+
 import '../../config/constants.dart';
 import '../../config/themes/app_size.dart';
 import '../../config/themes/color.dart';
@@ -168,10 +169,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: AppSize.sm, vertical: 6.h),
                           child: DropdownMenu<GenderLabel>(
+                            enableSearch:false,
+                            // expandedInsets: EdgeInsets.symmetric(vertical: 20),
+                            inputDecorationTheme: InputDecorationTheme(
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(35.r),
+                                borderSide: BorderSide(
+                                  color: AppColor.primary,
+                                  width: 2.w,
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(35.r),
+                                borderSide: BorderSide(
+                                  color: AppColor.primary,
+                                  width: 2.w,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(35.r),
+                                borderSide: BorderSide.none,
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(35.r),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: Theme.of(context).colorScheme.surface,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(35.r),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                            menuStyle: MenuStyle(
+                              backgroundColor: WidgetStateProperty.all(
+                                  Theme.of(context).colorScheme.surface),
+                            ),
                             width: DeviceUtils.getScreenWidth(context) * 0.4,
                             controller: genderController,
                             requestFocusOnTap: false,
-                            label: const Text('Gender'),
+                            label: Text(
+                              'Gender',
+                              style: dark
+                                  ? MyTextTheme.darkTextTheme.labelMedium
+                                  : MyTextTheme.lightTextTheme.labelMedium,
+                            ),
+                            textStyle: dark
+                                ? MyTextTheme.darkTextTheme.labelLarge
+                                : MyTextTheme.lightTextTheme.labelLarge,
                             onSelected: (GenderLabel? gender) {
                               setState(() {
                                 DeviceUtils.hideKeyboard(context);

@@ -33,7 +33,8 @@ class HelperFunctions {
     return Theme.of(context).brightness == Brightness.dark;
   }
 
-  static void debug(String titile){
-    print("+++++++++++++++++++++++++++++++++ ${titile} +++++++++++++++++++++++++++++++++");
+  static void debug(String titile) {
+    print(
+        '+++++++++++++++++++++++++++++++++ titile +++++++++++++++++++++++++++++++++');
   }
 }
