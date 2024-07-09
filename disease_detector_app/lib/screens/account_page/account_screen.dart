@@ -1,16 +1,15 @@
+import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
-import 'package:disease_detector_app/view_model/provider.dart';
-import 'package:disease_detector_app/screens/account_page/widget/change_password.dart';
+import 'package:disease_detector_app/config/themes/theme.dart';
 import 'package:disease_detector_app/screens/account_page/widget/logout_button.dart';
 import 'package:disease_detector_app/screens/account_page/widget/profile_menu_item.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
+import 'package:disease_detector_app/view_model/provider.dart';
+import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:disease_detector_app/config/constants.dart';
-import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:disease_detector_app/config/themes/theme.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -45,8 +44,8 @@ class _AccountScreenState extends State<AccountScreen> {
           SizedBox(
             height: 16.h,
           ),
-          const ChangePasswordButton(),
-          SizedBox(height: 16.h),
+          // const ChangePasswordButton(),
+          // SizedBox(height: 16.h),
           const LogoutButton(),
         ],
       ),
