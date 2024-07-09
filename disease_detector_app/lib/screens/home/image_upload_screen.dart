@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
+import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/material.dart';
 
 class ImageUploadScreen extends StatelessWidget {
   ImageUploadScreen({Key? key}) : super(key: key);
@@ -14,15 +16,15 @@ class ImageUploadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFAFAFA),
+      // backgroundColor: ,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: buildContent(),
+        child: buildContent(context),
       ),
     );
   }
 
-  Widget buildContent() {
+  Widget buildContent(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
@@ -30,9 +32,9 @@ class ImageUploadScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 65),
-          buildUploadImageContent(),
+          buildUploadImageContent(context),
           const SizedBox(height: 20),
-          buildDescription(),
+          buildDescription(context),
           const SizedBox(height: 20),
           buildProductList(),
         ],
@@ -40,19 +42,22 @@ class ImageUploadScreen extends StatelessWidget {
     );
   }
 
-  Widget buildUploadImageContent() {
+  Widget buildUploadImageContent(BuildContext context) {
+    final dark = HelperFunctions.isDarkMode(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const ListTile(
-          leading: Icon(
+        ListTile(
+          leading: const Icon(
             Icons.note_alt_outlined,
             size: 35,
             color: Color(0xFF3F51B5),
           ),
           title: Text(
             'Please upload an image of the eye disease here',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: dark
+                ? MyTextTheme.darkTextTheme.labelLarge
+                : MyTextTheme.lightTextTheme.labelLarge,
           ),
         ),
         const SizedBox(height: 20),
@@ -64,7 +69,7 @@ class ImageUploadScreen extends StatelessWidget {
             height: 260,
             width: 260,
             color: Colors.white,
-            child: buildUploadImageButton(),
+            child: buildUploadImageButton(context),
           ),
         ),
         const SizedBox(height: 30),
@@ -72,14 +77,14 @@ class ImageUploadScreen extends StatelessWidget {
     );
   }
 
-  Widget buildUploadImageButton() {
+  Widget buildUploadImageButton(BuildContext context) {
     return Stack(
       children: [
         Center(
           child: Container(
             height: 260,
             width: 260,
-            color: Colors.grey[200],
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
         const Positioned(
@@ -95,10 +100,13 @@ class ImageUploadScreen extends StatelessWidget {
     );
   }
 
-  Widget buildDescription() {
+  Widget buildDescription(BuildContext context) {
+    final dark = HelperFunctions.isDarkMode(context);
     return Text(
       'After uploading the image, you can view information about various eye diseases below:',
-      style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+      style: dark
+          ? MyTextTheme.darkTextTheme.labelLarge
+          : MyTextTheme.lightTextTheme.labelLarge,
     );
   }
 
