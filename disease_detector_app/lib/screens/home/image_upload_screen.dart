@@ -1,5 +1,4 @@
 import 'package:disease_detector_app/provider/disease_provider.dart';
-import 'package:disease_detector_app/screens/view_pdf_screen/view_pdf_screen.dart';
 import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -100,8 +99,8 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         Center(
           child: InkWell(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PdfScreen(id: 1)));
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => PdfScreen(id: 1)));
             },
             child: Container(
               height: 260,
@@ -138,14 +137,14 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
       builder: (context, value, _) {
         return ListView.builder(
           shrinkWrap: true,
-          itemCount: value.dis?.data.length,
+          itemCount: value.dis!.data.length,
           itemBuilder: (context, index) {
-            final dis = value.dis?.data[index];
+            final dis = value.dis!.data[index];
             return Card(
               child: ListTile(
                 leading: const Icon(Icons.remove_red_eye_sharp,
                     color: Color(0xFF3F51B5)),
-                title: Text(dis!.title),
+                title: Text(dis.title),
                 subtitle: Text(dis.description),
                 onTap: () {
                   showModalBottomSheet(
