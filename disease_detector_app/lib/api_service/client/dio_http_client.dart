@@ -27,4 +27,4 @@ class BaseHttpClient {
 }
 
 const JsonDecoder decoder = JsonDecoder();
-const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+const JsonEncoder encoder = JsonEncoder.withIndent('');
