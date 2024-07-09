@@ -1,4 +1,6 @@
 import 'package:disease_detector_app/api_service/client/dio_http_client.dart';
+import 'package:disease_detector_app/provider/disease_provider.dart';
+import 'package:disease_detector_app/provider/document_provider.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:disease_detector_app/view_model/provider.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => AppProvider()),
         ChangeNotifierProvider(create: (_) => UserProfileProvider()),
+        ChangeNotifierProvider(create: (_) => DiseaseProvider()),
+        ChangeNotifierProvider(create: (_) => DocumentProvider()),
         // Add more providers as needed
       ],
       child: const MyApp(),

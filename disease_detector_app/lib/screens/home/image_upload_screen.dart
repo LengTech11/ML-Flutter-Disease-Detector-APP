@@ -1,10 +1,27 @@
+import 'package:disease_detector_app/provider/disease_provider.dart';
+import 'package:disease_detector_app/screens/view_pdf_screen/view_pdf_screen.dart';
 import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ImageUploadScreen extends StatelessWidget {
+class ImageUploadScreen extends StatefulWidget {
   ImageUploadScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ImageUploadScreen> createState() => _ImageUploadScreenState();
+}
+
+class _ImageUploadScreenState extends State<ImageUploadScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    final provider = Provider.of<DiseaseProvider>(context, listen: false);
+    provider.fetchDocument();
+  }
 
   final List<String> products = [
     'glaucoma',
@@ -36,7 +53,7 @@ class ImageUploadScreen extends StatelessWidget {
           const SizedBox(height: 20),
           buildDescription(context),
           const SizedBox(height: 20),
-          buildProductList(),
+          buildProductList(context),
         ],
       ),
     );
@@ -81,10 +98,16 @@ class ImageUploadScreen extends StatelessWidget {
     return Stack(
       children: [
         Center(
-          child: Container(
-            height: 260,
-            width: 260,
-            color: Theme.of(context).colorScheme.secondary,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PdfScreen(id: 1)));
+            },
+            child: Container(
+              height: 260,
+              width: 260,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
           ),
         ),
         const Positioned(
@@ -110,75 +133,85 @@ class ImageUploadScreen extends StatelessWidget {
     );
   }
 
-  Widget buildProductList() {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: products.length,
-      itemBuilder: (context, index) {
-        return Card(
-          child: ListTile(
-            leading: const Icon(Icons.remove_red_eye_sharp,
-                color: Color(0xFF3F51B5)),
-            title: Text(products[index]),
-            subtitle: Text('This is a description of ${products[index]}.'),
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                builder: (context) => DraggableScrollableSheet(
-                  initialChildSize: 0.5, // Half screen on initial display
-                  minChildSize: 0.3, // Minimum screen size
-                  maxChildSize: 1.0, // Full screen on drag
-                  expand: false, // Don't expand automatically
-                  builder: (context, scrollController) {
-                    return SingleChildScrollView(
-                      controller: scrollController,
-                      child: Container(
-                        padding: EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 16.0),
-                            Text(
-                              'This is a bottom sheet',
-                              style: TextStyle(fontSize: 24.0),
+  Widget buildProductList(BuildContext context) {
+    return Consumer<DiseaseProvider>(
+      builder: (context, value, _) {
+        return ListView.builder(
+          shrinkWrap: true,
+          itemCount: value.dis?.data.length,
+          itemBuilder: (context, index) {
+            final dis = value.dis?.data[index];
+            return Card(
+              child: ListTile(
+                leading: const Icon(Icons.remove_red_eye_sharp,
+                    color: Color(0xFF3F51B5)),
+                title: Text(dis!.title),
+                subtitle: Text(dis.description),
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => DraggableScrollableSheet(
+                      initialChildSize: 0.5, // Half screen on initial display
+                      minChildSize: 0.3, // Minimum screen size
+                      maxChildSize: 1.0, // Full screen on drag
+                      expand: false, // Don't expand automatically
+                      builder: (context, scrollController) {
+                        return SingleChildScrollView(
+                          controller: scrollController,
+                          child: Container(
+                            padding: EdgeInsets.all(16.0),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 16.0),
+                                Text(
+                                  'This is a bottom sheet',
+                                  style: TextStyle(fontSize: 24.0),
+                                ),
+                                SizedBox(height: 16.0),
+                                Text(
+                                  'You can pull this sheet to the top to expand it to full screen.',
+                                  style: TextStyle(fontSize: 16.0),
+                                ),
+                                SizedBox(height: 16.0),
+                                Container(
+                                  height: 200,
+                                  color: Colors.blue[100],
+                                  child:
+                                      Center(child: Text('Scrollable content')),
+                                ),
+                                Container(
+                                  height: 200,
+                                  color: Colors.blue[200],
+                                  child:
+                                      Center(child: Text('Scrollable content')),
+                                ),
+                                Container(
+                                  height: 200,
+                                  color: Colors.blue[300],
+                                  child:
+                                      Center(child: Text('Scrollable content')),
+                                ),
+                                Container(
+                                  height: 200,
+                                  color: Colors.blue[400],
+                                  child:
+                                      Center(child: Text('Scrollable content')),
+                                ),
+                              ],
                             ),
-                            SizedBox(height: 16.0),
-                            Text(
-                              'You can pull this sheet to the top to expand it to full screen.',
-                              style: TextStyle(fontSize: 16.0),
-                            ),
-                            SizedBox(height: 16.0),
-                            Container(
-                              height: 200,
-                              color: Colors.blue[100],
-                              child: Center(child: Text('Scrollable content')),
-                            ),
-                            Container(
-                              height: 200,
-                              color: Colors.blue[200],
-                              child: Center(child: Text('Scrollable content')),
-                            ),
-                            Container(
-                              height: 200,
-                              color: Colors.blue[300],
-                              child: Center(child: Text('Scrollable content')),
-                            ),
-                            Container(
-                              height: 200,
-                              color: Colors.blue[400],
-                              child: Center(child: Text('Scrollable content')),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
-          ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            );
+          },
         );
       },
+      // child: ,
     );
   }
 }
