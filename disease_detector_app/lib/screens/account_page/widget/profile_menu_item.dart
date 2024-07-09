@@ -13,7 +13,7 @@ class profileInfo extends StatefulWidget {
 
 // ignore: camel_case_types
 class _profileInfoState extends State<profileInfo> {
-  String noImg = "https://i.ibb.co/X3WRYSK/FB-IMG-1711252077139.jpg";
+  String noImg = "assets/images/blank_profile.jpg";
 
   @override
   void initState() {
@@ -53,8 +53,8 @@ class _profileInfoState extends State<profileInfo> {
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                        "${noImg}",
+                                      image: AssetImage(
+                                        noImg,
                                       )),
                                   borderRadius: BorderRadius.circular(200),
                                 ),
@@ -75,7 +75,7 @@ class _profileInfoState extends State<profileInfo> {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(40.r),
-                      child: Image.network(
+                      child: Image.asset(
                         noImg,
                         fit: BoxFit.cover,
                       ),
