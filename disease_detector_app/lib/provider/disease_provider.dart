@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class DiseaseProvider extends ChangeNotifier {
   DiseaseModel? dis;
   DiseaseModel? get _dis => dis;
-  Future<void> fetchDocument() async {
+  Future<void> fetchDisease() async {
     final response = await DiseaseApiService().getDiseases();
     if (response.data.isNotEmpty) {
       dis = response;
