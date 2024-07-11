@@ -1,4 +1,6 @@
 import 'dart:io';
+
+import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
 import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
@@ -9,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 
 class ImageUploadScreen extends StatefulWidget {
-  ImageUploadScreen({Key? key}) : super(key: key);
+  const ImageUploadScreen({super.key});
 
   @override
   State<ImageUploadScreen> createState() => _ImageUploadScreenState();
@@ -39,6 +41,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         await _predictDisease();
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error picking image: $e');
     }
   }
@@ -56,14 +59,14 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         'file': await MultipartFile.fromFile(_image!.path),
       });
       final response =
-          await dio.post('http://127.0.0.1:5000/predict', data: formData);
+          await dio.post('http://192.168.1.195:5001/predict', data: formData);
 
       if (response.statusCode == 200) {
         setState(() {
           _predictedClass = response.data['Predicted Class'].toString();
           _confidence = response.data['Confidence'];
         });
-        _showPredictionBottomSheet();
+        _showPredictionBottomSheet(context);
       } else {
         setState(() {
           _predictedClass = 'Failed to predict';
@@ -71,6 +74,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         });
       }
     } catch (e) {
+      print('Error predicting disease: $e');
       setState(() {
         _predictedClass = 'Failed to predict';
         _confidence = null;
@@ -82,52 +86,153 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     }
   }
 
-  void _showPredictionBottomSheet() {
+  void _showPredictionBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      clipBehavior: Clip.none,
       builder: (context) => DraggableScrollableSheet(
         initialChildSize: 0.3, // Half screen on initial display
         minChildSize: 0.3, // Minimum screen size
-        maxChildSize: 1.0, // Full screen on drag
+        maxChildSize: 0.8, // Full screen on drag
         expand: false, // Don't expand automatically
         builder: (context, scrollController) {
+          final dark = HelperFunctions.isDarkMode(context);
           return Container(
-            width: double.infinity, // Ensure sheet spans entire width
-            alignment: Alignment.center, // Center content horizontally
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Prediction Result',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+            child: Stack(
+              children: <Widget>[
+                Positioned(
+                  top: 10,
+                  left: MediaQuery.of(context).size.width / 2 - 25,
+                  child: Container(
+                    alignment: Alignment.topCenter,
+                    height: 5,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[400],
+                      borderRadius: BorderRadius.circular(5),
                     ),
                   ),
-                  SizedBox(height: 16),
-                  Text(
-                    'Class: ${_predictedClass ?? 'Unknown'}',
-                    style: TextStyle(fontSize: 18),
+                ),
+                SingleChildScrollView(
+                  controller: scrollController,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 16.0,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Prediction Result',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Disease: ',
+                                style: dark
+                                    ? MyTextTheme.darkTextTheme.titleLarge
+                                    : MyTextTheme.lightTextTheme.titleLarge,
+                              ),
+                              TextSpan(
+                                text: _predictedClass ?? 'Unknown',
+                                style: dark
+                                    ? MyTextTheme.darkTextTheme.titleLarge
+                                    : MyTextTheme.lightTextTheme.titleLarge,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          color: Colors.grey,
+                          height: 20,
+                          thickness: 2,
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Confidence: ',
+                                    style: dark
+                                        ? MyTextTheme.darkTextTheme.titleLarge
+                                        : MyTextTheme.lightTextTheme.titleLarge,
+                                  ),
+                                  TextSpan(
+                                    text: _confidence != null
+                                        ? '${(_confidence! * 100).toStringAsFixed(2)}%'
+                                        : 'N/A',
+                                    style: dark
+                                        ? MyTextTheme.darkTextTheme.titleLarge
+                                        : MyTextTheme.lightTextTheme.titleLarge,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: LinearProgressIndicator(
+                                value: _confidence ?? 0,
+                                backgroundColor: Colors.grey[200],
+                                color: Colors.blue,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        const Divider(
+                          color: Colors.grey,
+                          height: 20,
+                          thickness: 2,
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Confidence: ${_confidence != null ? (_confidence! * 100).toStringAsFixed(2) + '%' : 'N/A'}',
-                    style: TextStyle(fontSize: 18),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColor.primary,
+                        minimumSize: const Size(double.infinity, 50),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Close',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('Close'),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
@@ -157,7 +262,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
           const SizedBox(height: 20),
           buildDescription(context),
           const SizedBox(height: 20),
-          if (_isLoading) Center(child: CircularProgressIndicator()),
+          if (_isLoading) const Center(child: CircularProgressIndicator()),
         ],
       ),
     );
@@ -177,8 +282,8 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
           title: Text(
             'Please upload an image of the eye disease here',
             style: dark
-                ? MyTextTheme.darkTextTheme.labelLarge
-                : MyTextTheme.lightTextTheme.labelLarge,
+                ? MyTextTheme.darkTextTheme.titleLarge
+                : MyTextTheme.lightTextTheme.titleLarge,
           ),
         ),
         const SizedBox(height: 20),
@@ -239,8 +344,8 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     return Text(
       'After uploading the image, you can view information about various eye diseases below:',
       style: dark
-          ? MyTextTheme.darkTextTheme.labelLarge
-          : MyTextTheme.lightTextTheme.labelLarge,
+          ? MyTextTheme.darkTextTheme.titleLarge
+          : MyTextTheme.lightTextTheme.titleLarge,
     );
   }
 }
