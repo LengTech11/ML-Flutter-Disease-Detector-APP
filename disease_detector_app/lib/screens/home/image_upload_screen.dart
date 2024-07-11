@@ -1,14 +1,16 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
 import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
+import 'package:disease_detector_app/widgets/eca_listtile.dart';
+import 'package:disease_detector_app/widgets/eca_show_btm_sheet.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
 
 class ImageUploadScreen extends StatefulWidget {
   const ImageUploadScreen({super.key});
@@ -28,7 +30,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   void initState() {
     super.initState();
     final provider = Provider.of<DiseaseProvider>(context, listen: false);
-    provider.fetchDocument();
+    provider.fetchDisease();
   }
 
   Future<void> _pickImage() async {
@@ -59,13 +61,14 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         'file': await MultipartFile.fromFile(_image!.path),
       });
       final response =
-          await dio.post('http://192.168.1.195:5001/predict', data: formData);
+          await dio.post('http://10.0.2.2:5000/predict', data: formData);
 
       if (response.statusCode == 200) {
         setState(() {
           _predictedClass = response.data['Predicted Class'].toString();
           _confidence = response.data['Confidence'];
         });
+        // ignore: use_build_context_synchronously
         _showPredictionBottomSheet(context);
       } else {
         setState(() {
@@ -250,6 +253,40 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     );
   }
 
+  Widget buildListDiseases(BuildContext context) {
+    return Consumer<DiseaseProvider>(
+      builder: (context, value, _) {
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          itemCount: value.dis?.data.length,
+          itemBuilder: (BuildContext context, int index) {
+            var disease = value.dis?.data[index];
+            if (disease == null) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: EcaListtile(
+                  leading: const Icon(
+                    Icons.visibility,
+                    color: AppColor.primary,
+                  ),
+                  title: Text(disease.title),
+                  onTap: () => ECABtmSheet.ecaShowBtmSheet(
+                      context: context,
+                      title: disease.title,
+                      description: disease.description),
+                ),
+              );
+            }
+          },
+        );
+      },
+      // child: ,
+    );
+  }
+
   Widget buildContent(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -261,6 +298,8 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
           buildUploadImageContent(context),
           const SizedBox(height: 20),
           buildDescription(context),
+          const SizedBox(height: 20),
+          buildListDiseases(context),
           const SizedBox(height: 20),
           if (_isLoading) const Center(child: CircularProgressIndicator()),
         ],
