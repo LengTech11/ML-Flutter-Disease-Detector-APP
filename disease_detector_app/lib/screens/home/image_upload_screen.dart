@@ -256,32 +256,38 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   Widget buildListDiseases(BuildContext context) {
     return Consumer<DiseaseProvider>(
       builder: (context, value, _) {
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          itemCount: value.dis?.data.length,
-          itemBuilder: (BuildContext context, int index) {
-            var disease = value.dis?.data[index];
-            if (disease == null) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: EcaListtile(
-                  leading: const Icon(
-                    Icons.visibility,
-                    color: AppColor.primary,
+        if (value.dis!.data.isEmpty) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemCount: value.dis?.data.length,
+            itemBuilder: (BuildContext context, int index) {
+              var disease = value.dis?.data[index];
+              if (disease == null) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: EcaListtile(
+                    leading: const Icon(
+                      Icons.visibility,
+                      color: AppColor.primary,
+                    ),
+                    title: Text(disease.title),
+                    onTap: () => ECABtmSheet.ecaShowBtmSheet(
+                        context: context,
+                        title: disease.title,
+                        description: disease.description),
                   ),
-                  title: Text(disease.title),
-                  onTap: () => ECABtmSheet.ecaShowBtmSheet(
-                      context: context,
-                      title: disease.title,
-                      description: disease.description),
-                ),
-              );
-            }
-          },
-        );
+                );
+              }
+            },
+          );
+        }
       },
       // child: ,
     );
