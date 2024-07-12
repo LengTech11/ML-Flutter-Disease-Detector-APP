@@ -7,7 +7,7 @@ class DiseaseProvider extends ChangeNotifier {
   DiseaseModel? get _dis => dis;
   Future<void> fetchDisease() async {
     final response = await DiseaseApiService().getDiseases();
-    if (response.data.isNotEmpty) {
+    if (response.data != null) {
       dis = response;
     } else {
       dis = null;

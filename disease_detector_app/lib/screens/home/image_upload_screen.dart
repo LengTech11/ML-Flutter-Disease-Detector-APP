@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
+import 'package:disease_detector_app/provider/document_provider.dart';
 import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/eca_listtile.dart';
@@ -256,7 +257,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   Widget buildListDiseases(BuildContext context) {
     return Consumer<DiseaseProvider>(
       builder: (context, value, _) {
-        if (value.dis!.data.isEmpty) {
+        if (value.dis!.data!.isEmpty) {
           return const Center(
             child: CircularProgressIndicator(),
           );
@@ -264,24 +265,34 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
           return ListView.builder(
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
-            itemCount: value.dis?.data.length,
+            itemCount: value.dis?.data!.length,
             itemBuilder: (BuildContext context, int index) {
-              var disease = value.dis?.data[index];
+              var disease = value.dis?.data![index];
               if (disease == null) {
                 return const Center(child: CircularProgressIndicator());
               } else {
+                final documentProvider =
+                    Provider.of<DocumentProvider>(context, listen: false);
+                documentProvider.fetchDocument(disease.title);
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: EcaListtile(
-                    leading: const Icon(
-                      Icons.visibility,
-                      color: AppColor.primary,
-                    ),
-                    title: Text(disease.title),
-                    onTap: () => ECABtmSheet.ecaShowBtmSheet(
-                        context: context,
-                        title: disease.title,
-                        description: disease.description),
+                  child: Consumer<DocumentProvider>(
+                    builder: (context, doc, _) {
+                      return EcaListtile(
+                        leading: const Icon(
+                          Icons.visibility,
+                          color: AppColor.primary,
+                        ),
+                        title: Text(disease.title),
+                        onTap: () => ECABtmSheet.ecaShowBtmSheet(
+                            context: context,
+                            title: disease.title,
+                            description: disease.description,
+                            fileUrl: doc.doc?.url,
+                            fileName: disease.title),
+                      );
+                    },
+                    // child: ,
                   ),
                 );
               }

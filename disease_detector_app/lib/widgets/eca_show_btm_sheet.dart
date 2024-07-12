@@ -1,8 +1,11 @@
 import 'package:disease_detector_app/config/constants.dart';
+import 'package:disease_detector_app/screens/pdf_screen/pdf_screen.dart';
 import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
+import 'package:disease_detector_app/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ECABtmSheet {
   ECABtmSheet._();
@@ -11,7 +14,8 @@ class ECABtmSheet {
       {required BuildContext context,
       required String title,
       String? description,
-      String? file}) {
+      String? fileUrl,
+      String? fileName}) {
     showModalBottomSheet(
       showDragHandle: true,
       useSafeArea: true,
@@ -51,6 +55,46 @@ class ECABtmSheet {
                         : MyTextTheme.lightTextTheme.titleMedium,
                     textAlign: TextAlign.justify,
                   ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    'Document',
+                    style: dark
+                        ? MyTextTheme.darkTextTheme.titleLarge
+                        : MyTextTheme.lightTextTheme.titleLarge,
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      printMe('file url: $fileUrl');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PDFScreen(
+                                    url: fileUrl!,
+                                    title: fileName,
+                                  )));
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset('assets/icons/PDF_file_icon.svg'),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Text(
+                          fileName!,
+                          style: dark
+                              ? MyTextTheme.darkTextTheme.bodyMedium
+                              : MyTextTheme.lightTextTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

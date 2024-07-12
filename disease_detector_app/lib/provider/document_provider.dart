@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 
 class DocumentProvider extends ChangeNotifier {
   Document? doc;
-  Document? get _doc => doc;
-  Future<void> fetchDocument(int id) async {
+  Future<void> fetchDocument(String name) async {
     final response = await DocumentApiService().getDocument();
     if (response.data.isNotEmpty) {
       for (int i = 0; i < response.data.length; i++) {
-        if (id == response.data[i].id) {
+        if (name == response.data[i].fileName) {
           doc = response.data[i];
         }
       }
