@@ -27,3 +27,8 @@ Route::group([
 Route::get('/diseases', [ApiController::class, 'showDisease']);
 
 Route::get('/documents', [ApiController::class, 'showDocument']);
+
+Route::post('/change-password', [ApiController::class, 'changePassword'])->middleware('auth:sanctum');
+
+
+

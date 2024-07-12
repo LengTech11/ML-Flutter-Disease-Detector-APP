@@ -135,4 +135,49 @@ class ApiController extends Controller
         ], 200);
     }
 
+    public function changePassword(Request $request)
+    {
+        try
+        {
+            $validator = Validator::make($request->all(), [
+                'old_password' => 'required',
+                'password' => 'required|string|min:8',
+                'confirm_password' => 'required|same:password'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Validation error',
+                    'errors' => $validator->errors(),
+                ], 422);
+            }
+
+            $user = $request->user();
+            if(Hash::check($request->old_password, $user->password))
+            {
+                $user->update([
+                    'password'=> Hash::make($request->password)
+                ]);
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Password Successfully Updated',
+                ], 200);
+            }
+            else
+            {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Old password do not matched',
+                ], 400);
+            }
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
 }
