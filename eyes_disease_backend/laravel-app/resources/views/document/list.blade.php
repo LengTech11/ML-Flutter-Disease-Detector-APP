@@ -230,8 +230,13 @@
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
                                             @php
-                                                $fileSize = filesize("storage/document/".$value->title);
-                                                $formattedSize = app('App\Http\Controllers\DocumentController')->formatFileSize($fileSize);
+                                                $file_path = public_path('storage/document/' . $value->title);
+                                                if (file_exists($file_path)) {
+                                                    $fileSize = filesize($file_path);
+                                                    $formattedSize = app('App\Http\Controllers\DocumentController')->formatFileSize($fileSize);
+                                                } else {
+                                                    $formattedSize = "File not found";
+                                                }
                                             @endphp
                                             {{ $formattedSize }}
                                         </td>

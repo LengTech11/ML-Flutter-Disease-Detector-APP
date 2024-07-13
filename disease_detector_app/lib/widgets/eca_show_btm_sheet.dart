@@ -23,8 +23,8 @@ class ECABtmSheet {
       isScrollControlled: true,
       clipBehavior: Clip.none,
       builder: (context) => DraggableScrollableSheet(
-        initialChildSize: 0.3, // Half screen on initial display
-        minChildSize: 0.3, // Minimum screen size
+        initialChildSize: 0.5, // Half screen on initial display
+        minChildSize: 0.5, // Minimum screen size
         maxChildSize: 0.8,
         expand: false,
         builder: (context, scrollController) {
@@ -74,7 +74,7 @@ class ECABtmSheet {
                           context,
                           MaterialPageRoute(
                               builder: (context) => PDFScreen(
-                                    url: fileUrl!,
+                                    url: fileUrl ?? 'none',
                                     title: fileName,
                                   )));
                     },

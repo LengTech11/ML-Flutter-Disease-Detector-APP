@@ -8,8 +8,12 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 
 class PDFScreen extends StatefulWidget {
-  const PDFScreen(
-      {super.key, this.path, required this.url, required this.title});
+  const PDFScreen({
+    super.key,
+    this.path,
+    required this.url,
+    required this.title,
+  });
   final String url, title;
   final String? path;
 
@@ -31,12 +35,11 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     List<String> parts = widget.url.split('/');
     String fileName = parts.last;
 
-    downloadAndSavePdf(fileName, widget.title).then((f) {
+    downloadAndSavePdf(widget.url, fileName).then((f) {
       setState(() {
         pathPDF = f.path;
       });
@@ -54,7 +57,9 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
         return file;
       }
 
-      final response = await Dio().download(widget.url, filePath);
+      print('URL: ${widget.url}');
+      final response = await Dio()
+          .download(widget.url, filePath); // Use url instead of widget.url
       if (response.statusCode == 200) {
         return file;
       } else {

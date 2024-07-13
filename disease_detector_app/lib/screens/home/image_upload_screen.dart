@@ -62,7 +62,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         'file': await MultipartFile.fromFile(_image!.path),
       });
       final response =
-          await dio.post('http://10.0.2.2:5000/predict', data: formData);
+          await dio.post('http://0.0.0.0:5001/predict', data: formData);
 
       if (response.statusCode == 200) {
         setState(() {
@@ -190,6 +190,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                                 ],
                               ),
                             ),
+                            const SizedBox(height: 30),
                             Expanded(
                               child: LinearProgressIndicator(
                                 value: _confidence ?? 0,
@@ -300,7 +301,6 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
           );
         }
       },
-      // child: ,
     );
   }
 
