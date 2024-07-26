@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:disease_detector_app/config/app_config/app_config.dart';
+import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
 import 'package:disease_detector_app/provider/document_provider.dart';
+import 'package:disease_detector_app/screens/validate/success_screen.dart';
 import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/eca_listtile.dart';
@@ -44,8 +47,9 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         await _predictDisease();
       }
     } catch (e) {
-      // ignore: avoid_print
-      print('Error picking image: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error picking image: $e')),
+      );
     }
   }
 
@@ -61,8 +65,11 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
       final formData = FormData.fromMap({
         'file': await MultipartFile.fromFile(_image!.path),
       });
-      final response =
-          await dio.post('http://0.0.0.0:5001/predict', data: formData);
+
+      final response = await dio.post(
+        AppConfig.predictApiUrl,
+        data: formData,
+      );
 
       if (response.statusCode == 200) {
         setState(() {
@@ -90,16 +97,59 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     }
   }
 
+  Future<bool> savePrediction(String predictedClass, double confidence) async {
+    const String apiUrl = 'http://0.0.0.0:8000/api/predictions';
+
+    String? token = AppConstant.USER_TOKEN;
+
+    if (token == null) {
+      print('User is not authenticated');
+      return false;
+    }
+
+    try {
+      final dio = Dio();
+      final formData = FormData.fromMap({
+        'predicted_class': predictedClass,
+        'confidence': confidence,
+        'image':
+            await MultipartFile.fromFile(_image!.path, filename: 'image.jpg'),
+      });
+
+      final response = await dio.post(
+        apiUrl,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+        data: formData,
+      );
+
+      if (response.statusCode == 200) {
+        print('Prediction saved successfully');
+        return true;
+      } else {
+        print('Failed to save prediction: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      print('Error saving prediction: $e');
+      return false;
+    }
+  }
+
   void _showPredictionBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       clipBehavior: Clip.none,
       builder: (context) => DraggableScrollableSheet(
-        initialChildSize: 0.3, // Half screen on initial display
-        minChildSize: 0.3, // Minimum screen size
-        maxChildSize: 0.8, // Full screen on drag
-        expand: false, // Don't expand automatically
+        initialChildSize: 0.3,
+        minChildSize: 0.3,
+        maxChildSize: 0.8,
+        expand: false,
         builder: (context, scrollController) {
           final dark = HelperFunctions.isDarkMode(context);
           return Container(
@@ -207,6 +257,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                           height: 20,
                           thickness: 2,
                         ),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -216,24 +267,65 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                   right: 0,
                   bottom: 0,
                   child: Container(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColor.primary,
-                        minimumSize: const Size(double.infinity, 50),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Row(
+                            children: [
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColor.ok,
+                                    minimumSize:
+                                        const Size(double.infinity, 50),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text(
+                                    'Close',
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColor.primary,
+                                    minimumSize:
+                                        const Size(double.infinity, 50),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    _showConfirmationDialog(context);
+                                  },
+                                  child: const Text(
+                                    'Save Prediction',
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        'Close',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                      ),
+                      ],
                     ),
                   ),
                 ),
@@ -241,6 +333,38 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirm Save'),
+        content: const Text('Do you want to save this prediction?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              // Call the function to save the prediction
+              if (_predictedClass != null && _confidence != null) {
+                await savePrediction(_predictedClass!, _confidence!);
+                Navigator.pop(context); // Close the dialog
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SuccessScreen()),
+                ); // Navigate to SuccessScreen
+              }
+            },
+            child: const Text('Confirm'),
+          ),
+        ],
       ),
     );
   }
@@ -329,33 +453,41 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ListTile(
-          leading: const Icon(
-            Icons.note_alt_outlined,
-            size: 35,
-            color: Color(0xFF3F51B5),
-          ),
-          title: Text(
-            'Please upload an image of the eye disease here',
-            style: dark
-                ? MyTextTheme.darkTextTheme.titleLarge
-                : MyTextTheme.lightTextTheme.titleLarge,
-          ),
-        ),
+        buildUploadImageTitle(context, dark),
         const SizedBox(height: 20),
-        DottedBorder(
-          dashPattern: const [9, 9],
-          color: const Color(0xFF3F51B5),
-          strokeWidth: 1.5,
-          child: Container(
-            height: 260,
-            width: 260,
-            color: Colors.white,
-            child: buildUploadImageButton(context),
-          ),
-        ),
+        buildDottedBorder(),
         const SizedBox(height: 30),
       ],
+    );
+  }
+
+  Widget buildUploadImageTitle(BuildContext context, bool dark) {
+    return ListTile(
+      leading: const Icon(
+        Icons.note_alt_outlined,
+        size: 35,
+        color: Color(0xFF3F51B5),
+      ),
+      title: Text(
+        'Please upload an image of the eye disease here',
+        style: dark
+            ? MyTextTheme.darkTextTheme.titleLarge
+            : MyTextTheme.lightTextTheme.titleLarge,
+      ),
+    );
+  }
+
+  Widget buildDottedBorder() {
+    return DottedBorder(
+      dashPattern: const [9, 9],
+      color: const Color(0xFF3F51B5),
+      strokeWidth: 1.5,
+      child: Container(
+        height: 260,
+        width: 260,
+        color: Colors.white,
+        child: buildUploadImageButton(context),
+      ),
     );
   }
 

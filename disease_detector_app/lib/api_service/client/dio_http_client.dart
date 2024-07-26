@@ -8,7 +8,7 @@ class BaseHttpClient {
 
   static void init() {
     final BaseOptions options = BaseOptions(
-      baseUrl: AppConfig.BASE_URL,
+      baseUrl: AppConfig.baseUrl,
       connectTimeout: const Duration(minutes: 1),
       receiveTimeout: const Duration(minutes: 1),
     );

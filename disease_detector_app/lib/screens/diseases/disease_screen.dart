@@ -18,7 +18,7 @@ class _DiseaseScreenState extends State<DiseaseScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 1, vsync: this); // Set length to 1
     super.initState();
   }
 
@@ -52,7 +52,7 @@ class _DiseaseScreenState extends State<DiseaseScreen>
           margin: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
           child: CustomTabBar(
             tabController: _tabController,
-            tabTexts: const ['Eye Diseases', 'History'],
+            tabTexts: const ['History'], // Only one tab
           ),
         ),
         Expanded(
@@ -61,47 +61,6 @@ class _DiseaseScreenState extends State<DiseaseScreen>
               padding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
               child: Column(
                 children: [
-                  Container(
-                    height: 54.h,
-                    margin: EdgeInsets.symmetric(vertical: kDefaultPadding),
-                    child: Row(children: [
-                      // Expanded(
-                      //   child: SearchBar(),
-                      // ),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.5),
-                      SortMenuBox(options: const [
-                        SortItem(text: 'Date'),
-                        SortItem(text: 'Alphabet')
-                      ])
-                    ]),
-                  ),
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-                      child: MyPlants(plantList: plantList),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
-              child: Column(
-                children: [
-                  Container(
-                    height: 54.h,
-                    margin: EdgeInsets.only(top: kDefaultPadding),
-                    child: Row(children: [
-                      // Expanded(
-                      //   child: SearchBar(),
-                      // ),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.5),
-                      SortMenuBox(options: const [
-                        SortItem(text: 'Latest'),
-                        SortItem(text: 'Oldest')
-                      ])
-                    ]),
-                  ),
                   Container(
                       height: 34.h,
                       margin:
