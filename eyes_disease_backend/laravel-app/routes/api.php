@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\PredictionController;
 
 // Register
 Route::post("register", [ApiController::class, "register"]);
@@ -10,20 +11,17 @@ Route::post("register", [ApiController::class, "register"]);
 // Login
 Route::post("login", [ApiController::class, "login"]);
 
-//Profile
-Route::group([
-    'middleware' => ['auth:sanctum']
-], function(){
-    //Profile
+// Profile and other protected routes
+Route::group(['middleware' => ['auth:sanctum']], function() {
+    // Profile
     Route::get("profile", [ApiController::class, "profile"]);
+
+    // Predictions
+    Route::post("/predictions", [PredictionController::class, "store"]);
+    // fetch all predictions
+    Route::get("/predictions", [PredictionController::class, "index"]);
 });
 
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
-
-
+// Public routes
 Route::get('/diseases', [ApiController::class, 'showDisease']);
-
 Route::get('/documents', [ApiController::class, 'showDocument']);
