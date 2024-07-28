@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentPage = 0;
   final List pages = [
-    ImageUploadScreen(),
+    const ImageUploadScreen(),
     const DiseaseScreen(),
     const AccountScreen()
   ];
