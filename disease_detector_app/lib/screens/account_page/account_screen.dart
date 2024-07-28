@@ -1,6 +1,7 @@
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/config/themes/theme.dart';
+import 'package:disease_detector_app/screens/account_page/change_password.dart';
 import 'package:disease_detector_app/screens/account_page/widget/logout_button.dart';
 import 'package:disease_detector_app/screens/account_page/widget/profile_menu_item.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
@@ -44,8 +45,6 @@ class _AccountScreenState extends State<AccountScreen> {
           SizedBox(
             height: 16.h,
           ),
-          // const ChangePasswordButton(),
-          // SizedBox(height: 16.h),
           const LogoutButton(),
         ],
       ),
@@ -83,6 +82,20 @@ class _AccountScreenState extends State<AccountScreen> {
                         color: Theme.of(context).secondaryHeaderColor,
                         fontSize: 16.sp,
                       )),
+                ),
+                SubMenuItem(
+                  onTap: () {
+                    HelperFunctions.debug('change password');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChangePasswordScreen(),
+                      ),
+                    );
+                  },
+                  icon: Icons.edit,
+                  text: 'Change Password',
+                  endWidget: const SizedBox(),
                 ),
               ],
               prefix: Iconsax.setting_2,

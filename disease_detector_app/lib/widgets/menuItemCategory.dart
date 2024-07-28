@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:disease_detector_app/config/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -121,11 +121,13 @@ class SubMenuItem extends StatelessWidget {
     required this.text,
     required this.icon,
     required this.endWidget,
+    this.onTap,
   });
 
   final Widget endWidget;
   final IconData icon;
   final String text;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +138,7 @@ class SubMenuItem extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-          onTap: () {},
+          onTap: onTap,
           child: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
@@ -148,7 +150,7 @@ class SubMenuItem extends StatelessWidget {
                   Icon(
                     this.icon,
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Text(
                     this.text,
                     style: TextStyle(

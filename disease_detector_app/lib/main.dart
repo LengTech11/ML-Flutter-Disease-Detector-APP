@@ -2,6 +2,7 @@ import 'package:disease_detector_app/api_service/client/dio_http_client.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
 import 'package:disease_detector_app/provider/document_provider.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
+import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:disease_detector_app/view_model/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';

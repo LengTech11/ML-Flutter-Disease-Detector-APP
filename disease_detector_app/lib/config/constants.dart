@@ -1,7 +1,7 @@
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 double kDefaultPadding = 25.0.w;
@@ -18,7 +18,7 @@ void showMessage(String message) {
   );
 }
 
-final appPadding = EdgeInsets.symmetric(horizontal: 8.w);
+final appPadding = EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h);
 
 showLoaderDialog(BuildContext context) {
   AlertDialog alert = AlertDialog(
