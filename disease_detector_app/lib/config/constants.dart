@@ -1,5 +1,6 @@
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -35,6 +36,32 @@ showLoaderDialog(BuildContext context) {
         ),
       );
     }),
+  );
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+showMessageDialog(BuildContext context, String msg) {
+  CupertinoAlertDialog alert = CupertinoAlertDialog(
+    insetAnimationDuration: const Duration(microseconds: 50),
+    title: Text(
+      msg,
+    ),
+    actions: [
+      TextButton(
+        style: ButtonStyle(
+            overlayColor: WidgetStateProperty.all(Colors.transparent)),
+        onPressed: () async {
+          Navigator.pop(context);
+        },
+        child: const Text('Close'),
+      ),
+    ],
   );
   showDialog(
     barrierDismissible: false,
