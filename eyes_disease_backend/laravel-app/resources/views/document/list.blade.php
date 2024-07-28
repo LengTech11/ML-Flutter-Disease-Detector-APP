@@ -45,10 +45,28 @@
                             <form action="{{route('import.document')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <!-- Modal body -->
-                                <div class="p-6 space-y-2">
-                                    <div class="input-group mb-3 mt-3">
+                                <div class="px-6 py-3 space-y-2">
+                                    <div class="input-group mt-3">
                                         <p class=" mb-3"><Span style="color: red; font-weight:500">Note: </Span>We only accept files with extensions including .pdf, .docx, .xls, .xlsx, and .ppt.</p>
                                         <input class="bg-gray-50 border border-gray-300 rounded-lg focus:ring-cyan-600 w-full" type="file" name="title" id="title" accept=".xlsx, .xls, .docx, .pdf, .ppt" required>
+                                    </div>
+                                </div>
+
+                                <div class="px-6 py-3 space-y-2">
+                                    <div class="input-group mb-3">
+                                        <label class="text-sm font-medium text-gray-900 block mb-2">
+                                            Disease</label>
+                                        <select name="disease_id" id="disease_id"
+                                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                            >
+                                            <option value="" selected>Select Disease</option>
+                                            @foreach($getDiseaseRecord as $disease)
+                                            <option class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                                value="{{ $disease->id }}">
+                                                {{ $disease->title }}
+                                            </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 

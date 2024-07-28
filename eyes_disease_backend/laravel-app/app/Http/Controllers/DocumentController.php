@@ -31,6 +31,7 @@ class DocumentController extends Controller
                 $file->move(public_path('storage/document'), $filename);
                 $doc->title = $filename;
             }
+            $doc->disease_id = trim($request->disease_id);
             $doc->save();
             return redirect('document/list')->with('success', 'Document has been saved.');
         }
