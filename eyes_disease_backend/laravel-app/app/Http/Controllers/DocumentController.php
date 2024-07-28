@@ -7,6 +7,7 @@ use App\Models\Document;
 use App\Models\Disease;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class DocumentController extends Controller
 {

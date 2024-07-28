@@ -25,3 +25,8 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 // Public routes
 Route::get('/diseases', [ApiController::class, 'showDisease']);
 Route::get('/documents', [ApiController::class, 'showDocument']);
+
+Route::post('/change-password', [ApiController::class, 'changePassword'])->middleware('auth:sanctum');
+
+
+
