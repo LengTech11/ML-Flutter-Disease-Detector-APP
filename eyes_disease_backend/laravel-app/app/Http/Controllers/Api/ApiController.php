@@ -117,9 +117,21 @@ class ApiController extends Controller
         ], 200);
     }
 
-    public function showDocument()
+    public function showDocument(Request $request)
     {
-        $doc = Document::with('disease')->get();
+        $diseaseTitle = $request->query('disease');
+
+        if (!$diseaseTitle) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No disease parameter provided'
+            ], 400);
+        }
+
+        $doc = Document::whereHas('disease', function ($query) use ($diseaseTitle) {
+            $query->where('title', 'LIKE', $diseaseTitle);
+        })->get();
+
         $doc = $doc->map(function ($doc) {
             return [
                 'id' => $doc->id,
@@ -134,6 +146,7 @@ class ApiController extends Controller
             'data' => $doc
         ], 200);
     }
+
 
     public function changePassword(Request $request)
     {
