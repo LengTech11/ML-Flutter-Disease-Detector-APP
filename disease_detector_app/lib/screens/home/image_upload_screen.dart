@@ -29,6 +29,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   bool _isLoading = false;
   String? _predictedClass;
   double? _confidence;
+  Map<String, double> _classProbabilities = {};
 
   @override
   void initState() {
@@ -75,6 +76,8 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         setState(() {
           _predictedClass = response.data['Predicted Class'].toString();
           _confidence = response.data['Confidence'];
+          _classProbabilities =
+              Map<String, double>.from(response.data['Class Probabilities']);
         });
         // ignore: use_build_context_synchronously
         _showPredictionBottomSheet(context);
@@ -82,6 +85,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         setState(() {
           _predictedClass = 'Failed to predict';
           _confidence = null;
+          _classProbabilities = {};
         });
       }
     } catch (e) {
@@ -89,6 +93,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
       setState(() {
         _predictedClass = 'Failed to predict';
         _confidence = null;
+        _classProbabilities = {};
       });
     } finally {
       setState(() {
@@ -146,16 +151,83 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
       isScrollControlled: true,
       clipBehavior: Clip.none,
       builder: (context) => DraggableScrollableSheet(
-        initialChildSize: 0.3,
-        minChildSize: 0.3,
-        maxChildSize: 0.8,
+        initialChildSize: 0.6,
+        minChildSize: 0.6,
+        maxChildSize: 0.9,
         expand: false,
         builder: (context, scrollController) {
           final dark = HelperFunctions.isDarkMode(context);
+          List<Widget> classProbabilityWidgets =
+              _classProbabilities.entries.map((entry) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '${entry.key}: ',
+                              style: dark
+                                  ? MyTextTheme.darkTextTheme.titleLarge
+                                  : MyTextTheme.lightTextTheme.titleLarge,
+                            ),
+                            TextSpan(
+                              text:
+                                  '${(entry.value * 100).toStringAsFixed(2)}%',
+                              style: dark
+                                  ? MyTextTheme.darkTextTheme.titleLarge
+                                  : MyTextTheme.lightTextTheme.titleLarge,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    SizedBox(
+                      width: 70,
+                      height: 70,
+                      child: Stack(
+                        children: [
+                          Positioned.fill(
+                            child: CircularProgressIndicator(
+                              value: entry.value,
+                              backgroundColor: Colors.grey[200],
+                              color: Colors.blue,
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              '${(entry.value * 100).toStringAsFixed(0)}%',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: dark ? Colors.white : Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                const Divider(
+                  color: Colors.grey,
+                  height: 20,
+                  thickness: 2,
+                ),
+              ],
+            );
+          }).toList();
+
           return Container(
             width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: dark ? Colors.grey[850] : Colors.white,
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               ),
@@ -179,19 +251,18 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                   controller: scrollController,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 16.0,
-                    ),
+                        horizontal: 16.0, vertical: 16.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Prediction Result',
+                          'Prediction Result:',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
+                          textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 16),
                         RichText(
@@ -240,15 +311,39 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 30),
+                            const SizedBox(width: 10),
                             Expanded(
-                              child: LinearProgressIndicator(
-                                value: _confidence ?? 0,
-                                backgroundColor: Colors.grey[200],
-                                color: Colors.blue,
+                              child: Container(
+                                height: 10,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Positioned.fill(
+                                      child: FractionallySizedBox(
+                                        alignment: Alignment.centerLeft,
+                                        widthFactor: _confidence ?? 0,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            gradient: const LinearGradient(
+                                              colors: [
+                                                Colors.green,
+                                                Colors.blueAccent
+                                              ],
+                                              stops: [0.0, 1.0],
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            const SizedBox(width: 10),
                           ],
                         ),
                         const SizedBox(height: 10),
@@ -257,6 +352,16 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                           height: 20,
                           thickness: 2,
                         ),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'Class Probabilities:',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        ...classProbabilityWidgets,
                         const SizedBox(height: 20),
                       ],
                     ),
@@ -269,60 +374,47 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                   child: Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                    child: Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColor.ok,
-                                    minimumSize:
-                                        const Size(double.infinity, 50),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 12),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text(
-                                    'Close',
-                                    style: TextStyle(
-                                        fontSize: 18, color: Colors.white),
-                                  ),
-                                ),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColor.ok,
+                              minimumSize: const Size(double.infinity, 50),
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
                               ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColor.primary,
-                                    minimumSize:
-                                        const Size(double.infinity, 50),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 12),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    _showConfirmationDialog(context);
-                                  },
-                                  child: const Text(
-                                    'Save Prediction',
-                                    style: TextStyle(
-                                        fontSize: 18, color: Colors.white),
-                                  ),
-                                ),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              'Close',
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColor.primary,
+                              minimumSize: const Size(double.infinity, 50),
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
                               ),
-                            ],
+                            ),
+                            onPressed: () {
+                              _showConfirmationDialog(context);
+                            },
+                            child: const Text(
+                              'Save Prediction',
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
+                            ),
                           ),
                         ),
                       ],
@@ -358,7 +450,8 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                 Navigator.pop(context); // Close the dialog
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SuccessScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const SuccessScreen()),
                 ); // Navigate to SuccessScreen
               }
             },
