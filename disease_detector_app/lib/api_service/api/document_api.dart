@@ -3,7 +3,7 @@ import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/model/document_model.dart';
 
 class DocumentApiService {
-  Future<DocumentModel> getDocument() async {
+  Future<DocumentModel> getDocument({required String diseaseName}) async {
     return BaseApiService().onRequest(
         path: "/documents",
         method: HttpMethod.GET,
@@ -15,6 +15,9 @@ class DocumentApiService {
           'Accept-Encoding': 'Accept-Encoding',
           'Connection': 'keep-alive',
           'Authorization': 'Bearer ${AppConstant.USER_TOKEN}'
+        },
+        query: {
+          'disease': diseaseName,
         },
         onSuccess: (response) {
           return DocumentModel.fromJson(response.data);

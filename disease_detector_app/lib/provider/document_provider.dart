@@ -3,17 +3,18 @@ import 'package:disease_detector_app/model/document_model.dart';
 import 'package:flutter/material.dart';
 
 class DocumentProvider extends ChangeNotifier {
-  Document? doc;
+  DocumentModel? doc;
   Future<void> fetchDocument(String name) async {
-    final response = await DocumentApiService().getDocument();
-    if (response.data.isNotEmpty) {
-      for (int i = 0; i < response.data.length; i++) {
-        if (name == response.data[i].fileName) {
-          doc = response.data[i];
-        }
+    try {
+      final response =
+          await DocumentApiService().getDocument(diseaseName: name);
+      if (response.data.isNotEmpty) {
+        doc = response;
+      } else {
+        doc = null;
       }
-    } else {
-      doc = null;
+    } catch (error) {
+      print('Error fetching document: $error');
     }
     notifyListeners();
   }
