@@ -502,15 +502,14 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                           color: AppColor.primary,
                         ),
                         title: Text(disease.title),
-                        onTap: () => ECABtmSheet.ecaShowBtmSheet(
-                            context: context,
-                            title: disease.title,
-                            description: disease.description,
-                            fileUrl: doc.doc?.url,
-                            fileName: disease.title),
+                        onTap: () => ECABtmSheet().ecaShowBtmSheet(
+                          context: context,
+                          title: disease.title,
+                          description: disease.description,
+                          fileName: disease.title,
+                        ),
                       );
                     },
-                    // child: ,
                   ),
                 );
               }
