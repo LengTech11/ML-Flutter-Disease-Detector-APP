@@ -1,6 +1,7 @@
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:disease_detector_app/screens/login/login_screen.dart';
+import 'package:disease_detector_app/storage/token_storage.dart';
 import 'package:disease_detector_app/widgets/tile_button.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -22,6 +23,7 @@ class _LogoutButtonState extends State<LogoutButton> {
           onpress: () {
             showLoaderDialog(context);
             value.clearUser();
+            TokenStorage.removeToken();
             if (value.userProfileModel?.data == null) {
               Navigator.of(context, rootNavigator: true).pop();
               Navigator.pushAndRemoveUntil(

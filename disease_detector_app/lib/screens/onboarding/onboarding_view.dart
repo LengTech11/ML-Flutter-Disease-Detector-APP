@@ -1,3 +1,4 @@
+import 'package:disease_detector_app/storage/check_first_install.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -101,6 +102,7 @@ class _OnboardingViewState extends State<OnboardingView> {
       height: 55,
       child: TextButton(
         onPressed: () {
+          CheckFirstInstall.setFirstInstall();
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const LoginScreen()));
         },

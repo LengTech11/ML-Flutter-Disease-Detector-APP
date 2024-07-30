@@ -3,6 +3,7 @@ import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/model/login_model/login_response_model.dart';
 import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:disease_detector_app/screens/register/register_screen.dart';
+import 'package:disease_detector_app/storage/token_storage.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:disease_detector_app/widgets/outlined_button.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
           await loginApiService.postLogin(email: email, password: password);
       AppConstant.USER_TOKEN = response.token;
       if (!context.mounted) return;
+      TokenStorage.saveToken(AppConstant.USER_TOKEN!);
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const HomeScreen()),

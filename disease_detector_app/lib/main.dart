@@ -2,15 +2,19 @@ import 'package:disease_detector_app/api_service/client/dio_http_client.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
 import 'package:disease_detector_app/provider/document_provider.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
-import 'package:disease_detector_app/utils/device/device_utility.dart';
+import 'package:disease_detector_app/screens/home/home_screen.dart';
+import 'package:disease_detector_app/screens/login/login_screen.dart';
+import 'package:disease_detector_app/screens/onboarding/onboarding_view.dart';
+import 'package:disease_detector_app/storage/check_first_install.dart';
+import 'package:disease_detector_app/storage/token_storage.dart';
 import 'package:disease_detector_app/view_model/provider.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
 import 'config/themes/theme.dart';
 import 'firebase_options.dart';
-import 'screens/onboarding/onboarding_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,10 +51,41 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool? isFirstInstall;
+  bool? isLogin;
+
+  Future<void> checkIsLogin() async {
+    final token = await TokenStorage.getToken();
+    if (token != null || token != '') {
+      setState(() {
+      isLogin = true;
+      });
+    } else {
+      setState(() {
+        isLogin = false;
+      });
+    }
+  }
+
+  Future<void> checkIsFirstInstall() async {
+    final getFirstInstall = await CheckFirstInstall.getFirstInstall();
+    if (getFirstInstall == false) {
+      setState(() {
+        isFirstInstall = false;
+      });
+    } else {
+      setState(() {
+        isFirstInstall = true;
+      });
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    checkIsFirstInstall();
+    checkIsLogin();
     BaseHttpClient.init();
   }
 
@@ -64,12 +99,17 @@ class _MyAppState extends State<MyApp> {
           splitScreenMode: true,
           builder: (context, child) {
             return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                title: 'VisionCareAI',
-                themeMode: themeProvider.themeMode,
-                theme: AppTheme.lightTheme,
-                darkTheme: AppTheme.darkTheme,
-                home: const OnboardingView());
+              debugShowCheckedModeBanner: false,
+              title: 'VisionCareAI',
+              themeMode: themeProvider.themeMode,
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              home: isFirstInstall == true
+                  ? const OnboardingView()
+                  : isLogin == true
+                      ? const LoginScreen()
+                      : const HomeScreen(),
+            );
           },
         );
       },
