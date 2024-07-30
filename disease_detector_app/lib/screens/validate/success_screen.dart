@@ -19,7 +19,7 @@ class SuccessScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.check_circle,
               size: 100,
               color: AppColor.ok,
