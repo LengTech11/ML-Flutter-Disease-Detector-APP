@@ -13,11 +13,10 @@ class profileInfo extends StatefulWidget {
 
 // ignore: camel_case_types
 class _profileInfoState extends State<profileInfo> {
-  String noImg = "assets/images/blank_profile.jpg";
+  String onImg = "assets/images/blank_profile.jpg";
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     final provider = Provider.of<UserProfileProvider>(context, listen: false);
     provider.getUserProfile();
@@ -34,33 +33,38 @@ class _profileInfoState extends State<profileInfo> {
       child: Consumer<UserProfileProvider>(
         builder: (context, value, child) {
           final provider = value.userProfileModel?.data;
-          final name = "${provider?.firstName} ${provider?.lastName}";
+          final name = value.isGuest
+              ? "Guest"
+              : "${provider?.firstName} ${provider?.lastName}";
           return Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
                 onTap: () {
-                  setState(() {
-                    showDialog(
+                  setState(
+                    () {
+                      showDialog(
                         context: context,
                         builder: (context) => Dialog(
-                              insetPadding: EdgeInsets.all(0),
-                              shape: RoundedRectangleBorder(),
-                              backgroundColor: Colors.transparent,
-                              child: Container(
-                                width: 320.w,
-                                height: 320.h,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage(
-                                        noImg,
-                                      )),
-                                  borderRadius: BorderRadius.circular(200),
-                                ),
-                              ),
-                            ));
-                  });
+                          insetPadding: EdgeInsets.all(0),
+                          shape: RoundedRectangleBorder(),
+                          backgroundColor: Colors.transparent,
+                          child: Container(
+                            width: 320.w,
+                            height: 320.h,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage(
+                                    onImg,
+                                  )),
+                              borderRadius: BorderRadius.circular(200),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
                   // });
                 },
                 child: Container(
@@ -74,9 +78,9 @@ class _profileInfoState extends State<profileInfo> {
                       ),
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(40.r),
+                      borderRadius: BorderRadius.circular(50.r),
                       child: Image.asset(
-                        noImg,
+                        onImg,
                         fit: BoxFit.cover,
                       ),
                     )),
@@ -95,7 +99,9 @@ class _profileInfoState extends State<profileInfo> {
                           style: TextStyle(
                               fontSize: 20.sp, fontWeight: FontWeight.w600)),
                       Text(
-                        provider?.email ?? "No Email",
+                        value.isGuest
+                            ? "No Email"
+                            : provider?.email ?? "No Email",
                         style: TextStyle(
                             fontSize: 14.sp,
                             color: Theme.of(context).colorScheme.onSecondary),

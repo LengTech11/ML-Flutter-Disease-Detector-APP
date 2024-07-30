@@ -58,7 +58,7 @@ class _MyAppState extends State<MyApp> {
     final token = await TokenStorage.getToken();
     if (token != null || token != '') {
       setState(() {
-      isLogin = true;
+        isLogin = true;
       });
     } else {
       setState(() {

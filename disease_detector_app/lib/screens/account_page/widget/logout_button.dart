@@ -33,7 +33,7 @@ class _LogoutButtonState extends State<LogoutButton> {
             }
           },
           prefix: Iconsax.logout4,
-          title: 'Log out',
+          title: value.isGuest ? 'Login' : 'Log out',
         );
       },
     );
