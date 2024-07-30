@@ -6,12 +6,14 @@ class UserProfileProvider extends ChangeNotifier {
   UserProfileModel? _userProfileModel;
   UserProfileModel? get userProfileModel => _userProfileModel;
 
+  bool get isGuest => _userProfileModel == null;
+
   Future<void> getUserProfile() async {
     final result = await UserProfileApiService().getUserProfile();
     if (result.data != null) {
       _userProfileModel = result;
     } else {
-      _userProfileModel = null;
+      _userProfileModel = null; // Ensure _userProfileModel is null if no data
     }
     notifyListeners();
   }

@@ -8,13 +8,11 @@ import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:disease_detector_app/widgets/outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../config/constants.dart';
 import '../../config/themes/app_size.dart';
 import '../../config/themes/color.dart';
-import '../../firebase_helpers/firebase_auth/firebase_auth_helpers.dart';
 import '../../utils/custom_text_theme/custom_text_theme.dart';
 import '../../utils/helper/helper_function.dart';
 import '../../widgets/my_button.dart';
@@ -74,7 +72,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // SizedBox(height: AppSize.appbarHeight),
                   Text(
                     "Welcome Back",
                     style: dark
@@ -163,20 +160,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 50.h,
                       width: MediaQuery.of(context).size.width,
                       child: OutlineButton(
-                          dark: dark,
-                          icon: SvgPicture.asset("assets/icons/google.svg",
-                              height: 32.h),
-                          title: "Continue with Google",
-                          onPressed: () async {
-                            if (await FirebaseAuthHelper.instance
-                                .siginWithGoogle(context)) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const HomeScreen()));
-                            }
-                          })),
+                        dark: dark,
+                        icon: const Icon(Iconsax.user),
+                        title: "Login as Guest",
+                        onPressed: () async {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomeScreen()));
+                        },
+                      )),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -191,20 +184,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: AppSize.xs,
                       ),
                       TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const RegisterScreen()));
-                          },
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                                color: AppColor.primary,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18.sp),
-                          )),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const RegisterScreen()));
+                        },
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(
+                              color: AppColor.primary,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.sp),
+                        ),
+                      ),
                     ],
                   )
                 ],

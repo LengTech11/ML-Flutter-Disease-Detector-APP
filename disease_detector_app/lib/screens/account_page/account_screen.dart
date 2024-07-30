@@ -24,7 +24,6 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
