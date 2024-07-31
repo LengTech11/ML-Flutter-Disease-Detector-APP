@@ -5,6 +5,8 @@ import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../account_page/account_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,45 +19,52 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentPage = 0;
+
   final List pages = [
     const ImageUploadScreen(),
     const DiseaseScreen(),
     const AccountScreen()
   ];
+
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
-    return Builder(builder: (context) {
-      return Scaffold(
+    return Builder(
+      builder: (context) {
+        return Scaffold(
           backgroundColor: dark ? AppColor.dark : AppColor.light,
-          appBar: AppBar(),
           body: pages[currentPage],
           bottomNavigationBar: BottomNavigator(
-              onTabChange: (currentIndex) {
-                setState(() {
+            onTabChange: (currentIndex) {
+              setState(
+                () {
                   currentPage = currentIndex;
-                });
-              },
-              tabs: const [
-                TabButton(
-                  color: AppColor.white,
-                  activeColor: AppColor.light,
-                  icon: Iconsax.camera,
-                  text: 'Camera',
-                ),
-                TabButton(
-                  color: AppColor.white,
-                  activeColor: AppColor.light,
-                  icon: Iconsax.home,
-                  text: 'My Eyes',
-                ),
-                TabButton(
-                  color: AppColor.white,
-                  activeColor: AppColor.black,
-                  icon: Iconsax.profile_circle4,
-                  text: 'Profile',
-                )
-              ]));
-    });
+                },
+              );
+            },
+            tabs: [
+              TabButton(
+                color: AppColor.white,
+                activeColor: AppColor.light,
+                icon: Iconsax.camera,
+                text: AppLocalizations.of(context)?.camera ?? 'Camera',
+              ),
+              TabButton(
+                color: AppColor.white,
+                activeColor: AppColor.light,
+                icon: Iconsax.home,
+                text: AppLocalizations.of(context)?.my_eye ?? 'My Eye',
+              ),
+              TabButton(
+                color: AppColor.white,
+                activeColor: AppColor.black,
+                icon: Iconsax.profile_circle4,
+                text: AppLocalizations.of(context)?.profile ?? 'Profile',
+              )
+            ],
+          ),
+        );
+      },
+    );
   }
 }

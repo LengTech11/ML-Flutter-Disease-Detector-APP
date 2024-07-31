@@ -6,6 +6,7 @@ import 'package:disease_detector_app/widgets/tile_button.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LogoutButton extends StatefulWidget {
   const LogoutButton({super.key});
@@ -27,13 +28,18 @@ class _LogoutButtonState extends State<LogoutButton> {
             if (value.userProfileModel?.data == null) {
               Navigator.of(context, rootNavigator: true).pop();
               Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                  (route) => false);
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LoginScreen(),
+                ),
+                (route) => false,
+              );
             }
           },
           prefix: Iconsax.logout4,
-          title: value.isGuest ? 'Login' : 'Log out',
+          title: value.isGuest
+              ? AppLocalizations.of(context)?.login ?? 'Login'
+              : AppLocalizations.of(context)?.logout ?? 'Logout',
         );
       },
     );

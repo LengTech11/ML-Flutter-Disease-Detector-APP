@@ -6,8 +6,20 @@ class ThemeProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.system;
   bool get isDarkMode => themeMode == ThemeMode.dark;
 
+  String? languageCode;
+
   void toggleTheme(bool isOn) {
     themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
+    notifyListeners();
+  }
+
+  void setKhmerLanguage() {
+    languageCode = 'km';
+    notifyListeners();
+  }
+
+  void setEnglishLanguage() {
+    languageCode = 'en';
     notifyListeners();
   }
 }

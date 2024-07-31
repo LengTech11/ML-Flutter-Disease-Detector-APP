@@ -3,6 +3,7 @@ import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class profileInfo extends StatefulWidget {
   const profileInfo({super.key});
@@ -34,7 +35,7 @@ class _profileInfoState extends State<profileInfo> {
         builder: (context, value, child) {
           final provider = value.userProfileModel?.data;
           final name = value.isGuest
-              ? "Guest"
+              ? AppLocalizations.of(context)?.guest ?? "Guest"
               : "${provider?.firstName} ${provider?.lastName}";
           return Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,18 +47,19 @@ class _profileInfoState extends State<profileInfo> {
                       showDialog(
                         context: context,
                         builder: (context) => Dialog(
-                          insetPadding: EdgeInsets.all(0),
-                          shape: RoundedRectangleBorder(),
+                          insetPadding: const EdgeInsets.all(0),
+                          shape: const RoundedRectangleBorder(),
                           backgroundColor: Colors.transparent,
                           child: Container(
                             width: 320.w,
                             height: 320.h,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage(
-                                    onImg,
-                                  )),
+                                fit: BoxFit.cover,
+                                image: AssetImage(
+                                  onImg,
+                                ),
+                              ),
                               borderRadius: BorderRadius.circular(200),
                             ),
                           ),
@@ -68,22 +70,23 @@ class _profileInfoState extends State<profileInfo> {
                   // });
                 },
                 child: Container(
-                    height: 90.h, //140
-                    width: 90.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        width: 5.w,
-                        color: Colors.transparent,
-                      ),
+                  height: 90.h, //140
+                  width: 90.h,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      width: 5.w,
+                      color: Colors.transparent,
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50.r),
-                      child: Image.asset(
-                        onImg,
-                        fit: BoxFit.cover,
-                      ),
-                    )),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50.r),
+                    child: Image.asset(
+                      onImg,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(
                 width: kDefaultPadding * 0.75,
@@ -95,9 +98,11 @@ class _profileInfoState extends State<profileInfo> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(name,
-                          style: TextStyle(
-                              fontSize: 20.sp, fontWeight: FontWeight.w600)),
+                      Text(
+                        name,
+                        style: TextStyle(
+                            fontSize: 20.sp, fontWeight: FontWeight.w600),
+                      ),
                       Text(
                         value.isGuest
                             ? "No Email"
