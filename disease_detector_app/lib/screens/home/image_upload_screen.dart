@@ -54,6 +54,26 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     }
   }
 
+  Future<void> _updateDiseaseCount(String title) async {
+    const String apiUrl = 'http://0.0.0.0:8000/api/update-disease-count';
+
+    try {
+      final dio = Dio();
+      final response = await dio.post(
+        apiUrl,
+        data: {'title': title},
+      );
+
+      if (response.statusCode == 200) {
+        print('Disease count updated successfully');
+      } else {
+        print('Failed to update disease count: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error updating disease count: $e');
+    }
+  }
+
   Future<void> _predictDisease() async {
     if (_image == null) return;
 
@@ -79,6 +99,10 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
           _classProbabilities =
               Map<String, double>.from(response.data['Class Probabilities']);
         });
+        // Call the method to update disease count
+        if (_predictedClass != null) {
+          await _updateDiseaseCount(_predictedClass!);
+        }
         // ignore: use_build_context_synchronously
         _showPredictionBottomSheet(context);
       } else {
