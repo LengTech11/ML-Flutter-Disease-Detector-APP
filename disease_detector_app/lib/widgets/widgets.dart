@@ -6,6 +6,6 @@ export 'package:disease_detector_app/widgets/checkMark.dart';
 export 'package:disease_detector_app/widgets/customTabBar.dart';
 export 'package:disease_detector_app/widgets/sortMenu.dart';
 export 'package:disease_detector_app/widgets/moreMenu.dart';
-export 'package:disease_detector_app/widgets/plantList.dart';
+export 'package:disease_detector_app/widgets/historyList.dart';
 export 'package:disease_detector_app/widgets/searchBar.dart';
 export 'package:disease_detector_app/widgets/buttons.dart';
