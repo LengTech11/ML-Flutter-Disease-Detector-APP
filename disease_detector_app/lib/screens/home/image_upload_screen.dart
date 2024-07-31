@@ -444,15 +444,38 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
           ),
           TextButton(
             onPressed: () async {
-              // Call the function to save the prediction
-              if (_predictedClass != null && _confidence != null) {
-                await savePrediction(_predictedClass!, _confidence!);
-                Navigator.pop(context); // Close the dialog
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const SuccessScreen()),
-                ); // Navigate to SuccessScreen
+              // Check authentication status and show a snackbar if not authenticated
+              String? token = AppConstant.USER_TOKEN;
+              if (token == null) {
+                Navigator.of(context)
+                    .popUntil((route) => route.isFirst); // Close all dialogs
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                        'Guest needs to Sign up or Login for an account to save history'),
+                  ),
+                );
+              } else {
+                // Call the function to save the prediction
+                if (_predictedClass != null && _confidence != null) {
+                  bool success =
+                      await savePrediction(_predictedClass!, _confidence!);
+                  Navigator.of(context)
+                      .popUntil((route) => route.isFirst); // Close all dialogs
+                  if (success) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SuccessScreen()),
+                    ); // Navigate to SuccessScreen
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Failed to save prediction'),
+                      ),
+                    );
+                  }
+                }
               }
             },
             child: const Text('Confirm'),
