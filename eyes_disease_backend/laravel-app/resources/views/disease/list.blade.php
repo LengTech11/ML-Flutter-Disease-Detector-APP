@@ -203,6 +203,9 @@
                                         Title
                                     </th>
                                     <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Detected Count
+                                    </th>
+                                    <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                                         Description
                                     </th>
                                     <th scope="col" class="p-4">
@@ -228,6 +231,9 @@
                                             <div class="text-sm font-normal text-gray-500">
                                                 <a href="{{ asset('storage/document/'.$value->title) }}" class="text-decoration-none text-base font-semibold text-gray-900">{{ $value->title }}</a>
                                             </div>
+                                        </td>
+                                        <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
+                                            <div>Count : {{ $value->count  }}</div>
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
                                             <button type="button" data-twe-toggle="modal"

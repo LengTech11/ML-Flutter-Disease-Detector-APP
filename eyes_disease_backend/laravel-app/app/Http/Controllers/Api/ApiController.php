@@ -193,4 +193,36 @@ class ApiController extends Controller
         }
     }
 
+    public function updateCount(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string',
+        ]);
+
+        $title = $request->input('title');
+
+        // Find the disease by title
+        $disease = Disease::where('title', $title)->first();
+
+        if($disease)
+        {
+            $disease->count = $disease->count + 1;
+            $disease->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Disease count has been updated.',
+                'disease' => $disease,
+                'count' => $disease->count
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Disease not found.'
+            ]);
+        }
+    }
+
 }

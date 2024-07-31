@@ -26,6 +26,9 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 Route::get('/diseases', [ApiController::class, 'showDisease']);
 Route::get('/documents', [ApiController::class, 'showDocument']);
 
+// Update Disease Count
+Route::post('/update-disease-count', [ApiController::class, 'updateCount']);
+
 Route::post('/change-password', [ApiController::class, 'changePassword'])->middleware('auth:sanctum');
 
 
