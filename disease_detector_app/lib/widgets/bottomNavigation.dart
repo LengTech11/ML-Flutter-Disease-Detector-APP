@@ -43,46 +43,56 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Container(
-            // height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(140.r)),
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            margin: EdgeInsets.symmetric(
-                horizontal: AppSize.md, vertical: AppSize.sm),
-            padding: EdgeInsets.symmetric(
-                horizontal: AppSize.sm, vertical: AppSize.sm),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: widget.tabs
-                    .map((tab) => TabButton(
-                          activeColor: Theme.of(context).colorScheme.primary,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .secondary
-                              .withOpacity(0.10),
-                          active: selectedIndex == widget.tabs.indexOf(tab),
-                          text: tab.text,
-                          icon: tab.icon,
-                          onPressed: () {
-                            if (!clickable) return;
-                            setState(() {
-                              selectedIndex = widget.tabs.indexOf(tab);
-                              clickable = false;
-                            });
+      child: Container(
+        // height: 50,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(140.r)),
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        margin:
+            EdgeInsets.symmetric(horizontal: AppSize.md, vertical: AppSize.sm),
+        padding:
+            EdgeInsets.symmetric(horizontal: AppSize.sm, vertical: AppSize.sm),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: widget.tabs
+              .map(
+                (tab) => TabButton(
+                  activeColor: Theme.of(context).colorScheme.primary,
+                  color:
+                      Theme.of(context).colorScheme.secondary.withOpacity(0.10),
+                  active: selectedIndex == widget.tabs.indexOf(tab),
+                  text: tab.text,
+                  icon: tab.icon,
+                  onPressed: () {
+                    if (!clickable) return;
+                    setState(
+                      () {
+                        selectedIndex = widget.tabs.indexOf(tab);
+                        clickable = false;
+                      },
+                    );
 
-                            tab.onPressed?.call();
-                            widget.onTabChange?.call(selectedIndex);
+                    tab.onPressed?.call();
+                    widget.onTabChange?.call(selectedIndex);
 
-                            Future.delayed(Duration(milliseconds: 400), () {
-                              setState(() {
-                                clickable = true;
-                              });
-                            });
+                    Future.delayed(
+                      const Duration(milliseconds: 400),
+                      () {
+                        setState(
+                          () {
+                            clickable = true;
                           },
-                        ))
-                    .toList())));
+                        );
+                      },
+                    );
+                  },
+                ),
+              )
+              .toList(),
+        ),
+      ),
+    );
   }
 }
 
@@ -118,7 +128,11 @@ class _TabButtonState extends State<TabButton> with TickerProviderStateMixin {
 
     expandController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 400))
-      ..addListener(() => setState(() {}));
+      ..addListener(
+        () => setState(
+          () {},
+        ),
+      );
   }
 
   @override
@@ -135,21 +149,29 @@ class _TabButtonState extends State<TabButton> with TickerProviderStateMixin {
             curve: _expanded ? Curves.easeInCubic : Curves.easeInCubic.flipped))
         .value;
     var colorTween = ColorTween(
-        begin: dark
-            ? AppTheme.darkTheme.iconTheme.color
-            : AppTheme.darkTheme.iconTheme.color,
-        end: widget.activeColor);
-    var colorTweenAnimation = colorTween.animate(CurvedAnimation(
+      begin: dark
+          ? AppTheme.darkTheme.iconTheme.color
+          : AppTheme.darkTheme.iconTheme.color,
+      end: widget.activeColor,
+    );
+    var colorTweenAnimation = colorTween.animate(
+      CurvedAnimation(
         parent: expandController,
-        curve: _expanded ? Curves.easeInExpo : Curves.easeOutCirc));
+        curve: _expanded ? Curves.easeInExpo : Curves.easeOutCirc,
+      ),
+    );
 
     _expanded = !widget.active!;
-    if (_expanded)
+    if (_expanded) {
       expandController.reverse();
-    else
+    } else {
       expandController.forward();
+    }
 
-    Widget icon = Icon(widget.icon, color: colorTweenAnimation.value);
+    Widget icon = Icon(
+      widget.icon,
+      color: colorTweenAnimation.value,
+    );
 
     return InkWell(
       borderRadius: BorderRadius.all(Radius.circular(100.r)),
@@ -158,60 +180,72 @@ class _TabButtonState extends State<TabButton> with TickerProviderStateMixin {
         curve: Curves.easeOut,
         padding: EdgeInsets.symmetric(
             horizontal: kDefaultPadding / 2, vertical: kDefaultPadding * 0.5),
-        duration: Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 400),
         decoration: BoxDecoration(
           color: _expanded ? AppColor.light.withOpacity(0) : AppColor.light,
-          borderRadius: BorderRadius.all(Radius.circular(100.r)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(100.r),
+          ),
         ),
         child: FittedBox(
           fit: BoxFit.fitHeight,
-          child: Builder(builder: (_) {
-            return Stack(
-              children: [
-                Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                  Opacity(
-                    opacity: 0,
-                    child: icon,
-                  ),
-                  Container(
-                    child: Align(
+          child: Builder(
+            builder: (_) {
+              return Stack(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Opacity(
+                        opacity: 0,
+                        child: icon,
+                      ),
+                      Align(
                         alignment: Alignment.centerRight,
                         widthFactor: curveValue,
-                        child: Container(
-                          child: Opacity(
-                              opacity: _expanded
-                                  ? pow(expandController.value, 13) as double
-                                  : expandController
-                                      .drive(CurveTween(curve: Curves.easeIn))
-                                      .value,
-                              child: Padding(
-                                padding: EdgeInsets.only(
+                        child: Opacity(
+                          opacity: _expanded
+                              ? pow(expandController.value, 13) as double
+                              : expandController
+                                  .drive(CurveTween(curve: Curves.easeIn))
+                                  .value,
+                          child: Padding(
+                            padding: EdgeInsets.only(
                                     left: 16 -
                                         (8 *
-                                            expandController
-                                                .drive(CurveTween(
-                                                    curve: Curves.easeOutSine))
-                                                .value).w,
+                                                expandController
+                                                    .drive(
+                                                      CurveTween(
+                                                          curve: Curves
+                                                              .easeOutSine),
+                                                    )
+                                                    .value)
+                                            .w,
                                     right: 8 *
                                         expandController
-                                            .drive(CurveTween(
-                                                curve: Curves.easeOutSine))
-                                            .value).w,
-                                child: Text(
-                                  widget.text,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: widget.activeColor,
-                                  ),
-                                ),
-                              )),
-                        )),
+                                            .drive(
+                                              CurveTween(
+                                                  curve: Curves.easeOutSine),
+                                            )
+                                            .value)
+                                .w,
+                            child: Text(
+                              widget.text,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: widget.activeColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ]),
-                Align(alignment: Alignment.centerLeft, child: icon),
-              ],
-            );
-          }),
+                  Align(alignment: Alignment.centerLeft, child: icon),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

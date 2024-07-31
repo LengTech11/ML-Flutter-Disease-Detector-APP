@@ -1,4 +1,5 @@
 import 'package:disease_detector_app/api_service/client/dio_http_client.dart';
+import 'package:disease_detector_app/l10n/l10n.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
 import 'package:disease_detector_app/provider/document_provider.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
@@ -12,6 +13,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'config/themes/theme.dart';
 import 'firebase_options.dart';
@@ -98,17 +101,32 @@ class _MyAppState extends State<MyApp> {
           minTextAdapt: true,
           splitScreenMode: true,
           builder: (context, child) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'VisionCareAI',
-              themeMode: themeProvider.themeMode,
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
-              home: isFirstInstall == true
-                  ? const OnboardingView()
-                  : isLogin == true
-                      ? const LoginScreen()
-                      : const HomeScreen(),
+            return ScreenUtilInit(
+              designSize: const Size(430, 932),
+              minTextAdapt: true,
+              splitScreenMode: true,
+              builder: (context, child) {
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: 'VisionCareAI',
+                  themeMode: themeProvider.themeMode,
+                  theme: AppTheme.lightTheme,
+                  darkTheme: AppTheme.darkTheme,
+                  supportedLocales: L10n.all,
+                  locale: Locale(themeProvider.languageCode ?? 'km'),
+                  localizationsDelegates: const [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  home: isFirstInstall == true
+                      ? const OnboardingView()
+                      : isLogin == true
+                          ? const LoginScreen()
+                          : const HomeScreen(),
+                );
+              },
             );
           },
         );

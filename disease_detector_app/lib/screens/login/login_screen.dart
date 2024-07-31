@@ -7,6 +7,7 @@ import 'package:disease_detector_app/storage/token_storage.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:disease_detector_app/widgets/outlined_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -73,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Welcome Back",
+                    AppLocalizations.of(context)?.welcome ?? 'Welcome',
                     style: dark
                         ? MyTextTheme.darkTextTheme.headlineLarge
                         : MyTextTheme.lightTextTheme.headlineLarge,
@@ -86,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: MyTextFormField(
                       dark: dark,
                       prefixIcon: const Icon(Icons.email_rounded),
-                      hint: "Email",
+                      hint: AppLocalizations.of(context)?.email ?? 'Email',
                       controller: emailController,
                       keyBoardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
@@ -116,7 +117,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 });
                               },
                             ),
-                      hint: "Password",
+                      hint:
+                          AppLocalizations.of(context)?.password ?? 'Password',
                       controller: passwordController,
                       keyBoardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
@@ -128,33 +130,35 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextButton(
                     onPressed: () {},
                     child: Text(
-                      "Forgot Password?",
+                      AppLocalizations.of(context)?.forgot_password ??
+                          'Forgot Password',
                       style: dark
                           ? MyTextTheme.darkTextTheme.titleMedium
                           : MyTextTheme.lightTextTheme.titleMedium,
                     ),
                   ),
                   Container(
-                      margin: EdgeInsets.symmetric(horizontal: 16.w),
-                      height: 50.h,
-                      width: MediaQuery.of(context).size.width,
-                      child: MyButton(
-                        dark: dark,
-                        name: "Login",
-                        onPress: () async {
-                          if (_formKey.currentState!.validate()) {
-                            bool isValidated = loginVaildation(
-                                emailController.text, passwordController.text);
-                            if (isValidated) {
-                              showLoaderDialog(context);
-                              await login(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                  context: context);
-                            }
+                    margin: EdgeInsets.symmetric(horizontal: 16.w),
+                    height: 50.h,
+                    width: MediaQuery.of(context).size.width,
+                    child: MyButton(
+                      dark: dark,
+                      name: AppLocalizations.of(context)?.login ?? 'Login',
+                      onPress: () async {
+                        if (_formKey.currentState!.validate()) {
+                          bool isValidated = loginVaildation(
+                              emailController.text, passwordController.text);
+                          if (isValidated) {
+                            showLoaderDialog(context);
+                            await login(
+                                email: emailController.text,
+                                password: passwordController.text,
+                                context: context);
                           }
-                        },
-                      )),
+                        }
+                      },
+                    ),
+                  ),
                   Container(
                       margin: EdgeInsets.symmetric(horizontal: 16.w),
                       height: 50.h,
@@ -162,12 +166,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: OutlineButton(
                         dark: dark,
                         icon: const Icon(Iconsax.user),
-                        title: "Login as Guest",
+                        title: AppLocalizations.of(context)?.login_as_guest ??
+                            'Continue as Guest',
                         onPressed: () async {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomeScreen()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomeScreen(),
+                            ),
+                          );
                         },
                       )),
                   Row(
@@ -175,7 +182,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Don’t have an account?",
+                        AppLocalizations.of(context)?.dont_have_account ??
+                            'Don\'t have account?',
                         style: dark
                             ? MyTextTheme.darkTextTheme.titleMedium
                             : MyTextTheme.lightTextTheme.titleMedium,
@@ -186,13 +194,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextButton(
                         onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RegisterScreen()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterScreen(),
+                            ),
+                          );
                         },
                         child: Text(
-                          "Sign Up",
+                          AppLocalizations.of(context)?.register ?? 'Register',
                           style: TextStyle(
                               color: AppColor.primary,
                               fontWeight: FontWeight.w500,

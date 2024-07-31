@@ -2,6 +2,7 @@ import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DiseaseScreen extends StatefulWidget {
   const DiseaseScreen({super.key});
@@ -50,9 +51,12 @@ class _DiseaseScreenState extends State<DiseaseScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'History',
-            style: TextStyle(
+          SizedBox(
+            height: kDefaultPadding,
+          ),
+          Text(
+            AppLocalizations.of(context)?.history ?? 'History',
+            style: const TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
               color: AppColor.primary,

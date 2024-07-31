@@ -6,6 +6,7 @@ import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/my_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -65,7 +66,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Change Password',
+              AppLocalizations.of(context)?.change_password ??
+                  'Change Password',
               style: dark
                   ? MyTextTheme.darkTextTheme.headlineMedium
                   : MyTextTheme.lightTextTheme.headlineMedium,
@@ -88,7 +90,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             ),
             MyTextFormField(
               dark: dark,
-              hint: "New Password",
+              hint:
+                  AppLocalizations.of(context)?.new_password ?? 'New Password',
               controller: newPasswordController,
               keyBoardType: TextInputType.text,
               textInputAction: TextInputAction.next,
@@ -99,7 +102,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             ),
             MyTextFormField(
               dark: dark,
-              hint: "Confirm Password",
+              hint: AppLocalizations.of(context)?.confirm_password ??
+                  'Confirm Password',
               controller: confirmPasswordController,
               keyBoardType: TextInputType.text,
               textInputAction: TextInputAction.next,
@@ -139,7 +143,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 });
               },
             ),
-      hint: "Current Password",
+      hint:
+          AppLocalizations.of(context)?.current_password ?? 'Current Password',
       controller: currentPasswordCotroller,
       keyBoardType: TextInputType.text,
       textInputAction: TextInputAction.next,
@@ -172,10 +177,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             newPassword: newPasswordController.text,
             confirmPassword: confirmPasswordController.text,
           );
-          HelperFunctions.debug('Change Password');
         },
         child: Text(
-          'Change Password',
+          AppLocalizations.of(context)?.change ?? 'Change',
           style: dark
               ? MyTextTheme.darkTextTheme.labelLarge
               : MyTextTheme.lightTextTheme.labelLarge,

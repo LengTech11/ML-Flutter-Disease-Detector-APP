@@ -42,9 +42,11 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     try {
       final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
-        setState(() {
-          _image = File(pickedFile.path);
-        });
+        setState(
+          () {
+            _image = File(pickedFile.path);
+          },
+        );
         await _predictDisease();
       }
     } catch (e) {
@@ -77,15 +79,19 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   Future<void> _predictDisease() async {
     if (_image == null) return;
 
-    setState(() {
-      _isLoading = true;
-    });
+    setState(
+      () {
+        _isLoading = true;
+      },
+    );
 
     try {
       final dio = Dio();
-      final formData = FormData.fromMap({
-        'file': await MultipartFile.fromFile(_image!.path),
-      });
+      final formData = FormData.fromMap(
+        {
+          'file': await MultipartFile.fromFile(_image!.path),
+        },
+      );
 
       final response = await dio.post(
         AppConfig.predictApiUrl,
@@ -93,12 +99,14 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
       );
 
       if (response.statusCode == 200) {
-        setState(() {
-          _predictedClass = response.data['Predicted Class'].toString();
-          _confidence = response.data['Confidence'];
-          _classProbabilities =
-              Map<String, double>.from(response.data['Class Probabilities']);
-        });
+        setState(
+          () {
+            _predictedClass = response.data['Predicted Class'].toString();
+            _confidence = response.data['Confidence'];
+            _classProbabilities =
+                Map<String, double>.from(response.data['Class Probabilities']);
+          },
+        );
         // Call the method to update disease count
         if (_predictedClass != null) {
           await _updateDiseaseCount(_predictedClass!);
@@ -106,23 +114,29 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         // ignore: use_build_context_synchronously
         _showPredictionBottomSheet(context);
       } else {
-        setState(() {
-          _predictedClass = 'Failed to predict';
-          _confidence = null;
-          _classProbabilities = {};
-        });
+        setState(
+          () {
+            _predictedClass = 'Failed to predict';
+            _confidence = null;
+            _classProbabilities = {};
+          },
+        );
       }
     } catch (e) {
       print('Error predicting disease: $e');
-      setState(() {
-        _predictedClass = 'Failed to predict';
-        _confidence = null;
-        _classProbabilities = {};
-      });
+      setState(
+        () {
+          _predictedClass = 'Failed to predict';
+          _confidence = null;
+          _classProbabilities = {};
+        },
+      );
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(
+        () {
+          _isLoading = false;
+        },
+      );
     }
   }
 
@@ -138,12 +152,14 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
 
     try {
       final dio = Dio();
-      final formData = FormData.fromMap({
-        'predicted_class': predictedClass,
-        'confidence': confidence,
-        'image':
-            await MultipartFile.fromFile(_image!.path, filename: 'image.jpg'),
-      });
+      final formData = FormData.fromMap(
+        {
+          'predicted_class': predictedClass,
+          'confidence': confidence,
+          'image':
+              await MultipartFile.fromFile(_image!.path, filename: 'image.jpg'),
+        },
+      );
 
       final response = await dio.post(
         apiUrl,
@@ -471,26 +487,32 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
               // Check authentication status and show a snackbar if not authenticated
               String? token = AppConstant.USER_TOKEN;
               if (token == null) {
-                Navigator.of(context)
-                    .popUntil((route) => route.isFirst); // Close all dialogs
+                Navigator.of(context).popUntil(
+                  (route) => route.isFirst,
+                ); // Close all dialogs
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text(
-                        'Guest needs to Sign up or Login for an account to save history'),
+                      'Guest needs to Sign up or Login for an account to save history',
+                    ),
                   ),
                 );
               } else {
                 // Call the function to save the prediction
                 if (_predictedClass != null && _confidence != null) {
-                  bool success =
-                      await savePrediction(_predictedClass!, _confidence!);
-                  Navigator.of(context)
-                      .popUntil((route) => route.isFirst); // Close all dialogs
+                  bool success = await savePrediction(
+                    _predictedClass!,
+                    _confidence!,
+                  );
+                  Navigator.of(context).popUntil(
+                    (route) => route.isFirst,
+                  ); // Close all dialogs
                   if (success) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SuccessScreen()),
+                        builder: (context) => const SuccessScreen(),
+                      ),
                     ); // Navigate to SuccessScreen
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
