@@ -547,49 +547,54 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   }
 
   Widget buildListDiseases(BuildContext context) {
+    final documentProvider =
+        Provider.of<DocumentProvider>(context, listen: false);
     return Consumer<DiseaseProvider>(
       builder: (context, value, _) {
-        if (value.dis!.data!.isEmpty) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          return ListView.builder(
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            itemCount: value.dis?.data!.length,
-            itemBuilder: (BuildContext context, int index) {
-              var disease = value.dis?.data![index];
-              if (disease == null) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                final documentProvider =
-                    Provider.of<DocumentProvider>(context, listen: false);
-                documentProvider.fetchDocument(disease.title);
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Consumer<DocumentProvider>(
-                    builder: (context, doc, _) {
-                      return EcaListtile(
-                        leading: const Icon(
-                          Icons.visibility,
-                          color: AppColor.primary,
-                        ),
-                        title: Text(disease.title),
-                        onTap: () => ECABtmSheet().ecaShowBtmSheet(
-                          context: context,
-                          title: disease.title,
-                          description: disease.description,
-                          fileName: disease.title,
-                        ),
-                      );
-                    },
+        return value.dis == null
+            ? SizedBox(
+                height: 300,
+                child: Center(
+                  child: Text(
+                    AppLocalizations.of(context)?.internal_server_error ??
+                        'Internal Server Error',
+                    style: MyTextTheme.lightTextTheme.titleLarge,
                   ),
-                );
-              }
-            },
-          );
-        }
+                ),
+              )
+            : ListView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemCount: value.dis?.data!.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var disease = value.dis?.data![index];
+                  documentProvider.fetchDocument(disease!.title);
+                  return value.dis!.data!.isEmpty
+                      ? const CircularProgressIndicator()
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Consumer<DocumentProvider>(
+                            builder: (context, doc, _) {
+                              return EcaListtile(
+                                leading: const Icon(
+                                  Icons.visibility,
+                                  color: AppColor.primary,
+                                ),
+                                title: Text(disease.title),
+                                onTap: () {
+                                  ECABtmSheet().ecaShowBtmSheet(
+                                    context: context,
+                                    title: disease.title,
+                                    description: disease.description,
+                                    fileName: disease.title,
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        );
+                },
+              );
       },
     );
   }

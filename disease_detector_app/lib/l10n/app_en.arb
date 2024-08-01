@@ -39,5 +39,6 @@
   "change": "Change",
   "close": "Close",
   "upload_eye_disease_image": "Please upload eye disease image",
-  "after_upload_info": "After uploading the image, you can view information about various eye diseases below:"
+  "after_upload_info": "After uploading the image, you can view information about various eye diseases below:",
+  "internal_server_error": "Internal Server Error"
 }
