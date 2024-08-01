@@ -47,8 +47,8 @@
                                 <!-- Modal body -->
                                 <div class="px-6 py-3 space-y-2">
                                     <div class="input-group mt-3">
-                                        <p class=" mb-3"><Span style="color: red; font-weight:500">Note: </Span>We only accept files with extensions including .pdf, .docx, .xls, .xlsx, and .ppt.</p>
-                                        <input class="bg-gray-50 border border-gray-300 rounded-lg focus:ring-cyan-600 w-full" type="file" name="title" id="title" accept=".xlsx, .xls, .docx, .pdf, .ppt" required>
+                                        <p class=" mb-3"><Span style="color: red; font-weight:500">Note: </Span>We only accept files with extensions including .pdf and .docx.</p>
+                                        <input class="bg-gray-50 border border-gray-300 rounded-lg focus:ring-cyan-600 w-full" type="file" name="title" id="title" accept=".xlsx, .xls, .pdf" required>
                                     </div>
                                 </div>
 
@@ -139,7 +139,7 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                             </a> --}}
-                            <a href="#"
+                            {{-- <a href="#"
                                 class="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center">
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -147,7 +147,7 @@
                                         d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                            </a>
+                            </a> --}}
                             {{-- <a href="#"
                                 class="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center">
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
@@ -179,7 +179,7 @@
                             </svg>
                             Import Document
                         </button>
-                        <a href="#"
+                        {{-- <a href="#"
                             class="w-1/2 text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto">
                             <svg class="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -188,7 +188,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                             Download All
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>
@@ -216,7 +216,8 @@
                                     <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                                         Size
                                     </th>
-                                    <th scope="col" class="p-4">
+                                    <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
@@ -260,7 +261,7 @@
                                         </td>
                                         <td class="p-4 whitespace-nowrap space-x-2">
                                             <button type="button" data-twe-toggle="modal"
-                                                data-twe-target="#editUser{{ $value->id }}"
+                                                data-twe-target="#editDoc{{ $value->id }}"
                                                 class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
                                                 <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
                                                     xmlns="http://www.w3.org/2000/svg">
@@ -274,7 +275,7 @@
                                                 Edit
                                             </button>
                                             <button type="button" data-twe-toggle="modal"
-                                                data-twe-target="#deleteUser{{ $value->id }}"
+                                                data-twe-target="#deleteDoc{{ $value->id }}"
                                                 class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
                                                 <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
                                                     xmlns="http://www.w3.org/2000/svg">
@@ -287,9 +288,9 @@
                                         </td>
                                     </tr>
 
-                                    <!--edit user modal-->
+                                    <!--edit document modal-->
                                     <div class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-                                        id="editUser{{ $value->id }}" data-twe-modal-init tabindex="-1"
+                                        id="editDoc{{ $value->id }}" data-twe-modal-init tabindex="-1"
                                         aria-modal="true">
                                         <div data-twe-modal-dialog-ref
                                             class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[600px]">
@@ -370,9 +371,9 @@
                                         </div>
                                     </div>
 
-                                    <!--delete user modal-->
+                                    <!--delete document modal-->
                                     <div class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-                                        id="deleteUser{{ $value->id }}" data-twe-modal-init tabindex="-1"
+                                        id="deleteDoc{{ $value->id }}" data-twe-modal-init tabindex="-1"
                                         aria-modal="true">
                                         <div data-twe-modal-dialog-ref
                                             class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
@@ -447,12 +448,12 @@
                     </svg>
                 </a>
                 <span class="text-sm font-normal text-gray-500">Showing <span
-                        class="text-gray-900 font-semibold">1-20</span> of {{$totalDocument}}<span class="text-gray-900 font-semibold">
+                        class="text-gray-900 font-semibold">1-{{$totalDocument}}</span> of {{$totalDocument}}<span class="text-gray-900 font-semibold">
                         </span></span>
             </div>
             <div class="flex items-center space-x-3">
                 <a href="#"
-                    class="flex-1 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center">
+                    class="flex-1 text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto">
                     <svg class="-ml-1 mr-1 h-5 w-5"" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
@@ -462,7 +463,7 @@
                     Previous
                 </a>
                 <a href="#"
-                    class="flex-1 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center">
+                    class="flex-1 text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto">
                     Next
                     <svg class="-mr-1 ml-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
