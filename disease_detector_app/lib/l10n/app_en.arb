@@ -37,5 +37,7 @@
   "change_password": "Change Password",
   "my_eye": "My Eye",
   "change": "Change",
-  "close": "Close"
+  "close": "Close",
+  "upload_eye_disease_image": "Please upload eye disease image",
+  "after_upload_info": "After uploading the image, you can view information about various eye diseases below:"
 }

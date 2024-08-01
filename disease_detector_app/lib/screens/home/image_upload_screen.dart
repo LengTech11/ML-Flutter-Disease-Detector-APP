@@ -15,6 +15,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ImageUploadScreen extends StatefulWidget {
   const ImageUploadScreen({super.key});
@@ -630,7 +631,8 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         color: Color(0xFF3F51B5),
       ),
       title: Text(
-        'Please upload an image of the eye disease here',
+        AppLocalizations.of(context)?.upload_eye_disease_image ??
+            'Upload Image',
         style: dark
             ? MyTextTheme.darkTextTheme.titleLarge
             : MyTextTheme.lightTextTheme.titleLarge,
@@ -691,7 +693,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   Widget buildDescription(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return Text(
-      'After uploading the image, you can view information about various eye diseases below:',
+      AppLocalizations.of(context)?.after_upload_info ?? 'Disease Description',
       style: dark
           ? MyTextTheme.darkTextTheme.titleLarge
           : MyTextTheme.lightTextTheme.titleLarge,
