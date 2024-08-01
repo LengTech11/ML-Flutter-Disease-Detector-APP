@@ -121,7 +121,7 @@
                     <nav class="flex mb-5" aria-label="Breadcrumb">
                         <ol class="inline-flex items-center space-x-1 md:space-x-2">
                             <li class="inline-flex items-center">
-                                <a href="#" class="text-gray-700 hover:text-gray-900 inline-flex items-center">
+                                <a href=" {{url('dashboard')}} " class="text-gray-700 hover:text-gray-900 inline-flex items-center">
                                     <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -168,7 +168,7 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                             </a> --}}
-                            <a href="#"
+                            {{-- <a href="#"
                                 class="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center">
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -176,7 +176,7 @@
                                         d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                            </a>
+                            </a> --}}
                             {{-- <a href="#"
                                 class="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center">
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
@@ -208,7 +208,7 @@
                             </svg>
                             Add user
                         </button>
-                        <a href="#"
+                        {{-- <a href="#"
                             class="w-1/2 text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto">
                             <svg class="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -217,7 +217,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                             Export
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>
@@ -264,7 +264,8 @@
                                     <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                                         Status
                                     </th>
-                                    <th scope="col" class="p-4">
+                                    <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
@@ -527,7 +528,7 @@
             </div>
             <div class="flex items-center space-x-3">
                 <a href="{{ $getRecord->previousPageUrl() }}"
-                    class="flex-1 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center">
+                    class="flex-1 w-1/2 text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto">
                     <svg class="-ml-1 mr-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
@@ -537,7 +538,7 @@
                     Previous
                 </a>
                 <a href="{{ $getRecord->nextPageUrl() }}"
-                    class="flex-1 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center">
+                    class="flex-1 w-1/2 text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto">
                     Next
                     <svg class="-mr-1 ml-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"

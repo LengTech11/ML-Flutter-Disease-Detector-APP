@@ -76,7 +76,7 @@
                 </div>
                 <div class="flow-root">
                     <ul role="list" class="divide-y divide-gray-200">
-                        @foreach ($getRecord->take(5) as $value)
+                        @foreach ($getRecord->take(4) as $value)
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-shrink-0">
@@ -110,17 +110,25 @@
             <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
 
                 <!-- Card Title -->
-                <h3 class="text-xl leading-none font-bold text-gray-900 mb-10">Dataset Overview</h3>
+                {{-- <h3 class="text-xl leading-none font-bold text-gray-900 mb-10">Dataset Overview</h3> --}}
+                <div class="flex  justify-between mb-8">
+                    <h3 class="text-xl font-bold leading-none text-gray-900">Disease Overview</h3>
+                    <a href=" {{url('disease/list')}} "
+                        class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center">
+                        View all
+                    </a>
+                </div>
+
                 <div class="block w-full overflow-x-auto">
                     <table class="items-center w-full bg-transparent border-collapse">
                         <thead>
                             <tr>
                                 <th
                                     class="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
-                                    Top dataset</th>
+                                    Top Disease</th>
                                 <th
                                     class="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
-                                    Total Used</th>
+                                    Total Scanned</th>
                                 <th
                                     class="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap min-w-140-px">
                                 </th>
@@ -148,7 +156,7 @@
                             <tr class="text-gray-500">
                                 <th
                                     class="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
-                                    Glaucoma</th>
+                                    Diabetic Retinopathy</th>
                                 <td
                                     class="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
                                     225</td>
@@ -181,7 +189,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr class="text-gray-500">
+                            {{-- <tr class="text-gray-500">
                                 <th
                                     class="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
                                     Diabetic Retinopathy</th>
@@ -198,8 +206,8 @@
                                         </div>
                                     </div>
                                 </td>
-                            </tr>
-                            <tr class="text-gray-500">
+                            </tr> --}}
+                            {{-- <tr class="text-gray-500">
                                 <th
                                     class="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
                                     Crossed Eye</th>
@@ -216,8 +224,8 @@
                                         </div>
                                     </div>
                                 </td>
-                            </tr>
-                            <tr class="text-gray-500">
+                            </tr> --}}
+                            {{-- <tr class="text-gray-500">
                                 <th
                                     class="border-t-0 align-middle text-sm font-normal whitespace-nowrap p-4 pb-0 text-left">
                                     Other</th>
@@ -229,12 +237,12 @@
                                         <span class="mr-2 text-xs font-medium">7%</span>
                                         <div class="relative w-full">
                                             <div class="w-full bg-gray-200 rounded-sm h-2">
-                                                <div class="bg-purple-500 h-2 rounded-sm" style="width: 7%"></div>
+                                                <div class="bg-purple-500 h-2 rounded-sm" style="width: 77%"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                     </table>
                 </div>
