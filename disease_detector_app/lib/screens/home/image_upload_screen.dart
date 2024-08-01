@@ -13,9 +13,9 @@ import 'package:disease_detector_app/widgets/eca_listtile.dart';
 import 'package:disease_detector_app/widgets/eca_show_btm_sheet.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ImageUploadScreen extends StatefulWidget {
   const ImageUploadScreen({super.key});
@@ -58,7 +58,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   }
 
   Future<void> _updateDiseaseCount(String title) async {
-    const String apiUrl = 'http://0.0.0.0:8000/api/update-disease-count';
+    const String apiUrl = 'http://10.0.2.2:8000/api/update-disease-count';
 
     try {
       final dio = Dio();
@@ -100,6 +100,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
       );
 
       if (response.statusCode == 200) {
+        HelperFunctions.debug(response.data.toString());
         setState(
           () {
             _predictedClass = response.data['Predicted Class'].toString();
@@ -115,6 +116,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         // ignore: use_build_context_synchronously
         _showPredictionBottomSheet(context);
       } else {
+        HelperFunctions.debug(response.data.toString());
         setState(
           () {
             _predictedClass = 'Failed to predict';
@@ -142,7 +144,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   }
 
   Future<bool> savePrediction(String predictedClass, double confidence) async {
-    const String apiUrl = 'http://0.0.0.0:8000/api/predictions';
+    const String apiUrl = 'http://10.0.2.2:8000/api/predictions';
 
     String? token = AppConstant.USER_TOKEN;
 
@@ -199,70 +201,72 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         builder: (context, scrollController) {
           final dark = HelperFunctions.isDarkMode(context);
           List<Widget> classProbabilityWidgets =
-              _classProbabilities.entries.map((entry) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: RichText(
-                        text: TextSpan(
+              _classProbabilities.entries.map(
+            (entry) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: '${entry.key}: ',
+                                style: dark
+                                    ? MyTextTheme.darkTextTheme.titleLarge
+                                    : MyTextTheme.lightTextTheme.titleLarge,
+                              ),
+                              TextSpan(
+                                text:
+                                    '${(entry.value * 100).toStringAsFixed(2)}%',
+                                style: dark
+                                    ? MyTextTheme.darkTextTheme.titleLarge
+                                    : MyTextTheme.lightTextTheme.titleLarge,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      SizedBox(
+                        width: 70,
+                        height: 70,
+                        child: Stack(
                           children: [
-                            TextSpan(
-                              text: '${entry.key}: ',
-                              style: dark
-                                  ? MyTextTheme.darkTextTheme.titleLarge
-                                  : MyTextTheme.lightTextTheme.titleLarge,
+                            Positioned.fill(
+                              child: CircularProgressIndicator(
+                                value: entry.value,
+                                backgroundColor: Colors.grey[200],
+                                color: Colors.blue,
+                              ),
                             ),
-                            TextSpan(
-                              text:
-                                  '${(entry.value * 100).toStringAsFixed(2)}%',
-                              style: dark
-                                  ? MyTextTheme.darkTextTheme.titleLarge
-                                  : MyTextTheme.lightTextTheme.titleLarge,
+                            Center(
+                              child: Text(
+                                '${(entry.value * 100).toStringAsFixed(0)}%',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: dark ? Colors.white : Colors.black,
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    SizedBox(
-                      width: 70,
-                      height: 70,
-                      child: Stack(
-                        children: [
-                          Positioned.fill(
-                            child: CircularProgressIndicator(
-                              value: entry.value,
-                              backgroundColor: Colors.grey[200],
-                              color: Colors.blue,
-                            ),
-                          ),
-                          Center(
-                            child: Text(
-                              '${(entry.value * 100).toStringAsFixed(0)}%',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: dark ? Colors.white : Colors.black,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                const Divider(
-                  color: Colors.grey,
-                  height: 20,
-                  thickness: 2,
-                ),
-              ],
-            );
-          }).toList();
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  const Divider(
+                    color: Colors.grey,
+                    height: 20,
+                    thickness: 2,
+                  ),
+                ],
+              );
+            },
+          ).toList();
 
           return Container(
             width: MediaQuery.of(context).size.width,

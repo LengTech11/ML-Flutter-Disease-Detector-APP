@@ -2,6 +2,7 @@ import 'package:disease_detector_app/api_service/client/dio_http_client.dart';
 import 'package:disease_detector_app/l10n/l10n.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
 import 'package:disease_detector_app/provider/document_provider.dart';
+import 'package:disease_detector_app/provider/get_history_provider.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:disease_detector_app/screens/login/login_screen.dart';
@@ -39,6 +40,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => UserProfileProvider()),
         ChangeNotifierProvider(create: (_) => DiseaseProvider()),
         ChangeNotifierProvider(create: (_) => DocumentProvider()),
+        ChangeNotifierProvider(create: (_) => GetHistoryProvider()),
         // Add more providers as needed
       ],
       child: const MyApp(),

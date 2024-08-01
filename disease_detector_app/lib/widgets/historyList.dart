@@ -3,7 +3,6 @@ import 'package:disease_detector_app/config/themes/theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 
 import 'moreMenu.dart';
 
@@ -70,7 +69,6 @@ class HistoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateFormat format = DateFormat.yMMMd();
     final dark = HelperFunctions.isDarkMode(context);
     return Container(
       padding: EdgeInsets.all(kDefaultPadding * 0.5),
@@ -97,7 +95,7 @@ class HistoryTile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage(_historyCard.imageUrl),
+                    image: NetworkImage(_historyCard.imageUrl),
                   ),
                 ),
               ),
@@ -142,8 +140,6 @@ class HistoryTile extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    const Spacer(),
-                    Text(format.format(_historyCard.date)),
                   ],
                 ),
               )
@@ -174,12 +170,7 @@ class HistoryItem {
   final String imageUrl;
   final String species;
   final String condition;
-  final DateTime date;
 
-  const HistoryItem({
-    required this.imageUrl,
-    required this.species,
-    required this.condition,
-    required this.date,
-  });
+  const HistoryItem(
+      {required this.imageUrl, required this.species, required this.condition});
 }
