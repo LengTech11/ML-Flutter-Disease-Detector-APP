@@ -58,7 +58,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   }
 
   Future<void> _updateDiseaseCount(String title) async {
-    const String apiUrl = 'http://10.0.2.2:8000/api/update-disease-count';
+    const String apiUrl = 'http://0.0.0.0:8000/api/update-disease-count';
 
     try {
       final dio = Dio();
@@ -144,7 +144,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   }
 
   Future<bool> savePrediction(String predictedClass, double confidence) async {
-    const String apiUrl = 'http://10.0.2.2:8000/api/predictions';
+    const String apiUrl = 'http://0.0.0.0:8000/api/predictions';
 
     String? token = AppConstant.USER_TOKEN;
 

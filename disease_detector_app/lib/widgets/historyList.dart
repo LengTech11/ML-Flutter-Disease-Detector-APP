@@ -95,7 +95,8 @@ class HistoryTile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(_historyCard.imageUrl),
+                    image: NetworkImage(
+                        'http://0.0.0.0:8000${_historyCard.imageUrl}'),
                   ),
                 ),
               ),

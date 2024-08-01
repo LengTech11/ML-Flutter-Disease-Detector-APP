@@ -1,6 +1,7 @@
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/get_history_provider.dart';
+import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -74,6 +75,7 @@ class _DiseaseScreenState extends State<DiseaseScreen>
                           },
                           itemCount: value.history!.length,
                           separatorBuilder: (context, index) {
+                            HelperFunctions.debug('${history[index].imageUrl}');
                             return const SizedBox(
                               height: 8,
                             );
