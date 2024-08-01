@@ -570,7 +570,12 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                   var disease = value.dis?.data![index];
                   documentProvider.fetchDocument(disease!.title);
                   return value.dis!.data!.isEmpty
-                      ? const CircularProgressIndicator()
+                      ? const Center(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8),
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
                       : Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Consumer<DocumentProvider>(
