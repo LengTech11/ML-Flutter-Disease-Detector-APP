@@ -59,160 +59,170 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  bool isKeyboardVisible() {
+    return MediaQuery.of(context).viewInsets.bottom != 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+      ),
       body: Form(
         key: _formKey,
-        child: Center(
-          child: SingleChildScrollView(
-            child: SizedBox(
-              height: DeviceUtils.getScreenHeight(context) * 0.6,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)?.welcome ?? 'Welcome',
-                    style: dark
-                        ? MyTextTheme.darkTextTheme.headlineLarge
-                        : MyTextTheme.lightTextTheme.headlineLarge,
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: DeviceUtils.getScreenHeight(context),
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  AppLocalizations.of(context)?.welcome ?? 'Welcome Back',
+                  style: dark
+                      ? MyTextTheme.darkTextTheme.headlineLarge
+                      : MyTextTheme.lightTextTheme.headlineLarge,
+                ),
+                Image.asset(
+                  'assets/logo/logo.png',
+                  height: 200.h,
+                  fit: BoxFit.cover,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppSize.sm),
+                  child: MyTextFormField(
+                    dark: dark,
+                    prefixIcon: const Icon(Icons.email_rounded),
+                    hint: AppLocalizations.of(context)?.email ?? 'Email',
+                    controller: emailController,
+                    keyBoardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    visible: false,
                   ),
-                  SizedBox(
-                    height: AppSize.md,
+                ),
+                SizedBox(
+                  height: AppSize.sm,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppSize.sm),
+                  child: MyTextFormField(
+                    dark: dark,
+                    prefixIcon: const Icon(Iconsax.password_check),
+                    visible: isPassword,
+                    suffix: isPassword
+                        ? IconButton(
+                            icon: const Icon(Icons.visibility_off),
+                            onPressed: () {
+                              setState(() {
+                                isPassword = !isPassword;
+                              });
+                            },
+                          )
+                        : IconButton(
+                            icon: const Icon(Icons.visibility),
+                            onPressed: () {
+                              setState(() {
+                                isPassword = !isPassword;
+                              });
+                            },
+                          ),
+                    hint: AppLocalizations.of(context)?.password ?? 'Password',
+                    controller: passwordController,
+                    keyBoardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppSize.sm),
-                    child: MyTextFormField(
-                      dark: dark,
-                      prefixIcon: const Icon(Icons.email_rounded),
-                      hint: AppLocalizations.of(context)?.email ?? 'Email',
-                      controller: emailController,
-                      keyBoardType: TextInputType.text,
-                      textInputAction: TextInputAction.next,
-                      visible: false,
-                    ),
+                ),
+                SizedBox(
+                  height: 64.h,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16.w),
+                  height: 50.h,
+                  width: MediaQuery.of(context).size.width,
+                  child: MyButton(
+                    dark: dark,
+                    name: AppLocalizations.of(context)?.login ?? 'Login',
+                    onPress: () async {
+                      if (_formKey.currentState!.validate()) {
+                        bool isValidated = loginVaildation(
+                            emailController.text, passwordController.text);
+                        if (isValidated) {
+                          showLoaderDialog(context);
+                          await login(
+                              email: emailController.text,
+                              password: passwordController.text,
+                              context: context);
+                        }
+                      }
+                    },
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppSize.sm),
-                    child: MyTextFormField(
-                      dark: dark,
-                      prefixIcon: const Icon(Iconsax.password_check),
-                      visible: isPassword,
-                      suffix: isPassword
-                          ? IconButton(
-                              icon: const Icon(Icons.visibility_off),
-                              onPressed: () {
-                                setState(() {
-                                  isPassword = !isPassword;
-                                });
-                              },
-                            )
-                          : IconButton(
-                              icon: const Icon(Icons.visibility),
-                              onPressed: () {
-                                setState(() {
-                                  isPassword = !isPassword;
-                                });
-                              },
-                            ),
-                      hint:
-                          AppLocalizations.of(context)?.password ?? 'Password',
-                      controller: passwordController,
-                      keyBoardType: TextInputType.text,
-                      textInputAction: TextInputAction.next,
-                    ),
-                  ),
-                  SizedBox(
-                    height: AppSize.xl,
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      AppLocalizations.of(context)?.forgot_password ??
-                          'Forgot Password',
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)?.dont_have_account ??
+                          'Don\'t have account?',
                       style: dark
                           ? MyTextTheme.darkTextTheme.titleMedium
                           : MyTextTheme.lightTextTheme.titleMedium,
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16.w),
-                    height: 50.h,
-                    width: MediaQuery.of(context).size.width,
-                    child: MyButton(
-                      dark: dark,
-                      name: AppLocalizations.of(context)?.login ?? 'Login',
-                      onPress: () async {
-                        if (_formKey.currentState!.validate()) {
-                          bool isValidated = loginVaildation(
-                              emailController.text, passwordController.text);
-                          if (isValidated) {
-                            showLoaderDialog(context);
-                            await login(
-                                email: emailController.text,
-                                password: passwordController.text,
-                                context: context);
-                          }
-                        }
-                      },
+                    SizedBox(
+                      width: AppSize.xs,
                     ),
-                  ),
-                  Container(
-                      margin: EdgeInsets.symmetric(horizontal: 16.w),
-                      height: 50.h,
-                      width: MediaQuery.of(context).size.width,
-                      child: OutlineButton(
-                        dark: dark,
-                        icon: const Icon(Iconsax.user),
-                        title: AppLocalizations.of(context)?.login_as_guest ??
-                            'Continue as Guest',
-                        onPressed: () async {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomeScreen(),
-                            ),
-                          );
-                        },
-                      )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)?.dont_have_account ??
-                            'Don\'t have account?',
-                        style: dark
-                            ? MyTextTheme.darkTextTheme.titleMedium
-                            : MyTextTheme.lightTextTheme.titleMedium,
-                      ),
-                      SizedBox(
-                        width: AppSize.xs,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const RegisterScreen(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          AppLocalizations.of(context)?.register ?? 'Register',
-                          style: TextStyle(
-                              color: AppColor.primary,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18.sp),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegisterScreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)?.register ?? 'Register',
+                        style: TextStyle(
+                          color: AppColor.primary,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18.sp,
                         ),
                       ),
-                    ],
-                  )
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: AppSize.xl,
+                ),
+              ],
             ),
+          ),
+        ),
+      ),
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Visibility(
+        visible: !isKeyboardVisible(),
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 16.w),
+          height: 50.h,
+          child: OutlineButton(
+            dark: dark,
+            icon: const Icon(Iconsax.user),
+            title: AppLocalizations.of(context)?.login_as_guest ??
+                'Continue as Guest',
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomeScreen(),
+                ),
+              );
+            },
           ),
         ),
       ),
