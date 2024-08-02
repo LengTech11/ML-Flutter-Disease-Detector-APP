@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
               TabButton(
                 color: AppColor.white,
                 activeColor: AppColor.light,
-                icon: Iconsax.home,
+                icon: Iconsax.save_add,
                 text: AppLocalizations.of(context)?.my_eye ?? 'My Eye',
               ),
               TabButton(
