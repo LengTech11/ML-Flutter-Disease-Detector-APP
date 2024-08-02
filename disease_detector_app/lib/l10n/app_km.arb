@@ -41,5 +41,11 @@
   "close": "បិទ",
   "upload_eye_disease_image": "សូមផ្ទុកឡើងរូបភាពនៃជំងឺភ្នែកនៅទីនេះ",
   "after_upload_info": "បន្ទាប់ពីផ្ទុកឡើងរូបភាព, អ្នកអាចមើលព័ត៌មានអំពីជំងឺភ្នែកជាច្រើនខាងក្រោម:",
-  "internal_server_error": "បញ្ហាបច្ចេកទេស"
+  "internal_server_error": "បញ្ហាបច្ចេកទេស",
+  "confirm_save": "បញ្ជាក់ការរក្សាទុក",
+  "do_you_want_to_save": "តើអ្នកចង់រក្សាទុកការពិន័យនេះទេ?",
+  "guest_needs_to_signup_or_login": "ភ្ញៀវត្រូវតែចុះឈ្មោះឬចូលគណនីដើម្បីរក្សាទុកប្រវត្តិ",
+  "failed_to_save_prediction": "បានបរាជ័យក្រោយពិន័យ",
+  "confirm": "បញ្ជាក់",
+  "cancel": "ទេ"
 }

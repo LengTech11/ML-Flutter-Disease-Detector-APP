@@ -480,14 +480,14 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Confirm Save'),
-        content: const Text('Do you want to save this prediction?'),
+        title: Text(AppLocalizations.of(context)!.confirm_save),
+        content: Text(AppLocalizations.of(context)!.do_you_want_to_save),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.pop(context); // Close the dialog
             },
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -498,9 +498,10 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                   (route) => route.isFirst,
                 ); // Close all dialogs
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                  SnackBar(
                     content: Text(
-                      'Guest needs to Sign up or Login for an account to save history',
+                      AppLocalizations.of(context)!
+                          .guest_needs_to_signup_or_login,
                     ),
                   ),
                 );
@@ -523,15 +524,16 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                     ); // Navigate to SuccessScreen
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Failed to save prediction'),
+                      SnackBar(
+                        content: Text(AppLocalizations.of(context)!
+                            .failed_to_save_prediction),
                       ),
                     );
                   }
                 }
               }
             },
-            child: const Text('Confirm'),
+            child: Text(AppLocalizations.of(context)!.confirm),
           ),
         ],
       ),
