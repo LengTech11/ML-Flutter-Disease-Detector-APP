@@ -1,3 +1,4 @@
+import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:disease_detector_app/screens/login/login_screen.dart';
@@ -24,7 +25,11 @@ class _LogoutButtonState extends State<LogoutButton> {
           onpress: () {
             showLoaderDialog(context);
             value.clearUser();
+
+            AppConstant.USER_TOKEN = '';
+
             TokenStorage.removeToken();
+
             if (value.userProfileModel?.data == null) {
               Navigator.of(context, rootNavigator: true).pop();
               Navigator.pushAndRemoveUntil(
