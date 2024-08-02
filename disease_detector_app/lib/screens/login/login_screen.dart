@@ -210,8 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 16.w),
           height: 50.h,
-          child: OutlineButton(
-            dark: dark,
+          child: OutlinedButtonWidget(
             icon: const Icon(Iconsax.user),
             title: AppLocalizations.of(context)?.login_as_guest ??
                 'Continue as Guest',

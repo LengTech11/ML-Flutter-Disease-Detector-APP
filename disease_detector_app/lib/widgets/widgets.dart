@@ -9,3 +9,5 @@ export 'package:disease_detector_app/widgets/moreMenu.dart';
 export 'package:disease_detector_app/widgets/historyList.dart';
 export 'package:disease_detector_app/widgets/searchBar.dart';
 export 'package:disease_detector_app/widgets/buttons.dart';
+export 'package:disease_detector_app/widgets/tile_button.dart';
+export 'package:disease_detector_app/widgets/outlined_button.dart';
