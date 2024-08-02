@@ -13,7 +13,7 @@
 
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
-    @vite('node_modules/tw-elements/js/tw-elements.umd.min.js')
+    {{-- @vite('node_modules/tw-elements/js/tw-elements.umd.min.js') --}}
 
 
 
