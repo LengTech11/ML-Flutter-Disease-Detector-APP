@@ -20,7 +20,7 @@ class MenuItemCategory extends StatefulWidget {
 
 class _MenuItemCategoryState extends State<MenuItemCategory>
     with TickerProviderStateMixin {
-  bool _expanded = false;
+  bool _expanded = true;
   late AnimationController animationController;
 
   @override
