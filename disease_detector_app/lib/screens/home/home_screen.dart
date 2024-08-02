@@ -33,14 +33,19 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context) {
         return Scaffold(
           appBar: AppBar(
+            centerTitle: true,
             automaticallyImplyLeading: false,
             title: Text(
               AppLocalizations.of(context)?.app_name ?? 'Vision Care',
-              style: const TextStyle(
-                color: AppColor.white,
+              style: TextStyle(
+                fontFamily: 'Times New Roman',
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: dark ? AppColor.white : AppColor.black,
+                letterSpacing: 0.8
               ),
             ),
-            backgroundColor: AppColor.primary,
+            backgroundColor: dark ? AppColor.dark : AppColor.light,
           ),
           backgroundColor: dark ? AppColor.dark : AppColor.light,
           body: pages[currentPage],
