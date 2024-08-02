@@ -31,9 +31,6 @@ class _AccountScreenState extends State<AccountScreen> {
       padding: appPadding,
       child: Column(
         children: [
-          SizedBox(
-            height: 20.h,
-          ),
           const profileInfo(),
           SizedBox(height: 16.h),
           profileMenuItems(context),

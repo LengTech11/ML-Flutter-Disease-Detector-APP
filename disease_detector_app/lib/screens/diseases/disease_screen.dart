@@ -40,9 +40,6 @@ class _DiseaseScreenState extends State<DiseaseScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: kDefaultPadding,
-          ),
           Text(
             AppLocalizations.of(context)?.history ?? 'History',
             style: const TextStyle(

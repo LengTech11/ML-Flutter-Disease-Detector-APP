@@ -32,6 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return Builder(
       builder: (context) {
         return Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Text(
+              AppLocalizations.of(context)?.app_name ?? 'Vision Care',
+              style: const TextStyle(
+                color: AppColor.white,
+              ),
+            ),
+            backgroundColor: AppColor.primary,
+          ),
           backgroundColor: dark ? AppColor.dark : AppColor.light,
           body: pages[currentPage],
           bottomNavigationBar: BottomNavigator(
