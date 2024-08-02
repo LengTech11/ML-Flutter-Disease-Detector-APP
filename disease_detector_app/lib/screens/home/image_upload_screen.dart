@@ -611,7 +611,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 65),
+          // const SizedBox(height: 65),
           buildUploadImageContent(context),
           const SizedBox(height: 20),
           buildDescription(context),
