@@ -67,20 +67,19 @@ class _profileInfoState extends State<profileInfo> {
                       );
                     },
                   );
-                  // });
                 },
                 child: Container(
-                  height: 90.h, //140
-                  width: 90.h,
+                  height: 70.h, 
+                  width: 70.h,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      width: 5.w,
+                      width: 2.w,
                       color: Colors.transparent,
                     ),
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50.r),
+                    borderRadius: BorderRadius.circular(40.r),
                     child: Image.asset(
                       onImg,
                       fit: BoxFit.cover,
