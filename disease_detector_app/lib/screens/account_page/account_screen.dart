@@ -28,7 +28,7 @@ class _AccountScreenState extends State<AccountScreen> {
       decoration: BoxDecoration(
         color: dark ? AppColor.dark : AppColor.light,
       ),
-      padding: appPadding, 
+      padding: appPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -116,10 +116,16 @@ class _AccountScreenState extends State<AccountScreen> {
       context,
       listen: false,
     );
+    final local = Localizations.localeOf(context);
+
     CupertinoAlertDialog alert = CupertinoAlertDialog(
       insetAnimationDuration: const Duration(microseconds: 50),
       title: Text(
         AppLocalizations.of(context)?.switch_language ?? 'Switch Language',
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+        ),
       ),
       content: Column(
         children: [
@@ -134,9 +140,15 @@ class _AccountScreenState extends State<AccountScreen> {
               children: [
                 Text(
                   AppLocalizations.of(context)?.switch_to_english ?? 'English',
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
-                provider.languageCode == 'en'
-                    ? const Icon(Icons.check_rounded)
+                local == const Locale('en')
+                    ? const Icon(
+                        Icons.check_rounded,
+                        color: Colors.green,
+                      )
                     : const SizedBox(),
               ],
             ),
@@ -152,9 +164,15 @@ class _AccountScreenState extends State<AccountScreen> {
               children: [
                 Text(
                   AppLocalizations.of(context)?.switch_to_khmer ?? 'Khmer',
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
-                provider.languageCode == 'km'
-                    ? const Icon(Icons.check_rounded)
+                local == const Locale('km')
+                    ? const Icon(
+                        Icons.check_rounded,
+                        color: Colors.green,
+                      )
                     : const SizedBox(),
               ],
             ),
