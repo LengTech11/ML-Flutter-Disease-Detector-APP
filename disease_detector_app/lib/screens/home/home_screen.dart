@@ -36,14 +36,13 @@ class _HomeScreenState extends State<HomeScreen> {
             centerTitle: true,
             automaticallyImplyLeading: false,
             title: Text(
-              AppLocalizations.of(context)?.app_name ?? 'Vision Care',
+              AppLocalizations.of(context)?.app_name ?? 'VisionCare AI',
               style: TextStyle(
-                fontFamily: 'Times New Roman',
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: dark ? AppColor.white : AppColor.black,
-                letterSpacing: 0.8
-              ),
+                  fontFamily: 'Poppins',
+                  fontSize: 28,
+                  fontWeight: FontWeight.w900,
+                  color: dark ? AppColor.white : AppColor.black,
+                  letterSpacing: 0.8),
             ),
             backgroundColor: dark ? AppColor.dark : AppColor.light,
           ),
