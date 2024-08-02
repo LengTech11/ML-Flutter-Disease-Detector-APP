@@ -1,11 +1,11 @@
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/config/constants.dart';
+import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:disease_detector_app/screens/login/login_screen.dart';
 import 'package:disease_detector_app/storage/token_storage.dart';
-import 'package:disease_detector_app/widgets/tile_button.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -21,8 +21,17 @@ class _LogoutButtonState extends State<LogoutButton> {
   Widget build(BuildContext context) {
     return Consumer<UserProfileProvider>(
       builder: (context, value, child) {
-        return TileButton(
-          onpress: () {
+        return TextButton(
+          style: TextButton.styleFrom(
+            alignment: Alignment.centerLeft,
+            minimumSize: Size(1.sw, 0),
+            padding: const EdgeInsets.all(8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(6.r),
+            ),
+            overlayColor: AppColor.error.withOpacity(0.1),
+          ),
+          onPressed: () {
             showLoaderDialog(context);
             value.clearUser();
 
@@ -41,10 +50,15 @@ class _LogoutButtonState extends State<LogoutButton> {
               );
             }
           },
-          prefix: Iconsax.logout4,
-          title: value.isGuest
-              ? AppLocalizations.of(context)?.login ?? 'Login'
-              : AppLocalizations.of(context)?.logout ?? 'Logout',
+          child: Text(
+            value.isGuest
+                ? AppLocalizations.of(context)?.login ?? 'Login'
+                : AppLocalizations.of(context)?.logout ?? 'Logout',
+            style: const TextStyle(
+              color: AppColor.error,
+              fontSize: 18,
+            ),
+          ),
         );
       },
     );

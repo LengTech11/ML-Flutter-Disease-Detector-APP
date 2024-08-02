@@ -28,8 +28,9 @@ class _AccountScreenState extends State<AccountScreen> {
       decoration: BoxDecoration(
         color: dark ? AppColor.dark : AppColor.light,
       ),
-      padding: appPadding,
+      padding: appPadding, 
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const profileInfo(),
           SizedBox(height: 16.h),
