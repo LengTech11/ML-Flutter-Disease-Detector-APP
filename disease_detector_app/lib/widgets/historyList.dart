@@ -7,7 +7,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'moreMenu.dart';
 
 class HistoryList extends StatefulWidget {
-  const HistoryList({super.key, required this.historyList});
+  const HistoryList({
+    super.key,
+    required this.historyList,
+  });
+
   final List<HistoryItem> historyList;
 
   @override
@@ -60,9 +64,11 @@ class _HistoryState extends State<History> {
 }
 
 class HistoryTile extends StatelessWidget {
-  const HistoryTile(
-      {super.key, required HistoryItem historyCard, this.packed = false})
-      : _historyCard = historyCard;
+  const HistoryTile({
+    super.key,
+    required HistoryItem historyCard,
+    this.packed = false,
+  }) : _historyCard = historyCard;
 
   final HistoryItem _historyCard;
   final bool packed;
@@ -112,12 +118,15 @@ class HistoryTile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      _historyCard.species,
-                      style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onBackground),
+                    Expanded(
+                      child: Text(
+                        _historyCard.species,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onBackground),
+                      ),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -134,11 +143,12 @@ class HistoryTile extends StatelessWidget {
                       child: Text(
                         _historyCard.condition,
                         style: TextStyle(
-                            fontSize: 12.sp,
-                            color: _historyCard.condition == 'Healthy'
-                                ? Theme.of(context).colorScheme.secondary
-                                : Theme.of(context).colorScheme.error,
-                            fontWeight: FontWeight.bold),
+                          fontSize: 12.sp,
+                          color: _historyCard.condition == 'Healthy'
+                              ? Theme.of(context).colorScheme.secondary
+                              : Theme.of(context).colorScheme.error,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
@@ -172,6 +182,9 @@ class HistoryItem {
   final String species;
   final String condition;
 
-  const HistoryItem(
-      {required this.imageUrl, required this.species, required this.condition});
+  const HistoryItem({
+    required this.imageUrl,
+    required this.species,
+    required this.condition,
+  });
 }
