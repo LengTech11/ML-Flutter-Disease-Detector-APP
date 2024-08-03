@@ -22,20 +22,16 @@ void showMessage(String message) {
 final appPadding = EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h);
 
 showLoaderDialog(BuildContext context) {
-  AlertDialog alert = AlertDialog(
-    content: Builder(builder: (context) {
-      return SizedBox(
-        width: 60.w,
-        child: const Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CircularProgressIndicator(
-              color: AppColor.primary,
-            ),
-          ],
-        ),
-      );
-    }),
+  final alert = Center(
+    child: Container(
+      color: Colors.black,
+      padding: const EdgeInsets.all(4),
+      child: CircularProgressIndicator(
+        backgroundColor: Colors.transparent,
+        strokeWidth: 2.w,
+        color: AppColor.primary,
+      ),
+    ),
   );
   showDialog(
     barrierDismissible: false,
