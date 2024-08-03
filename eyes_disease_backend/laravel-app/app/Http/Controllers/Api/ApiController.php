@@ -109,7 +109,7 @@ class ApiController extends Controller
 
     public function showDisease()
     {
-        $diseases = Disease::select('id', 'title', 'description')->get();
+        $diseases = Disease::select('id', 'title', 'description')->where('title', '!=', 'Unknown')->get();
 
         return response()->json([
             'status' => 'success',
