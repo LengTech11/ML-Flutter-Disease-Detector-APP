@@ -262,9 +262,6 @@
                                         Scans
                                     </th>
                                     <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
-                                        Status
-                                    </th>
-                                    <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                                         Action
                                     </th>
                                 </tr>
@@ -297,12 +294,7 @@
                                                 Female
                                             @endif
                                         </td>
-                                        <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">103
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-base font-normal text-gray-900">
-                                            <div class="flex items-center">
-                                                <div class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div> Active
-                                            </div>
+                                        <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">{{ $value->count}}
                                         </td>
                                         <td class="p-4 whitespace-nowrap space-x-2">
                                             <button type="button" data-twe-toggle="modal"
@@ -399,6 +391,7 @@
                                                                 <input type="" name="phone_number"
                                                                     id="phone_number" pattern="[0-9+-]*"
                                                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                                                    placeholder="{{$value->phone_number ?? 'N/A'}}"
                                                                     value="{{$value->phone_number}}">
                                                             </div>
                                                             <div class="col-span-6 sm:col-span-3">

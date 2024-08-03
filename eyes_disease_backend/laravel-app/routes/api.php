@@ -20,6 +20,8 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post("/predictions", [PredictionController::class, "store"]);
     // fetch all predictions
     Route::get("/predictions", [PredictionController::class, "index"]);
+
+    Route::post('/user-count', [ApiController::class, 'updateUserCount']);
 });
 
 // Public routes

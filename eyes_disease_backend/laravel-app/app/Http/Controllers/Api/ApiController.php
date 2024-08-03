@@ -225,4 +225,30 @@ class ApiController extends Controller
         }
     }
 
+    public function updateUserCount(Request $request) {
+
+        // Get the currently authenticated user
+        $user = Auth::user();
+
+        if ($user)
+        {
+            $user->count = $user->count + 1;
+            $user->save();
+
+            return response()->json([
+                'user' => $user,
+                'status' => 'success',
+                'message' => 'User count has been updated.',
+                'count' => $user->count
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not authenticated.'
+            ]);
+        }
+    }
+
 }

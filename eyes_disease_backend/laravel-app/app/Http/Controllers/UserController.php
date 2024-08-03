@@ -17,6 +17,7 @@ class UserController extends Controller
         //                             ->paginate(5);
         $search = $request->input('search');
         $query = User::select('users.*')
+                        ->orderBy('count', 'desc')
                         ->where('user_role', 0);
 
         if (!empty($search)) {
@@ -29,6 +30,7 @@ class UserController extends Controller
         $data['getRecord'] = $query->orderBy('id', 'desc')->paginate(5);
 
         $data['totalUser'] = User::getTotalUser();
+
 
         return view('user/list', $data);
     }

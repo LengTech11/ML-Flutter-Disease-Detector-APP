@@ -61,7 +61,6 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-        {{-- <link rel="stylesheet" href="{{ mix('resources/css/app.css') }}"> --}}
         @vite('resources/css/app.css')
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="theme-color" content="#ffffff">
@@ -72,7 +71,10 @@
             <div class="mx-auto md:h-screen flex flex-col justify-center items-center px-6 pt-8 pt:mt-0">
                 <!-- Card -->
                 <div class="bg-white shadow rounded-lg md:mt-0 w-full sm:max-w-screen-sm xl:p-0">
-                    <div class="p-6 sm:p-8 lg:p-16 space-y-8">
+                    <div class="p-6 sm:p-8 lg:p-16">
+                        <div class="flex justify-center">
+                            <img src="{{asset('assets/eyeslogo-removebg-preview.png')}}" class="h-20" alt="Windster Logo">
+                        </div>
                         <div class="flex justify-center">
                             <h2 class="text-2xl lg:text-3xl font-bold text-gray-900">
                                 Sign in

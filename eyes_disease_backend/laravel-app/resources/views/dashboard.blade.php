@@ -37,7 +37,7 @@
             <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">3,128</span>
+                        <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900"> {{$totalDiseaseCount}} </span>
                         <h3 class="text-base font-normal text-gray-500">Total Scans</h3>
                     </div>
                     <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
@@ -52,7 +52,7 @@
             <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">1,885</span>
+                        <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900"> {{$totalDiseaseCountWithoutUnknown}} </span>
                         <h3 class="text-base font-normal text-gray-500">Successful Detection</h3>
                     </div>
                     <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
@@ -138,16 +138,16 @@
                             <tr class="text-gray-500">
                                 <th
                                     class="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
-                                    Healthy</th>
+                                    Healthyyy</th>
                                 <td
                                     class="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
-                                    649</td>
+                                    {{$totalNormalClass}}</td>
                                 <td class="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
                                     <div class="flex items-center">
-                                        <span class="mr-2 text-xs font-medium">30%</span>
+                                        <span class="mr-2 text-xs font-medium">{{ ($totalNormalClass * $totalDisease) }}%</span>
                                         <div class="relative w-full">
                                             <div class="w-full bg-gray-200 rounded-sm h-2">
-                                                <div class="bg-cyan-600 h-2 rounded-sm" style="width: 30%"></div>
+                                                <div class="bg-cyan-600 h-2 rounded-sm" style="width: {{ ($totalNormalClass * $totalDisease) }}%;"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -159,13 +159,13 @@
                                     Diabetic Retinopathy</th>
                                 <td
                                     class="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
-                                    225</td>
+                                    {{$totalDiabeticClass}}</td>
                                 <td class="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
                                     <div class="flex items-center">
-                                        <span class="mr-2 text-xs font-medium">24%</span>
+                                        <span class="mr-2 text-xs font-medium">{{ ($totalDiabeticClass * $totalDisease) }}%</span>
                                         <div class="relative w-full">
                                             <div class="w-full bg-gray-200 rounded-sm h-2">
-                                                <div class="bg-orange-300 h-2 rounded-sm" style="width: 24%"></div>
+                                                <div class="bg-orange-300 h-2 rounded-sm" style="width: {{ ($totalDiabeticClass * $totalDisease) }}%;"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -177,13 +177,31 @@
                                     Cataract</th>
                                 <td
                                     class="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
-                                    105</td>
+                                    {{$totalCataractClass}}</td>
                                 <td class="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
                                     <div class="flex items-center">
-                                        <span class="mr-2 text-xs font-medium">18%</span>
+                                        <span class="mr-2 text-xs font-medium">{{ ($totalCataractClass * $totalDisease) }}%</span>
                                         <div class="relative w-full">
                                             <div class="w-full bg-gray-200 rounded-sm h-2">
-                                                <div class="bg-teal-400 h-2 rounded-sm" style="width: 18%"></div>
+                                                <div class="bg-teal-400 h-2 rounded-sm" style="width: {{ ($totalCataractClass * $totalDisease) }}%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="text-gray-500">
+                                <th
+                                    class="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
+                                    Unknown</th>
+                                <td
+                                    class="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
+                                    {{$totalUnknownClass}}</td>
+                                <td class="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
+                                    <div class="flex items-center">
+                                        <span class="mr-2 text-xs font-medium"> {{ ($totalUnknownClass * $totalDisease) }}%</span>
+                                        <div class="relative w-full">
+                                            <div class="w-full bg-gray-200 rounded-sm h-2">
+                                                <div class="bg-teal-400 h-2 rounded-sm" style="width: {{ ($totalUnknownClass * $totalDisease) }}%;"></div>
                                             </div>
                                         </div>
                                     </div>
