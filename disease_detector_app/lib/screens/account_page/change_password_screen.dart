@@ -76,7 +76,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               height: 20,
             ),
             Text(
-              'Your password must be at least 8 characters and should contain letters, number one special character.',
+              AppLocalizations.of(context)?.password_tip ??
+                  'Your password must be at least 8 characters and should contain letters, number one special character.',
               style: dark
                   ? MyTextTheme.darkTextTheme.bodyLarge
                   : MyTextTheme.lightTextTheme.bodyLarge,
