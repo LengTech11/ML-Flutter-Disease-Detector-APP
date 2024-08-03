@@ -38,8 +38,6 @@ dependencies:
   flutter_localization: ^0.2.1
   flutter_localizations:
     sdk: flutter
-  
-  
 
 dev_dependencies:
   flutter_lints: ^4.0.0
@@ -62,9 +60,6 @@ flutter:
         - asset: assets/fonts/Poppins-Regular.ttf
         - asset: assets/fonts/Poppins-Bold.ttf
           weight: 700
-  
-
-
 
 #-------------------- Splash Screen --------------------#
 flutter_native_splash:

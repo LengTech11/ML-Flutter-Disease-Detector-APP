@@ -48,5 +48,6 @@
   "failed_to_save_prediction": "Failed to Save Prediction",
   "confirm": "Confirm",
   "cancel": "Cancel",
-  "no_history": "No History"
+  "no_history": "No History",
+  "password_tip": "Your password must be at least 8 characters and should contain letters, number one special character."
 }

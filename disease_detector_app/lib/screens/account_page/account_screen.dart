@@ -1,7 +1,7 @@
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/config/themes/theme.dart';
-import 'package:disease_detector_app/screens/account_page/change_password.dart';
+import 'package:disease_detector_app/screens/account_page/change_password_screen.dart';
 import 'package:disease_detector_app/screens/account_page/widget/logout_button.dart';
 import 'package:disease_detector_app/screens/account_page/widget/profile_menu_item.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
