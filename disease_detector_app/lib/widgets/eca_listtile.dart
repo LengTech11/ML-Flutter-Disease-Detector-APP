@@ -1,4 +1,3 @@
-import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
@@ -17,15 +16,13 @@ class EcaListtile extends ListTile {
     final dark = HelperFunctions.isDarkMode(context);
     return Container(
       decoration: BoxDecoration(
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.white,
-            blurRadius: .4,
-            offset: Offset.zero,
-          )
-        ],
-        color: dark ? AppColor.black : AppColor.white,
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        border: Border.all(
+          color: dark ? const Color(0x8BFFFFFF) : const Color(0x8B000000),
+        ),
+        color: dark ? Colors.black : Colors.white,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(8),
+        ),
       ),
       child: ListTile(
         trailing: trailing,
