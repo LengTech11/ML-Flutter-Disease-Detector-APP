@@ -4,13 +4,14 @@ import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 
 class EcaListtile extends ListTile {
-  const EcaListtile(
-      {super.key,
-      required super.title,
-      super.subtitle,
-      super.leading,
-      super.trailing,
-      super.onTap});
+  const EcaListtile({
+    super.key,
+    required super.title,
+    super.subtitle,
+    super.leading,
+    super.trailing,
+    super.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +21,18 @@ class EcaListtile extends ListTile {
         boxShadow: const [
           BoxShadow(
             color: Colors.white,
-            blurRadius: .4,
-            offset: Offset.zero,
+            spreadRadius: .5,
+            offset: Offset.infinite,
           )
         ],
         color: dark ? AppColor.black : AppColor.white,
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        border: Border.all(
+          width: 1,
+          color: dark ? const Color(0x93FFFFFF) : const Color(0x93000000),
+        ),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(8),
+        ),
       ),
       child: ListTile(
         trailing: trailing,
