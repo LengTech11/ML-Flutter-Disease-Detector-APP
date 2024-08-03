@@ -47,5 +47,6 @@
   "guest_needs_to_signup_or_login": "ភ្ញៀវត្រូវតែចុះឈ្មោះឬចូលគណនីដើម្បីរក្សាទុកប្រវត្តិ",
   "failed_to_save_prediction": "បានបរាជ័យក្រោយពិន័យ",
   "confirm": "បញ្ជាក់",
-  "cancel": "ទេ"
+  "cancel": "ទេ",
+  "no_history": "មិនមានប្រវត្តិ"
 }

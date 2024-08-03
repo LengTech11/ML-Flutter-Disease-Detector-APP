@@ -47,5 +47,6 @@
   "guest_needs_to_signup_or_login": "Guest needs to Signup or Login",
   "failed_to_save_prediction": "Failed to Save Prediction",
   "confirm": "Confirm",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "no_history": "No History"
 }
