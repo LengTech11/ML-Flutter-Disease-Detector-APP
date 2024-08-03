@@ -188,7 +188,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: AppSize.sm, vertical: 6.h),
+                          horizontal: AppSize.sm,
+                        ),
                         child: DropdownMenu<GenderLabel>(
                           width: DeviceUtils.getScreenWidth(context) * 0.4,
                           controller: genderController,
