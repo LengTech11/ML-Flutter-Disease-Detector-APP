@@ -4,13 +4,16 @@ import 'package:flutter/cupertino.dart';
 
 class GetHistoryProvider extends ChangeNotifier {
   List<GetHistoryModel>? history;
+  bool isloading = true;
 
   Future<void> getHistory() async {
     try {
       final response = await GetHistoryApiService().getHistory();
 
       history = response;
+      isloading = false;
     } catch (e) {
+      isloading = false;
       print(e);
     }
     notifyListeners();

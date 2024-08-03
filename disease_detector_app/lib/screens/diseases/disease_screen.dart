@@ -1,7 +1,6 @@
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/get_history_provider.dart';
-import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -30,6 +29,7 @@ class _DiseaseScreenState extends State<DiseaseScreen>
   @override
   void dispose() {
     super.dispose();
+    getHistoryProvider.getHistory();
     _tabController.dispose();
   }
 
@@ -56,28 +56,33 @@ class _DiseaseScreenState extends State<DiseaseScreen>
               borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
               child: Consumer<GetHistoryProvider>(
                 builder: (context, value, child) {
-                  final history = value.history;
-                  return history == null
+                  final histoies = value.history;
+                  return value.isloading
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
-                      : ListView.separated(
-                          itemBuilder: (context, index) {
-                            HistoryItem historyItem = HistoryItem(
-                              imageUrl: history[index].imageUrl ?? '',
-                              species: history[index].predictedClass ?? '',
-                              condition: history[index].confidence ?? '',
+                      : histoies == null
+                          ? Center(
+                              child: Text(
+                                  AppLocalizations.of(context)?.no_history ??
+                                      'No History'),
+                            )
+                          : ListView.separated(
+                              itemBuilder: (context, index) {
+                                HistoryItem historyItem = HistoryItem(
+                                  imageUrl: histoies[index].imageUrl ?? '',
+                                  species: histoies[index].predictedClass ?? '',
+                                  condition: histoies[index].confidence ?? '',
+                                );
+                                return HistoryTile(historyCard: historyItem);
+                              },
+                              itemCount: histoies.length,
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(
+                                  height: 8,
+                                );
+                              },
                             );
-                            return HistoryTile(historyCard: historyItem);
-                          },
-                          itemCount: value.history!.length,
-                          separatorBuilder: (context, index) {
-                            HelperFunctions.debug('${history[index].imageUrl}');
-                            return const SizedBox(
-                              height: 8,
-                            );
-                          },
-                        );
                 },
               ),
             ),
