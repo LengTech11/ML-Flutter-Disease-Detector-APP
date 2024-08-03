@@ -171,6 +171,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return SizedBox(
       width: DeviceUtils.getScreenWidth(context) * 0.95,
       child: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
         onPressed: () {
           changePassword(
             context: context,
