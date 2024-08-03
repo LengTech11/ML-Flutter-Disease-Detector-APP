@@ -43,7 +43,9 @@ class OutlinedButtonWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(child: icon),
+          Container(
+            child: icon,
+          ),
           SizedBox(
             width: 8.w,
           ),
@@ -57,7 +59,7 @@ class OutlinedButtonWidget extends StatelessWidget {
                 : TextStyle(
                     fontSize: 22.sp,
                     fontWeight: FontWeight.w500,
-                    color: AppColor.primary,
+                    color: const Color.fromARGB(255, 255, 255, 255),
                   ),
           ),
         ],

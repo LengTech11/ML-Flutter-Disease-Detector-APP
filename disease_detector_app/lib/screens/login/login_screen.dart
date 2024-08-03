@@ -1,5 +1,6 @@
 import 'package:disease_detector_app/api_service/api/login_api.dart';
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
+import 'package:disease_detector_app/config/themes/theme.dart';
 import 'package:disease_detector_app/model/login_model/login_response_model.dart';
 import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:disease_detector_app/screens/register/register_screen.dart';
@@ -211,7 +212,14 @@ class _LoginScreenState extends State<LoginScreen> {
           margin: EdgeInsets.symmetric(horizontal: 16.w),
           height: 50.h,
           child: OutlinedButtonWidget(
-            icon: const Icon(Iconsax.user),
+            borderColor: dark ? AppColor.primary : Colors.white,
+            backgroundColor: dark
+                ? AppTheme.darkTheme.colorScheme.surface
+                : AppTheme.darkTheme.colorScheme.surface,
+            icon: Icon(
+              Iconsax.user,
+              color: dark ? AppColor.primary : Colors.white,
+            ),
             title: AppLocalizations.of(context)?.login_as_guest ??
                 'Continue as Guest',
             onPressed: () async {
