@@ -77,6 +77,43 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     }
   }
 
+  Future<void> _updateUserCount() async {
+    const String apiUrl = 'http://0.0.0.0:8000/api/user-count';
+
+    // Get the user token
+    String? userToken = AppConstant.USER_TOKEN;
+
+    if (userToken == null) {
+      print('User is not authenticated');
+      return;
+    }
+
+    try {
+      final dio = Dio();
+      final response = await dio.post(
+        apiUrl,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $userToken',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> jsonResponse =
+            response.data as Map<String, dynamic>;
+        print(jsonResponse['message']);
+      } else {
+        // If the server did not return a 200 OK response, throw an exception.
+        throw Exception('Failed to update user count: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error updating user count: $e');
+    }
+  }
+
   Future<void> _predictDisease() async {
     if (_image == null) return;
 
@@ -112,6 +149,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         // Call the method to update disease count
         if (_predictedClass != null) {
           await _updateDiseaseCount(_predictedClass!);
+          await _updateUserCount();
         }
         // ignore: use_build_context_synchronously
         _showPredictionBottomSheet(context);
