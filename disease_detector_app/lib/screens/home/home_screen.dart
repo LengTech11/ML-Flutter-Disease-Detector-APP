@@ -1,11 +1,11 @@
 import 'package:disease_detector_app/config/themes/color.dart';
-import 'package:disease_detector_app/screens/home/image_upload_screen.dart';
 import 'package:disease_detector_app/screens/diseases/disease_screen.dart';
+import 'package:disease_detector_app/screens/home/image_upload_screen.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
-import 'package:flutter/material.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../account_page/account_screen.dart';
 
@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context) {
         return Scaffold(
           appBar: AppBar(
+            surfaceTintColor: dark ? AppColor.dark : AppColor.light,
             centerTitle: true,
             automaticallyImplyLeading: false,
             title: Text(
