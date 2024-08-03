@@ -69,9 +69,7 @@ showMessageDialog(BuildContext context, String msg) {
 }
 
 showErrorMsg(BuildContext context, String msg, bool dark) {
-  AlertDialog alert = AlertDialog(
-    backgroundColor: dark ? AppColor.dark : AppColor.light,
-    alignment: Alignment.center,
+  CupertinoAlertDialog alert = CupertinoAlertDialog(
     title: Center(
       child: Text(
         msg,
@@ -81,11 +79,12 @@ showErrorMsg(BuildContext context, String msg, bool dark) {
       ),
     ),
     actions: [
-      ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text("ok"))
+      TextButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: const Text("Close"),
+      ),
     ],
   );
   showDialog(
