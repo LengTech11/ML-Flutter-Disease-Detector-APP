@@ -50,14 +50,17 @@ class PredictionController extends Controller
         return response()->json($predictions);
     }
 
-    public function destroy($id)
+    // Delete a specific prediction by ID
+    public function destroy(Request $request)
     {
-        //Find the prediction by ID
+        $request->validate([
+            'prediction_id' => 'required|integer|exists:predictions,id',
+        ]);
+
+        $id = $request->input('prediction_id');
         $prediction = Prediction::find($id);
 
-        //Check if the prediction exists and belongs to the authenticated user
         if ($prediction && $prediction->user_id == Auth::id()) {
-            //Delete the prediction
             $prediction->delete();
 
             return response()->json(['message' => 'Prediction deleted successfully']);
@@ -66,9 +69,9 @@ class PredictionController extends Controller
         return response()->json(['message' => 'Prediction not found'], 404);
     }
 
+    // Delete all predictions for the authenticated user
     public function destroyAll()
     {
-        // Delete all predictions for the authenticated user
         $deletedCount = Prediction::where('user_id', Auth::id())->delete();
 
         return response()->json(['message' => "Deleted $deletedCount predictions"]);

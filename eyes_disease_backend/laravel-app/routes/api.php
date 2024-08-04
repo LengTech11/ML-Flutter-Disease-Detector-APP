@@ -23,9 +23,9 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     Route::post('/user-count', [ApiController::class, 'updateUserCount']);
 
-
-    Route::delete('/predictions/{id}', [PredictionController::class, 'destroy']);
-    Route::delete('/predictions', [PredictionController::class, 'destroyAll']);
+    // Delete User predictions history 1 and all
+    Route::delete('/predictions', [PredictionController::class, 'destroy']);
+    Route::delete('/predictions/all', [PredictionController::class, 'destroyAll']);
 
 });
 
