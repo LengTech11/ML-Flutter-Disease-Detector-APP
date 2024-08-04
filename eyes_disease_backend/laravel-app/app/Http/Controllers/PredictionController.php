@@ -51,13 +51,8 @@ class PredictionController extends Controller
     }
 
     // Delete a specific prediction by ID
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $request->validate([
-            'prediction_id' => 'required|integer|exists:predictions,id',
-        ]);
-
-        $id = $request->input('prediction_id');
         $prediction = Prediction::find($id);
 
         if ($prediction && $prediction->user_id == Auth::id()) {
