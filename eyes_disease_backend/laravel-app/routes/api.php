@@ -22,6 +22,11 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get("/predictions", [PredictionController::class, "index"]);
 
     Route::post('/user-count', [ApiController::class, 'updateUserCount']);
+
+
+    Route::delete('/predictions/{id}', [PredictionController::class, 'destroy']);
+    Route::delete('/predictions', [PredictionController::class, 'destroyAll']);
+
 });
 
 // Public routes

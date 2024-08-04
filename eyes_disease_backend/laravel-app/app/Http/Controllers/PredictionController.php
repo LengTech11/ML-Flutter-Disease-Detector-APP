@@ -50,4 +50,28 @@ class PredictionController extends Controller
         return response()->json($predictions);
     }
 
+    public function destroy($id)
+    {
+        //Find the prediction by ID
+        $prediction = Prediction::find($id);
+
+        //Check if the prediction exists and belongs to the authenticated user
+        if ($prediction && $prediction->user_id == Auth::id()) {
+            //Delete the prediction
+            $prediction->delete();
+
+            return response()->json(['message' => 'Prediction deleted successfully']);
+        }
+
+        return response()->json(['message' => 'Prediction not found'], 404);
+    }
+
+    public function destroyAll()
+    {
+        // Delete all predictions for the authenticated user
+        $deletedCount = Prediction::where('user_id', Auth::id())->delete();
+
+        return response()->json(['message' => "Deleted $deletedCount predictions"]);
+    }
+
 }
