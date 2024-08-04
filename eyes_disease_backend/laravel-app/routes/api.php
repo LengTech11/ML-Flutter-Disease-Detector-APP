@@ -17,7 +17,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get("profile", [ApiController::class, "profile"]);
 
     // Predictions
-    Route::post("/predictions", [PredictionController::class, "store"]);
+    Route::post("/save-history", [PredictionController::class, "store"]);
     // fetch all predictions
     Route::get("/predictions", [PredictionController::class, "index"]);
 

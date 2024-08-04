@@ -182,7 +182,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   }
 
   Future<bool> savePrediction(String predictedClass, double confidence) async {
-    const String apiUrl = 'http://0.0.0.0:8000/api/predictions';
+    const String apiUrl = 'http://0.0.0.0:8000/api/save-history';
 
     String? token = AppConstant.USER_TOKEN;
 
