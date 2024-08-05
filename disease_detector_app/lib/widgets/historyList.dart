@@ -127,7 +127,7 @@ class HistoryTile extends StatelessWidget {
                       _historyCard.species,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: 20.sp,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.onBackground),
                     ),
