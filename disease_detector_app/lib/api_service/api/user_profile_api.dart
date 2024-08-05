@@ -14,7 +14,7 @@ class UserProfileApiService {
           'Content-Type': 'application/json',
           'Accept-Encoding': 'Accept-Encoding',
           'Connection': 'keep-alive',
-          'Authorization':'Bearer ${AppConstant.USER_TOKEN}'
+          'Authorization': 'Bearer ${AppConstant.USER_TOKEN}'
         },
         onSuccess: (response) {
           return UserProfileModel.fromJson(response.data);

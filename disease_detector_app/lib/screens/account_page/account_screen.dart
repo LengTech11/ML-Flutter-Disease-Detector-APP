@@ -32,7 +32,7 @@ class _AccountScreenState extends State<AccountScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const profileInfo(),
+          const ProfileInfo(),
           SizedBox(height: 16.h),
           profileMenuItems(context),
           SizedBox(

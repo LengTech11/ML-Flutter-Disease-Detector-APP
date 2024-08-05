@@ -5,16 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class profileInfo extends StatefulWidget {
-  const profileInfo({super.key});
+class ProfileInfo extends StatefulWidget {
+  const ProfileInfo({super.key});
 
   @override
-  State<profileInfo> createState() => _profileInfoState();
+  State<ProfileInfo> createState() => _profileInfoState();
 }
 
 // ignore: camel_case_types
-class _profileInfoState extends State<profileInfo> {
-  String onImg = "assets/images/blank_profile.jpg";
+class _profileInfoState extends State<ProfileInfo> {
+  String noImg = "assets/images/blank_profile.jpg";
 
   @override
   void initState() {
@@ -37,10 +37,12 @@ class _profileInfoState extends State<profileInfo> {
           final profileImageUrl =
               provider?.profile != null && provider!.profile.isNotEmpty
                   ? 'http://0.0.0.0:8000/storage/${provider.profile}'
-                  : onImg;
+                  : noImg;
           final name = value.isGuest
               ? AppLocalizations.of(context)?.guest ?? "Guest"
               : "${provider?.firstName} ${provider?.lastName}";
+          final email =
+              value.isGuest ? "No Email" : provider?.email ?? "No Email";
           return Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -60,8 +62,8 @@ class _profileInfoState extends State<profileInfo> {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: profileImageUrl == onImg
-                                    ? AssetImage(onImg) as ImageProvider<Object>
+                                image: profileImageUrl == noImg
+                                    ? AssetImage(noImg) as ImageProvider<Object>
                                     : NetworkImage(profileImageUrl)
                                         as ImageProvider<Object>,
                               ),
@@ -85,9 +87,9 @@ class _profileInfoState extends State<profileInfo> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(40.r),
-                    child: profileImageUrl == onImg
+                    child: profileImageUrl == noImg
                         ? Image.asset(
-                            onImg,
+                            noImg,
                             fit: BoxFit.cover,
                           )
                         : Image.network(
@@ -113,9 +115,7 @@ class _profileInfoState extends State<profileInfo> {
                             fontSize: 20.sp, fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        value.isGuest
-                            ? "No Email"
-                            : provider?.email ?? "No Email",
+                        email,
                         style: TextStyle(
                             fontSize: 14.sp,
                             color: Theme.of(context).colorScheme.onSecondary),
