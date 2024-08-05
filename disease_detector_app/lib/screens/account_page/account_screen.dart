@@ -30,6 +30,7 @@ class _AccountScreenState extends State<AccountScreen> {
       ),
       padding: appPadding,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const profileInfo(),

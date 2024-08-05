@@ -1,9 +1,9 @@
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class profileInfo extends StatefulWidget {
   const profileInfo({super.key});
@@ -27,7 +27,6 @@ class _profileInfoState extends State<profileInfo> {
   Widget build(BuildContext context) {
     return Container(
       height: 100.h,
-      padding: appPadding,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
       ),
@@ -69,7 +68,7 @@ class _profileInfoState extends State<profileInfo> {
                   );
                 },
                 child: Container(
-                  height: 70.h, 
+                  height: 70.h,
                   width: 70.h,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
