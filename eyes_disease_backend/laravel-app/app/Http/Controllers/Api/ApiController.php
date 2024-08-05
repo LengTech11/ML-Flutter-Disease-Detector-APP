@@ -96,7 +96,7 @@ class ApiController extends Controller
         }
     }
 
-    public function profile(Request $request)
+    public function getProfile(Request $request)
     {
         $userData  = auth()->user();
         return response()->json([
@@ -104,6 +104,18 @@ class ApiController extends Controller
             'status' => 'success',
             'message' => 'User profile',
             'data' => $userData,
+        ], 200);
+    }
+
+    public function editProfile(Request $request)
+    {
+        $user = auth()->user();
+        $user->update($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User profile updated successfully',
+            'data' => $user,
         ], 200);
     }
 

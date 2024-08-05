@@ -14,7 +14,9 @@ Route::post("login", [ApiController::class, "login"]);
 // Profile and other protected routes
 Route::group(['middleware' => ['auth:sanctum']], function() {
     // Profile
-    Route::get("profile", [ApiController::class, "profile"]);
+    Route::get("profile", [ApiController::class, "getProfile"]);
+    // Edit Profile
+    Route::post("edit-profile", [ApiController::class, "editProfile"]);
 
     // Predictions
     Route::post("/save-history", [PredictionController::class, "store"]);
