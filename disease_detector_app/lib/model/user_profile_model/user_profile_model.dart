@@ -44,6 +44,7 @@ class Data {
   String firstName;
   String lastName;
   String email;
+  String profile;
   dynamic emailVerifiedAt;
   int age;
   dynamic phoneNumber;
@@ -57,6 +58,7 @@ class Data {
     required this.firstName,
     required this.lastName,
     required this.email,
+    required this.profile,
     required this.emailVerifiedAt,
     required this.age,
     required this.phoneNumber,
@@ -71,6 +73,7 @@ class Data {
         firstName: json["first_name"],
         lastName: json["last_name"],
         email: json["email"],
+        profile: json["profile"],
         emailVerifiedAt: json["email_verified_at"],
         age: json["age"],
         phoneNumber: json["phone_number"],
@@ -85,6 +88,7 @@ class Data {
         "first_name": firstName,
         "last_name": lastName,
         "email": email,
+        "profile": profile,
         "email_verified_at": emailVerifiedAt,
         "age": age,
         "phone_number": phoneNumber,

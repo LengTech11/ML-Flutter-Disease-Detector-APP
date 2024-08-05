@@ -34,6 +34,10 @@ class _profileInfoState extends State<profileInfo> {
       child: Consumer<UserProfileProvider>(
         builder: (context, value, child) {
           final provider = value.userProfileModel?.data;
+          final profileImageUrl =
+              provider?.profile != null && provider!.profile.isNotEmpty
+                  ? 'http://0.0.0.0:8000/storage/${provider.profile}'
+                  : onImg;
           final name = value.isGuest
               ? AppLocalizations.of(context)?.guest ?? "Guest"
               : "${provider?.firstName} ${provider?.lastName}";
@@ -56,9 +60,10 @@ class _profileInfoState extends State<profileInfo> {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: AssetImage(
-                                  onImg,
-                                ),
+                                image: profileImageUrl == onImg
+                                    ? AssetImage(onImg) as ImageProvider<Object>
+                                    : NetworkImage(profileImageUrl)
+                                        as ImageProvider<Object>,
                               ),
                               borderRadius: BorderRadius.circular(200),
                             ),
@@ -69,7 +74,7 @@ class _profileInfoState extends State<profileInfo> {
                   );
                 },
                 child: Container(
-                  height: 70.h, 
+                  height: 70.h,
                   width: 70.h,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -80,10 +85,15 @@ class _profileInfoState extends State<profileInfo> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(40.r),
-                    child: Image.asset(
-                      onImg,
-                      fit: BoxFit.cover,
-                    ),
+                    child: profileImageUrl == onImg
+                        ? Image.asset(
+                            onImg,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.network(
+                            profileImageUrl,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
               ),
