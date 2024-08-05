@@ -1,9 +1,9 @@
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileInfo extends StatefulWidget {
   const ProfileInfo({super.key});
@@ -24,6 +24,13 @@ class _profileInfoState extends State<ProfileInfo> {
   }
 
   @override
+  void dispose() {
+    final provider = Provider.of<UserProfileProvider>(context, listen: false);
+    provider.getUserProfile();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: 100.h,
@@ -39,7 +46,7 @@ class _profileInfoState extends State<ProfileInfo> {
                   ? 'http://0.0.0.0:8000/storage/${provider.profile}'
                   : noImg;
           final name = value.isGuest
-              ? AppLocalizations.of(context)?.guest ?? "Guest"
+              ? AppLocalizations.of(context)?.guest ?? 'Guest'
               : "${provider?.firstName} ${provider?.lastName}";
           final email =
               value.isGuest ? "No Email" : provider?.email ?? "No Email";

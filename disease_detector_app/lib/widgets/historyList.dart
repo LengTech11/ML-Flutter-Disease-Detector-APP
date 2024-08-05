@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/config/themes/theme.dart';
 import 'package:disease_detector_app/provider/get_history_provider.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class HistoryTile extends StatelessWidget {
   const HistoryTile({
