@@ -6,9 +6,32 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Prediction;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class PredictionController extends Controller
 {
+
+    public function list(Request $request)
+    {
+
+        $search = $request->input('search');
+        $query = Prediction::select('predictions.*', 'users.first_name', 'users.last_name', 'users.email')
+                    ->join('users', 'predictions.user_id', '=', 'users.id')
+                    ->orderBy('predictions.id', 'desc');
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('first_name', 'like', '%'.$search.'%')
+                    ->orWhere('last_name', 'like', '%'.$search.'%')
+                    ->orWhere('email', 'like', '%'.$search.'%');
+            });
+        }
+
+        $data['getRecord'] = $query->orderBy('id', 'desc')->paginate(10);
+
+        return view('history/list', $data);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
