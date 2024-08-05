@@ -94,7 +94,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               hint:
                   AppLocalizations.of(context)?.new_password ?? 'New Password',
               controller: newPasswordController,
-              keyBoardType: TextInputType.text,
+              keyBoardType: TextInputType.visiblePassword,
               textInputAction: TextInputAction.next,
               visible: false,
             ),
@@ -106,8 +106,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               hint: AppLocalizations.of(context)?.confirm_password ??
                   'Confirm Password',
               controller: confirmPasswordController,
-              keyBoardType: TextInputType.text,
-              textInputAction: TextInputAction.next,
+              keyBoardType: TextInputType.visiblePassword,
+              textInputAction: TextInputAction.done,
               visible: false,
             ),
           ],
@@ -147,7 +147,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       hint:
           AppLocalizations.of(context)?.current_password ?? 'Current Password',
       controller: currentPasswordCotroller,
-      keyBoardType: TextInputType.text,
+      keyBoardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.next,
     );
   }
