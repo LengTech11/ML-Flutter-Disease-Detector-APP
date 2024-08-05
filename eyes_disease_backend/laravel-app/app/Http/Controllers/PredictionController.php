@@ -15,9 +15,9 @@ class PredictionController extends Controller
     {
 
         $search = $request->input('search');
-        $query = Prediction::select('predictions.*', 'users.first_name', 'users.last_name', 'users.email')
+        $query = Prediction::select('predictions.*', 'users.first_name', 'users.last_name', 'users.email', 'profile')
                     ->join('users', 'predictions.user_id', '=', 'users.id')
-                    ->orderBy('predictions.id', 'desc');
+                    ->orderBy('users.first_name', 'asc');
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
@@ -27,7 +27,8 @@ class PredictionController extends Controller
             });
         }
 
-        $data['getRecord'] = $query->orderBy('id', 'desc')->paginate(10);
+        $perPage = $request->input('per_page', 10);
+        $data['getRecord'] = $query->orderBy('id', 'desc')->paginate($perPage);
 
         return view('history/list', $data);
     }
