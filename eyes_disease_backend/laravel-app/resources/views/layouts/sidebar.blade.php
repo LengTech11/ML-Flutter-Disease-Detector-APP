@@ -65,6 +65,17 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href=" {{url('history/list')}} "
+                            class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5.25h18a.75.75 0 0 1 .75.75v12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1-.75-.75V6a.75.75 0 0 1 .75-.75zM3 8.25h18M3 12h18M3 15.75h18M3 19.5h18" />
+                            </svg>
+
+                            <span class="ml-3 flex-1 whitespace-nowrap">History</span>
+                        </a>
+                    </li>
+
 
                 </ul>
                 <div class="space-y-2 pt-2">
