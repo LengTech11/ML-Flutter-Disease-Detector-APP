@@ -1,3 +1,4 @@
+import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/config/themes/theme.dart';
@@ -82,19 +83,33 @@ class _AccountScreenState extends State<AccountScreen> {
                 endWidget: Text(
                   AppLocalizations.of(context)?.english_khmer ?? 'English',
                   style: TextStyle(
-                    color: Theme.of(context).secondaryHeaderColor,
+                    color: Colors.white,
                     fontSize: 16.sp,
                   ),
                 ),
               ),
               SubMenuItem(
+                // enable: AppConstant.USER_TOKEN == null ? false : true,
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ChangePasswordScreen(),
-                    ),
-                  );
+                  if (AppConstant.USER_TOKEN == null) {
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          AppLocalizations.of(context)
+                                  ?.login_to_change_password ??
+                              'Please login to change password',
+                        ),
+                      ),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChangePasswordScreen(),
+                      ),
+                    );
+                  }
                 },
                 icon: Icons.edit,
                 text: AppLocalizations.of(context)?.change_password ??

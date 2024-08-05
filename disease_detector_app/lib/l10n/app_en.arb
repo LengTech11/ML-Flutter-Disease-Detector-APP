@@ -53,5 +53,6 @@
   "delete_history": "Are you sure you want to delete this prediction History ?",
   "delete_history_success": "Prediction deleted successfully",
   "delete_history_failed": "Failed to delete prediction",
-  "confirm_delete": "Confirm Delete"
+  "confirm_delete": "Confirm Delete",
+  "login_to_change_password": "Please login to change password"
 }
