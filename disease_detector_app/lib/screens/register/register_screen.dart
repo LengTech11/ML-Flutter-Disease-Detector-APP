@@ -4,9 +4,10 @@ import 'package:disease_detector_app/model/register_model/register_response_mode
 import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+
 import '../../config/constants.dart';
 import '../../config/themes/app_size.dart';
 import '../../config/themes/color.dart';
@@ -196,6 +197,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           requestFocusOnTap: false,
                           label: Text(
                             AppLocalizations.of(context)?.gender ?? 'Gender',
+                            style: dark
+                                ? MyTextTheme.darkTextTheme.labelLarge
+                                : MyTextTheme.lightTextTheme.labelLarge,
                           ),
                           onSelected: (GenderLabel? gender) {
                             setState(
@@ -225,7 +229,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     hint: AppLocalizations.of(context)?.phone_number ??
                         'Phone Number',
                     controller: phoneNumberController,
-                    keyBoardType: TextInputType.text,
+                    keyBoardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
                     visible: false,
                   ),
