@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final userProfileModel = userProfileModelFromJson(jsonString);
-
 import 'dart:convert';
 
 UserProfileModel userProfileModelFromJson(String str) =>
@@ -17,17 +13,17 @@ class UserProfileModel {
   Data? data;
 
   UserProfileModel({
-    required this.id,
-    required this.status,
-    required this.message,
-    required this.data,
+    this.id,
+    this.status,
+    this.message,
+    this.data,
   });
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) =>
       UserProfileModel(
-        id: json["id"] ?? "",
-        status: json["status"] ?? "",
-        message: json["message"] ?? "",
+        id: json["id"] as int?,
+        status: json["status"] as String?,
+        message: json["message"] as String?,
         data: json["data"] == null ? null : Data.fromJson(json["data"]),
       );
 
@@ -35,7 +31,7 @@ class UserProfileModel {
         "id": id,
         "status": status,
         "message": message,
-        "data": data!.toJson(),
+        "data": data?.toJson(),
       };
 }
 
@@ -59,9 +55,9 @@ class Data {
     required this.lastName,
     required this.email,
     required this.profile,
-    required this.emailVerifiedAt,
+    this.emailVerifiedAt,
     required this.age,
-    required this.phoneNumber,
+    this.phoneNumber,
     required this.gender,
     required this.userRole,
     required this.createdAt,
@@ -69,18 +65,20 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        id: json["id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        email: json["email"],
-        profile: json["profile"],
+        id: json["id"] as int,
+        firstName: json["first_name"] as String? ?? '',
+        lastName: json["last_name"] as String? ?? '',
+        email: json["email"] as String? ?? '',
+        profile: json["profile"] as String? ?? '',
         emailVerifiedAt: json["email_verified_at"],
-        age: json["age"],
+        age: json["age"] as int? ?? 0,
         phoneNumber: json["phone_number"],
-        gender: json["gender"],
-        userRole: json["user_role"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        gender: json["gender"] as int? ?? 0,
+        userRole: json["user_role"] as int? ?? 0,
+        createdAt: DateTime.tryParse(json["created_at"] as String? ?? '') ??
+            DateTime.now(),
+        updatedAt: DateTime.tryParse(json["updated_at"] as String? ?? '') ??
+            DateTime.now(),
       );
 
   Map<String, dynamic> toJson() => {
