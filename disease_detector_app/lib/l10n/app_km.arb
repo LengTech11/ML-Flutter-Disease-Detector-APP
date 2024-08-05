@@ -53,5 +53,6 @@
   "delete_history": "តើអ្នកប្រាកដថាចង់លុបប្រវត្តិការទស្សន៍ទាយនេះទេ?",
   "delete_history_success": "ប្រវត្តិទស្សន៍ទាយត្រូវបានលុបដោយជោគជ័យ",
   "delete_history_failed": "បរាជ័យក្នុងការលុបការព្យាករណ៍",
-  "confirm_delete": "បញ្ជាក់ការលុប"
+  "confirm_delete": "បញ្ជាក់ការលុប",
+  "login_to_change_password": "សូមចូលដើម្បីប្ដូរពាក្យសម្ងាត់"
 }

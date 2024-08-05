@@ -45,7 +45,7 @@ class _MenuItemCategoryState extends State<MenuItemCategory>
     return AnimatedContainer(
       curve: Curves.easeOut,
       duration: const Duration(milliseconds: 400),
-      height: (_expanded ? widget.subitems.length * 74.w : 0) + 74.w,
+      height: (_expanded ? widget.subitems.length * 76.w : 0) + 74.w,
       decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
@@ -75,8 +75,9 @@ class _MenuItemCategoryState extends State<MenuItemCategory>
               },
               child: Container(
                 padding: EdgeInsets.symmetric(
-                    vertical: kDefaultPadding,
-                    horizontal: kDefaultPadding * 0.75),
+                  vertical: kDefaultPadding,
+                  horizontal: kDefaultPadding * 0.75,
+                ),
                 child: Row(
                   children: [
                     RotationTransition(
@@ -132,7 +133,7 @@ class SubMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 74.h,
+      height: 76.w,
       width: MediaQuery.of(context).size.width - kDefaultPadding,
       child: Material(
         color: Colors.transparent,
@@ -140,27 +141,29 @@ class SubMenuItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
           onTap: onTap,
           child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
-              padding: EdgeInsets.symmetric(
-                  vertical: kDefaultPadding,
-                  horizontal: kDefaultPadding * 0.75),
-              child: Row(
-                children: [
-                  Icon(
-                    this.icon,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
+            padding: EdgeInsets.symmetric(
+              vertical: kDefaultPadding,
+              horizontal: kDefaultPadding,
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  icon,
+                ),
+                const SizedBox(width: 20),
+                Text(
+                  text,
+                  style: const TextStyle(
+                    fontSize: 16,
                   ),
-                  const SizedBox(width: 20),
-                  Text(
-                    this.text,
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  Spacer(),
-                  this.endWidget,
-                ],
-              )),
+                ),
+                const Spacer(),
+                endWidget,
+              ],
+            ),
+          ),
         ),
       ),
     );
