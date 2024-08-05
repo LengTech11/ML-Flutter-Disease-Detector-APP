@@ -56,33 +56,45 @@ class _DiseaseScreenState extends State<DiseaseScreen>
               borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
               child: Consumer<GetHistoryProvider>(
                 builder: (context, value, child) {
-                  final histoies = value.history;
+                  final histories = value.history;
                   return value.isloading
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
-                      : histoies == null
+                      : histories == null
                           ? Center(
                               child: Text(
-                                  AppLocalizations.of(context)?.no_history ??
-                                      'No History'),
+                                AppLocalizations.of(context)?.no_history ??
+                                    'No History',
+                              ),
                             )
-                          : ListView.separated(
-                              itemBuilder: (context, index) {
-                                HistoryItem historyItem = HistoryItem(
-                                  imageUrl: histoies[index].imageUrl ?? '',
-                                  species: histoies[index].predictedClass ?? '',
-                                  condition: histoies[index].confidence ?? '',
+                          : histories.isEmpty
+                              ? Center(
+                                  child: Text(
+                                    AppLocalizations.of(context)?.no_history ??
+                                        'No History',
+                                  ),
+                                )
+                              : ListView.separated(
+                                  itemBuilder: (context, index) {
+                                    HistoryItem historyItem = HistoryItem(
+                                      id: histories[index].id.toString(),
+                                      imageUrl: histories[index].imageUrl ?? '',
+                                      species:
+                                          histories[index].predictedClass ?? '',
+                                      condition:
+                                          histories[index].confidence ?? '',
+                                    );
+                                    return HistoryTile(
+                                        historyCard: historyItem);
+                                  },
+                                  itemCount: histories.length,
+                                  separatorBuilder: (context, index) {
+                                    return const SizedBox(
+                                      height: 8,
+                                    );
+                                  },
                                 );
-                                return HistoryTile(historyCard: historyItem);
-                              },
-                              itemCount: histoies.length,
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(
-                                  height: 8,
-                                );
-                              },
-                            );
                 },
               ),
             ),

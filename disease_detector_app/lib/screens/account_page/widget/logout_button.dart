@@ -50,15 +50,21 @@ class _LogoutButtonState extends State<LogoutButton> {
               );
             }
           },
-          child: Text(
-            value.isGuest
-                ? AppLocalizations.of(context)?.login ?? 'Login'
-                : AppLocalizations.of(context)?.logout ?? 'Logout',
-            style: const TextStyle(
-              color: AppColor.error,
-              fontSize: 18,
-            ),
-          ),
+          child: value.isGuest
+              ? Text(
+                  AppLocalizations.of(context)?.login ?? 'Login',
+                  style: const TextStyle(
+                    color: AppColor.primary,
+                    fontSize: 18,
+                  ),
+                )
+              : Text(
+                  AppLocalizations.of(context)?.logout ?? 'Logout',
+                  style: const TextStyle(
+                    color: AppColor.error,
+                    fontSize: 18,
+                  ),
+                ),
         );
       },
     );

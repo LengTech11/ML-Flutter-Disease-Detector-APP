@@ -49,5 +49,9 @@
   "confirm": "Confirm",
   "cancel": "Cancel",
   "no_history": "No History",
-  "password_tip": "Your password must be at least 8 characters and should contain letters, number one special character."
+  "password_tip": "Your password must be at least 8 characters and should contain letters, number one special character.",
+  "delete_history": "Are you sure you want to delete this prediction History ?",
+  "delete_history_success": "Prediction deleted successfully",
+  "delete_history_failed": "Failed to delete prediction",
+  "confirm_delete": "Confirm Delete"
 }
