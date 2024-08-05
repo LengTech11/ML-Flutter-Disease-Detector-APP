@@ -146,7 +146,7 @@
                             </li>
                         </ol>
                     </nav>
-                    <h1 class="text-xl sm:text-2xl font-semibold text-gray-900">All users</h1>
+                    <h1 class="text-xl sm:text-2xl font-semibold text-gray-900">All Users</h1>
                 </div>
                 <div class="sm:flex">
                     <div class="hidden sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
@@ -279,8 +279,8 @@
                                         </td>
                                         <td class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
                                             <img class="h-10 w-10 rounded-full"
-                                                src="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0="
-                                                alt="Neil Sims avatar">
+                                                src="{{ $value->profile ? asset('storage/profile/' . $value->profile) : 'https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=' }}"
+                                                alt="">
                                             <div class="text-sm font-normal text-gray-500">
                                                 <div class="text-base font-semibold text-gray-900">{{ $value->first_name }}
                                                     {{ $value->last_name }}</div>
@@ -499,25 +499,22 @@
         <div
             class="bg-white sticky sm:flex items-center w-full sm:justify-between bottom-0 right-0 border-t border-gray-200 p-4">
             <div class="flex items-center mb-4 sm:mb-0">
-                <a href="{{ $getRecord->previousPageUrl() }}"
-                    class="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center">
-                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </a>
-                <a href="{{ $getRecord->nextPageUrl() }}"
-                    class="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center mr-2">
-                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </a>
                 <span class="text-sm font-normal text-gray-500">Showing <span
                         class="text-gray-900 font-semibold">{{ $getRecord->firstItem() }}-{{ $getRecord->lastItem() }}</span> of <span
-                        class="text-gray-900 font-semibold">{{ $getRecord->total() }}</span></span>
+                        class="text-gray-900 font-semibold">{{ $getRecord->total() }}</span>
+                </span>
+                <form action="" method="GET">
+                    <div class="ml-4">
+                        <select name="per_page" id="per_page"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600"
+                            onchange="this.form.submit()">
+                            <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                            <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
+                            <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                            <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                        </select>
+                    </div>
+                </form>
             </div>
             <div class="flex items-center space-x-3">
                 <a href="{{ $getRecord->previousPageUrl() }}"

@@ -27,7 +27,9 @@ class UserController extends Controller
                     ->orWhere('email', 'like', '%'.$search.'%');
             });
         }
-        $data['getRecord'] = $query->orderBy('id', 'desc')->paginate(5);
+
+        $perPage = $request->input('per_page', 10);
+        $data['getRecord'] = $query->orderBy('id', 'desc')->paginate($perPage);
 
         $data['totalUser'] = User::getTotalUser();
 
