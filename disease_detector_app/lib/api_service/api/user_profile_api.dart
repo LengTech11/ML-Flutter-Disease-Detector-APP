@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:disease_detector_app/api_service/base_api_service.dart';
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/model/user_profile_model/user_profile_model.dart';
@@ -24,23 +27,28 @@ class UserProfileApiService {
   Future<UserProfileModel> editUserProfile({
     required String firstName,
     required String lastName,
-    // required int age,
+    required int age,
+    required int gender,
     required String email,
     required String phoneNumber,
-    // required File image,
+    required File image,
   }) async {
+    final formData = FormData.fromMap({
+      "profile": await MultipartFile.fromFile(image.path),
+    });
     return BaseApiService().onRequest(
         path: "/edit-profile",
         method: HttpMethod.POST,
         requiredToken: true,
         autoRefreshToken: true,
+        data: formData,
         query: {
           "first_name": firstName,
           "last_name": lastName,
-          // "profile": image,
           "email": email,
-          "phone_number": phoneNumber
-          // "age": age
+          "phone_number": phoneNumber,
+          "age": age,
+          "gender": gender
         },
         headers: {
           'Accept': 'application/json',

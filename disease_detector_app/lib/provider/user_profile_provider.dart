@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:disease_detector_app/api_service/api/user_profile_api.dart';
 import 'package:disease_detector_app/model/user_profile_model/user_profile_model.dart';
 import 'package:flutter/material.dart';
@@ -21,19 +23,21 @@ class UserProfileProvider extends ChangeNotifier {
   Future<void> editUserProfile({
     required String firstName,
     required String lastName,
-    // required int age,
+    required int age,
+    required int gender,
     required String email,
     required String phoneNumber,
-    // required File image,
+    required File image,
   }) async {
     try {
       final response = await UserProfileApiService().editUserProfile(
+        gender: gender,
         firstName: firstName,
         lastName: lastName,
-        // age: age,
+        age: age,
         email: email,
         phoneNumber: phoneNumber,
-        // image: image,
+        image: image,
       );
       if (response.data != null) {
         _userProfileModel = response;
