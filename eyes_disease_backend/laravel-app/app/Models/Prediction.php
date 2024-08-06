@@ -20,4 +20,9 @@ class Prediction extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    static public function getSinglePrediction($id)
+    {
+        return self::find($id);
+    }
 }

@@ -96,7 +96,7 @@
                                 <tr>
                                     <th scope="col" class="p-4">
                                         <div class="flex items-center">
-                                            <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox"
+                                            <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" onClick="toggle(this)"
                                                 class="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded">
                                             <label for="checkbox-all" class="sr-only">checkbox</label>
                                         </div>
@@ -121,7 +121,7 @@
                                     <tr class="hover:bg-gray-100">
                                         <td class="p-4 w-4">
                                             <div class="flex items-center">
-                                                <input id="checkbox-1" aria-describedby="checkbox-1" type="checkbox"
+                                                <input id="checkbox-1" aria-describedby="checkbox-1" type="checkbox" name="checkAll"
                                                     class="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded">
                                                 <label for="checkbox-1" class="sr-only">checkbox</label>
                                             </div>
@@ -148,7 +148,7 @@
                                         </td>
                                         <td class="p-4 whitespace-nowrap space-x-2">
                                             <button type="button" data-twe-toggle="modal"
-                                                data-twe-target="#deleteUser{{ $value->id }}"
+                                                data-twe-target="#delete{{ $value->id }}"
                                                 class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
                                                 <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
                                                     xmlns="http://www.w3.org/2000/svg">
@@ -163,7 +163,7 @@
 
                                     <!--delete modal-->
                                     <div class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-                                        id="deleteUser{{ $value->id }}" data-twe-modal-init tabindex="-1"
+                                        id="delete{{ $value->id }}" data-twe-modal-init tabindex="-1"
                                         aria-modal="true">
                                         <div data-twe-modal-dialog-ref
                                             class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
@@ -175,7 +175,7 @@
                                                     <div class="flex justify-end p-2">
                                                         <button type="button" data-twe-modal-dismiss
                                                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                                                            data-modal-toggle="delete-user-modal">
+                                                            data-modal-toggle="delete-modal">
                                                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                                                 xmlns="http://www.w3.org/2000/svg">
                                                                 <path fill-rule="evenodd"
@@ -197,7 +197,7 @@
                                                         <h3 class="text-xl font-normal text-gray-500 mt-5 mb-6">Are you
                                                             sure you want to delete this history?
                                                         </h3>
-                                                        <a href="{{ url('user/delete/'.$value->id)}}"
+                                                        <a href="{{ url('history/delete/'.$value->id)}}"
                                                             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2">
                                                             Yes, I'm sure
                                                         </a>
@@ -261,4 +261,16 @@
             </div>
         </div>
     </main>
+
 @endsection
+
+<script>
+    function toggle(source) {
+        checkboxes = document.getElementsByName('checkAll');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>
+
+

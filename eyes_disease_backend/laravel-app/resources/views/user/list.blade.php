@@ -247,7 +247,7 @@
                                 <tr>
                                     <th scope="col" class="p-4">
                                         <div class="flex items-center">
-                                            <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox"
+                                            <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" onClick="toggle(this)"
                                                 class="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded">
                                             <label for="checkbox-all" class="sr-only">checkbox</label>
                                         </div>
@@ -272,7 +272,7 @@
                                     <tr class="hover:bg-gray-100">
                                         <td class="p-4 w-4">
                                             <div class="flex items-center">
-                                                <input id="checkbox-1" aria-describedby="checkbox-1" type="checkbox"
+                                                <input id="checkbox-1" aria-describedby="checkbox-1" type="checkbox" name="checkAll"
                                                     class="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded">
                                                 <label for="checkbox-1" class="sr-only">checkbox</label>
                                             </div>
@@ -540,3 +540,12 @@
         </div>
     </main>
 @endsection
+
+<script>
+    function toggle(source) {
+        checkboxes = document.getElementsByName('checkAll');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>
