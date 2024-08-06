@@ -68,9 +68,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return Scaffold(
+      primary: false,
       appBar: AppBar(
+        forceMaterialTransparency: true,
+        primary: false,
+        surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
-        elevation: 0,
         automaticallyImplyLeading: false,
       ),
       body: Form(
@@ -79,7 +82,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SizedBox(
             height: DeviceUtils.getScreenHeight(context),
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(

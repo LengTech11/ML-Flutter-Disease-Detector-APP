@@ -7,6 +7,7 @@ import 'package:disease_detector_app/model/user_profile_model/user_profile_model
 
 class UserProfileApiService {
   Future<UserProfileModel> getUserProfile() async {
+    print('bart: ${AppConstant.USER_TOKEN}');
     return BaseApiService().onRequest(
         path: "/profile",
         method: HttpMethod.GET,
