@@ -143,6 +143,13 @@ class ApiController extends Controller
             }
 
             $user->profile = $imagePath;
+        } else if ($request->input('profile') === null) {
+            // If the profile is set as null, delete the old profile image
+            if ($user->profile) {
+                Storage::delete('public/' . $user->profile);
+            }
+
+            $user->profile = null;
         }
 
         $user->update($request->except('profile'));
