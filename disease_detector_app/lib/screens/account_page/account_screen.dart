@@ -202,7 +202,12 @@ class _AccountScreenState extends State<AccountScreen> {
           onPressed: () async {
             Navigator.pop(context);
           },
-          child: Text(AppLocalizations.of(context)?.close ?? 'Close'),
+          child: Text(
+            AppLocalizations.of(context)?.close ?? 'Close',
+            style: const TextStyle(
+              color: AppColor.error,
+            ),
+          ),
         ),
       ],
     );
