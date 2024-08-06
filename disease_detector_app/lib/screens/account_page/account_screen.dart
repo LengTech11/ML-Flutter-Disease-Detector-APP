@@ -84,7 +84,6 @@ class _AccountScreenState extends State<AccountScreen> {
                 endWidget: Text(
                   AppLocalizations.of(context)?.english_khmer ?? 'English',
                   style: TextStyle(
-                    color: Colors.white,
                     fontSize: 16.sp,
                   ),
                 ),
