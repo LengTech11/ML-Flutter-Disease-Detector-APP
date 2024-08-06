@@ -31,25 +31,33 @@ class UserProfileApiService {
     required int gender,
     required String email,
     required String phoneNumber,
-    required File image,
+    required File? image,
   }) async {
-    final formData = FormData.fromMap({
-      "profile": await MultipartFile.fromFile(image.path),
-    });
+    print('bart: ${image?.isAbsolute}');
+    final formData = image!.isAbsolute
+        ? FormData.fromMap({
+            "first_name": firstName,
+            "last_name": lastName,
+            "email": email,
+            "phone_number": phoneNumber,
+            "age": age,
+            "gender": gender,
+            "profile": await MultipartFile.fromFile(image.path),
+          })
+        : FormData.fromMap({
+            "first_name": firstName,
+            "last_name": lastName,
+            "email": email,
+            "phone_number": phoneNumber,
+            "age": age,
+            "gender": gender,
+          });
     return BaseApiService().onRequest(
         path: "/edit-profile",
         method: HttpMethod.POST,
         requiredToken: true,
         autoRefreshToken: true,
         data: formData,
-        query: {
-          "first_name": firstName,
-          "last_name": lastName,
-          "email": email,
-          "phone_number": phoneNumber,
-          "age": age,
-          "gender": gender
-        },
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',

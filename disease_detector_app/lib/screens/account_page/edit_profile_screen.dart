@@ -13,7 +13,10 @@ import 'package:disease_detector_app/widgets/my_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart' as http;
+import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({
@@ -69,25 +72,79 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   bool isPicked = false;
   int? selectedGender;
 
-  Future<void> initializeField(UserProfileProvider value) async {
-    final response = value.userProfileModel?.data;
+  Future<void> initializeField(UserProfileProvider user) async {
     try {
-      selectedGender = response?.gender;
-      selectedGender == 1
-          ? genderController.text = "Male"
-          : genderController.text = "Female";
-      firstNameController.text = response?.firstName ?? '';
-      lastNameController.text = response?.lastName ?? '';
-      ageController.text = response!.age.toString();
-      emailController.text = response.email ?? '';
-      phoneNumberController.text = response.phoneNumber ?? '';
-      image = response.profile == null || response.profile!.isEmpty
-          ? null
-          : File(
-              'http://10.0.2.2:8000${response.profile}',
-            );
+      final response = user.userProfileModel?.data;
+      if (response != null) {
+        selectedGender = response.gender;
+        selectedGender == 1
+            ? genderController.text = "Male"
+            : genderController.text = "Female";
+        firstNameController.text = response.firstName ?? '';
+        lastNameController.text = response.lastName ?? '';
+        ageController.text = response.age.toString();
+        emailController.text = response.email ?? '';
+        phoneNumberController.text = response.phoneNumber ?? '';
+        if (response.profile != null && response.profile!.isNotEmpty) {
+          final profileUrl = 'http://0.0.0.0:8000${response.profile}';
+
+          await downloadImage(profileUrl).then((value) async {
+            print(profileUrl);
+            setState(() {
+              image = value;
+            });
+          });
+        } else {
+          setState(() {
+            image = null;
+          });
+        }
+        HelperFunctions.debug('Image path: ${image?.path}');
+      } else {
+        HelperFunctions.debug('Response is null');
+      }
     } catch (e) {
       HelperFunctions.debug('Error: $e');
+    }
+  }
+
+  Future<File> replaceImage(String url) async {
+    try {
+      await deleteImage();
+
+      return await downloadImage(url);
+    } catch (e) {
+      HelperFunctions.debug('Error replacing image: $e');
+      rethrow;
+    }
+  }
+
+  Future<File> downloadImage(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final documentDirectory = await getApplicationDocumentsDirectory();
+        final file = File('${documentDirectory.path}/profile_picture.jpg');
+        file.writeAsBytesSync(response.bodyBytes);
+        return file;
+      } else {
+        throw Exception('Failed to download image');
+      }
+    } catch (e) {
+      HelperFunctions.debug('Error downloading image: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> deleteImage() async {
+    try {
+      final documentDirectory = await getApplicationDocumentsDirectory();
+      final file = File('${documentDirectory.path}/profile_picture.jpg');
+      file.deleteSync();
+      print('file : ${file.path}');
+      HelperFunctions.debug('Image deleted successfully');
+    } catch (e) {
+      HelperFunctions.debug('Error deleting image: $e');
     }
   }
 
@@ -95,6 +152,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    deleteImage();
     initializeField(widget.user);
   }
 
@@ -114,7 +172,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ? const AssetImage('assets/images/blank_profile.jpg')
                 : isPicked
                     ? FileImage(image!)
-                    : NetworkImage(image!.path) as ImageProvider,
+                    : NetworkImage(
+                        'http://0.0.0.0:8000${widget.user.userProfileModel?.data?.profile}',
+                      ) as ImageProvider<Object>,
           ),
           const SizedBox(
             height: 18,
@@ -163,6 +223,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           style: TextStyle(fontSize: AppSize.fontLg),
                         ),
                       ),
+                      ListTile(
+                        onTap: () async {
+                          await deleteImage();
+                          setState(() {
+                            image = null;
+                          });
+                          Navigator.pop(context);
+                        },
+                        leading: const Icon(
+                          Iconsax.trash4,
+                          size: 28,
+                          color: AppColor.error,
+                        ),
+                        title: Text(
+                          'Remove Profile Picture',
+                          style: TextStyle(fontSize: AppSize.fontLg),
+                        ),
+                      ),
                       const SizedBox(
                         height: 8,
                       )
@@ -171,11 +249,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               );
             },
-            child: const Text(
+            child: Text(
               'Edit Profile Picture',
               style: TextStyle(
                 color: AppColor.primary,
-                fontSize: 16,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.normal,
               ),
             ),
@@ -315,7 +393,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             height: 50.h,
             child: MyButton(
               dark: dark,
-              name: 'Edit',
+              name: 'Update',
               onPress: () async {
                 showLoaderDialog(context);
                 await widget.user.editUserProfile(
@@ -329,6 +407,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 );
                 await widget.user.getUserProfile();
                 Navigator.pop(context);
+                await deleteImage();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

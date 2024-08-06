@@ -17,8 +17,10 @@ class EditProfileButton extends StatelessWidget {
     return IconButton(
       onPressed: () {
         showModalBottomSheet(
+          showDragHandle: true,
           backgroundColor: dark ? AppColor.dark : AppColor.light,
           context: context,
+          useSafeArea: true,
           isScrollControlled: true,
           clipBehavior: Clip.none,
           shape: const RoundedRectangleBorder(
@@ -34,15 +36,6 @@ class EditProfileButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 80,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_back_ios),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
                   EditProfileScreen(
                     user: user,
                   ),

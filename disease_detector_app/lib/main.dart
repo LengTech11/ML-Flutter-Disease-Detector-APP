@@ -12,10 +12,10 @@ import 'package:disease_detector_app/storage/token_storage.dart';
 import 'package:disease_detector_app/view_model/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'config/themes/theme.dart';
 import 'firebase_options.dart';
@@ -61,13 +61,13 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> checkIsLogin() async {
     final token = await TokenStorage.getToken();
-    if (token != null || token != '') {
+    if (token == null || token == '') {
       setState(() {
-        isLogin = true;
+        isLogin = false;
       });
     } else {
       setState(() {
-        isLogin = false;
+        isLogin = true;
       });
     }
   }
@@ -125,8 +125,8 @@ class _MyAppState extends State<MyApp> {
                   home: isFirstInstall == true
                       ? const OnboardingView()
                       : isLogin == true
-                          ? const LoginScreen()
-                          : const HomeScreen(),
+                          ? const HomeScreen()
+                          : const LoginScreen(),
                 );
               },
             );

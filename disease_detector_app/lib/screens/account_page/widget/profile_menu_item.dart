@@ -125,9 +125,11 @@ class _profileInfoState extends State<ProfileInfo> {
               ),
             ),
           ),
-          EditProfileButton(
-            user: widget.userProvider,
-          ),
+          widget.userProvider.isGuest
+              ? const SizedBox()
+              : EditProfileButton(
+                  user: widget.userProvider,
+                ),
         ],
       ),
     );
