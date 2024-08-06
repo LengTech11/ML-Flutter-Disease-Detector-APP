@@ -18,6 +18,30 @@ class UserProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> editUserProfile({
+    required String firstName,
+    required String lastName,
+    // required int age,
+    required String email,
+    required String phoneNumber,
+    // required File image,
+  }) async {
+    try {
+      final response = await UserProfileApiService().editUserProfile(
+        firstName: firstName,
+        lastName: lastName,
+        // age: age,
+        email: email,
+        phoneNumber: phoneNumber,
+        // image: image,
+      );
+      if (response.data != null) {
+        _userProfileModel = response;
+      }
+    } catch (error) {}
+    notifyListeners();
+  }
+
   void clearUser() {
     _userProfileModel = null;
     notifyListeners();

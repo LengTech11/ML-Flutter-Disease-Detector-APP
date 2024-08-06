@@ -1,5 +1,6 @@
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
+import 'package:disease_detector_app/screens/account_page/widget/edit_profile_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -123,6 +124,7 @@ class _profileInfoState extends State<ProfileInfo> {
                   ),
                 ),
               ),
+              const EditProfileButton(),
             ],
           );
         },

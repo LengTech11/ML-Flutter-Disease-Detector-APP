@@ -2,6 +2,7 @@ import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/config/themes/theme.dart';
+import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:disease_detector_app/screens/account_page/change_password_screen.dart';
 import 'package:disease_detector_app/screens/account_page/widget/logout_button.dart';
 import 'package:disease_detector_app/screens/account_page/widget/profile_menu_item.dart';
@@ -22,6 +23,17 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  UserProfileProvider userProfileProvider = UserProfileProvider();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userProfileProvider =
+        Provider.of<UserProfileProvider>(context, listen: false);
+    userProfileProvider.getUserProfile();
+  }
+
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
@@ -35,6 +47,7 @@ class _AccountScreenState extends State<AccountScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const ProfileInfo(),
+          SizedBox(height: 16.h),
           SizedBox(height: 16.h),
           profileMenuItems(context),
           SizedBox(
@@ -89,7 +102,6 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
               SubMenuItem(
-                // enable: AppConstant.USER_TOKEN == null ? false : true,
                 onTap: () {
                   if (AppConstant.USER_TOKEN == null) {
                     ScaffoldMessenger.of(context).clearSnackBars();
