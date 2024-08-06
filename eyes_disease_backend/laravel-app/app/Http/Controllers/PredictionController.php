@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Prediction;
-use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class PredictionController extends Controller
 {
@@ -94,6 +94,14 @@ class PredictionController extends Controller
         $deletedCount = Prediction::where('user_id', Auth::id())->delete();
 
         return response()->json(['message' => "Deleted $deletedCount predictions"]);
+    }
+
+    public function delete($id)
+    {
+        $prediction = Prediction::getSinglePrediction($id);
+        $prediction->delete();
+
+        return redirect('history/list')->with('success', 'History has been deleted.');
     }
 
 }
