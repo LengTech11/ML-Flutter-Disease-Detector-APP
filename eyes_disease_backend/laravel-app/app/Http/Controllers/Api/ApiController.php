@@ -10,7 +10,7 @@ use App\Models\Disease;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Storage;
 
 class ApiController extends Controller
 {
@@ -96,21 +96,56 @@ class ApiController extends Controller
         }
     }
 
+    // public function getProfile(Request $request)
+    // {
+    //     $userData  = auth()->user();
+    //     return response()->json([
+    //         'id' => auth()->user()->id,
+    //         'status' => 'success',
+    //         'message' => 'User profile',
+    //         'data' => $userData,
+    //     ], 200);
+    // }
+
+
     public function getProfile(Request $request)
     {
-        $userData  = auth()->user();
+        $user = auth()->user();
+
+        // Include the full URL of the profile image
+        if ($user->profile) {
+            $user->profile = Storage::url($user->profile);
+        }
+
         return response()->json([
-            'id' => auth()->user()->id,
+            'id' => $user->id,
             'status' => 'success',
             'message' => 'User profile',
-            'data' => $userData,
+            'data' => $user,
         ], 200);
     }
 
     public function editProfile(Request $request)
     {
         $user = auth()->user();
-        $user->update($request->all());
+
+        // Handle the profile image upload
+        if ($request->hasFile('profile')) {
+            $file = $request->file('profile');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+
+            // Store the image in the 'public' disk under the 'profiles' directory
+            $imagePath = $file->storeAs('profiles', $filename, 'public');
+
+            // Delete the old profile image
+            if ($user->profile) {
+                Storage::delete('public/' . $user->profile);
+            }
+
+            $user->profile = $imagePath;
+        }
+
+        $user->update($request->except('profile'));
 
         return response()->json([
             'status' => 'success',

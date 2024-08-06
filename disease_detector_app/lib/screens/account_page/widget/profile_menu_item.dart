@@ -36,7 +36,7 @@ class _profileInfoState extends State<ProfileInfo> {
           final provider = value.userProfileModel?.data;
           final profileImageUrl =
               provider?.profile != null && provider!.profile.isNotEmpty
-                  ? 'http://0.0.0.0:8000/storage/profiles/${provider.profile}'
+                  ? 'http://0.0.0.0:8000${provider.profile}'
                   : noImg;
           final name = value.isGuest
               ? AppLocalizations.of(context)?.guest ?? "Guest"

@@ -123,15 +123,13 @@ class HistoryTile extends StatelessWidget {
                 children: [
                   Container(
                     width: 200,
-                    child: Expanded(
-                      child: Text(
-                        _historyCard.species,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onBackground),
-                      ),
+                    child: Text(
+                      _historyCard.species,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onBackground),
                     ),
                   ),
                   Container(
