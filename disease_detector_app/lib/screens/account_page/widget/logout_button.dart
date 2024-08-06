@@ -5,9 +5,9 @@ import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:disease_detector_app/screens/login/login_screen.dart';
 import 'package:disease_detector_app/storage/token_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LogoutButton extends StatefulWidget {
   const LogoutButton({super.key});
@@ -29,7 +29,9 @@ class _LogoutButtonState extends State<LogoutButton> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(6.r),
             ),
-            overlayColor: AppColor.error.withOpacity(0.1),
+            overlayColor: value.isGuest
+                ? AppColor.primary
+                : AppColor.error.withOpacity(0.1),
           ),
           onPressed: () {
             showLoaderDialog(context);

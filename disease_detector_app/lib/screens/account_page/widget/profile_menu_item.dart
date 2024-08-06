@@ -1,9 +1,9 @@
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileInfo extends StatefulWidget {
   const ProfileInfo({super.key});
@@ -27,7 +27,6 @@ class _profileInfoState extends State<ProfileInfo> {
   Widget build(BuildContext context) {
     return Container(
       height: 100.h,
-      padding: appPadding,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
       ),
@@ -36,7 +35,7 @@ class _profileInfoState extends State<ProfileInfo> {
           final provider = value.userProfileModel?.data;
           final profileImageUrl =
               provider?.profile != null && provider!.profile.isNotEmpty
-                  ? 'http://0.0.0.0:8000/storage/${provider.profile}'
+                  ? 'http://0.0.0.0:8000/storage/profiles/${provider.profile}'
                   : noImg;
           final name = value.isGuest
               ? AppLocalizations.of(context)?.guest ?? "Guest"

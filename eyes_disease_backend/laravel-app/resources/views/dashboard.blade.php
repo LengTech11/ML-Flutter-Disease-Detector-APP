@@ -144,10 +144,10 @@
                                     {{$totalNormalClass}}</td>
                                 <td class="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
                                     <div class="flex items-center">
-                                        <span class="mr-2 text-xs font-medium">{{ ($totalNormalClass * $totalDisease) }}%</span>
+                                        <span class="mr-2 text-xs font-medium">{{ ($totalNormalClass / $totalDiseaseCount) * 100 }}%</span>
                                         <div class="relative w-full">
                                             <div class="w-full bg-gray-200 rounded-sm h-2">
-                                                <div class="bg-cyan-600 h-2 rounded-sm" style="width: {{ ($totalNormalClass * $totalDisease) }}%;"></div>
+                                                <div class="bg-cyan-600 h-2 rounded-sm" style="width: {{ ($totalNormalClass / $totalDiseaseCount) * 100 }}%;"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -162,10 +162,10 @@
                                     {{$totalDiabeticClass}}</td>
                                 <td class="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
                                     <div class="flex items-center">
-                                        <span class="mr-2 text-xs font-medium">{{ ($totalDiabeticClass * $totalDisease) }}%</span>
+                                        <span class="mr-2 text-xs font-medium">{{ ($totalDiabeticClass / $totalDiseaseCount)*100}}%</span>
                                         <div class="relative w-full">
                                             <div class="w-full bg-gray-200 rounded-sm h-2">
-                                                <div class="bg-orange-300 h-2 rounded-sm" style="width: {{ ($totalDiabeticClass * $totalDisease) }}%;"></div>
+                                                <div class="bg-orange-300 h-2 rounded-sm" style="width: {{ ($totalDiabeticClass / $totalDiseaseCount) * 100}}%;"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -178,12 +178,12 @@
                                 <td
                                     class="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4">
                                     {{$totalCataractClass}}</td>
-                                <td class="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
+                                <td class="border-t-0 px-4 align-left text-xs whitespace-nowrap p-4">
                                     <div class="flex items-center">
-                                        <span class="mr-2 text-xs font-medium">{{ ($totalCataractClass * $totalDisease) }}%</span>
+                                        <span class="mr-2 text-xs font-medium">{{ ($totalCataractClass * $totalDiseaseCount) * 100 }}%</span>
                                         <div class="relative w-full">
                                             <div class="w-full bg-gray-200 rounded-sm h-2">
-                                                <div class="bg-teal-400 h-2 rounded-sm" style="width: {{ ($totalCataractClass * $totalDisease) }}%;"></div>
+                                                <div class="bg-teal-400 h-2 rounded-sm" style="width: {{ ($totalCataractClass / $totalDiseaseCount) * 100}}%;"></div>
                                             </div>
                                         </div>
                                     </div>

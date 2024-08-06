@@ -93,8 +93,8 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
                   autoSpacing: false,
                   pageFling: true,
                   pageSnap: true,
-                  defaultPage: currentPage!,
-                  fitPolicy: FitPolicy.BOTH,
+                  defaultPage: currentPage ?? 1,
+                  fitPolicy: FitPolicy.WIDTH,
                   preventLinkNavigation:
                       false, // if set to true the link is handled in flutter
                   onRender: (_pages) {
@@ -144,9 +144,9 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
         builder: (context, AsyncSnapshot<PDFViewController> snapshot) {
           if (snapshot.hasData) {
             return FloatingActionButton.extended(
-              label: Text("Go to ${pages! ~/ 2}"),
+              label: const Icon(Icons.keyboard_arrow_up),
               onPressed: () async {
-                await snapshot.data!.setPage(pages! ~/ 2);
+                await snapshot.data!.setPage(0);
               },
             );
           }
