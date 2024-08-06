@@ -107,7 +107,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   'Confirm Password',
               controller: confirmPasswordController,
               keyBoardType: TextInputType.text,
-              textInputAction: TextInputAction.next,
+              textInputAction: TextInputAction.done,
               visible: false,
             ),
           ],
