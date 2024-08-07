@@ -49,6 +49,18 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // Check the user's role after successful authentication
+        $user = Auth::user();
+
+        if (!$this->checkUserRole($user)) {
+            Auth::logout(); // Log out the user if role is not allowed
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => trans('auth.unauthorized_role'),
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 
@@ -81,5 +93,17 @@ class LoginRequest extends FormRequest
     public function throttleKey(): string
     {
         return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+    }
+
+    /**
+     * Check if the authenticated user has the required role.
+     *
+     * @param  \App\Models\User $user
+     * @return bool
+     */
+    protected function checkUserRole($user): bool
+    {
+        // Check if user_role is 1
+        return $user->user_role === 1;
     }
 }
