@@ -110,7 +110,8 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               SubMenuItem(
                 onTap: () {
-                  if (AppConstant.USER_TOKEN == null) {
+                  if (AppConstant.USER_TOKEN == null ||
+                      AppConstant.USER_TOKEN == '') {
                     ScaffoldMessenger.of(context).clearSnackBars();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

@@ -31,7 +31,7 @@ class _profileInfoState extends State<ProfileInfo> {
     final provider = widget.userProvider.userProfileModel?.data;
     final profileImageUrl =
         provider?.profile != null && provider!.profile!.isNotEmpty
-            ? 'http://10.0.2.2:8000${provider.profile}'
+            ? 'http://0.0.0.0:8000${provider.profile}'
             : noImg;
     final name = widget.userProvider.isGuest
         ? AppLocalizations.of(context)?.guest ?? "Guest"
