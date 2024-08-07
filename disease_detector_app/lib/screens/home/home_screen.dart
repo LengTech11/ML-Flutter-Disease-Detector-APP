@@ -1,6 +1,8 @@
+import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/screens/diseases/disease_screen.dart';
 import 'package:disease_detector_app/screens/home/image_upload_screen.dart';
+import 'package:disease_detector_app/storage/token_storage.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,22 @@ class _HomeScreenState extends State<HomeScreen> {
     const DiseaseScreen(),
     const AccountScreen()
   ];
+
+  Future<void> checkIsLogin() async {
+    final token = await TokenStorage.getToken();
+    if (token == null || token == '') {
+      AppConstant.USER_TOKEN = '';
+    } else {
+      AppConstant.USER_TOKEN = token;
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkIsLogin();
+  }
 
   @override
   Widget build(BuildContext context) {
