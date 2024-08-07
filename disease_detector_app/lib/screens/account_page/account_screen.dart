@@ -37,25 +37,32 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
-    return Container(
-      decoration: BoxDecoration(
-        color: dark ? AppColor.dark : AppColor.light,
-      ),
-      padding: appPadding,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const ProfileInfo(),
-          SizedBox(height: 16.h),
-          SizedBox(height: 16.h),
-          profileMenuItems(context),
-          SizedBox(
-            height: 16.h,
+    return Consumer<UserProfileProvider>(
+      builder: (context, value, child) {
+        return Container(
+          decoration: BoxDecoration(
+            color: dark ? AppColor.dark : AppColor.light,
           ),
-          const LogoutButton(),
-        ],
-      ),
+          padding: appPadding,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ProfileInfo(
+                userProvider: value,
+              ),
+              SizedBox(height: 16.h),
+              SizedBox(height: 16.h),
+              profileMenuItems(context),
+              SizedBox(
+                height: 16.h,
+              ),
+              const LogoutButton(),
+            ],
+          ),
+        );
+      },
+      // child: ,
     );
   }
 

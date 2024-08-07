@@ -104,7 +104,7 @@ class HistoryTile extends StatelessWidget {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage(
-                    'http://0.0.0.0:8000${_historyCard.imageUrl}',
+                    'http://10.0.2.2:8000${_historyCard.imageUrl}',
                   ),
                 ),
               ),
