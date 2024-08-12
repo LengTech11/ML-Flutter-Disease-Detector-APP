@@ -68,22 +68,16 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return Scaffold(
-      primary: false,
-      appBar: AppBar(
-        forceMaterialTransparency: true,
-        primary: false,
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: false,
-      ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
+          padding: appPadding,
           child: SizedBox(
             height: DeviceUtils.getScreenHeight(context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: AppSize.appbarHeight),
                 Text(
                   AppLocalizations.of(context)?.welcome ?? 'Welcome Back',
                   style: dark

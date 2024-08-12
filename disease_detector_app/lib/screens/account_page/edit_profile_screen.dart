@@ -86,7 +86,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         emailController.text = response.email ?? '';
         phoneNumberController.text = response.phoneNumber ?? '';
         if (response.profile != null && response.profile!.isNotEmpty) {
-          final profileUrl = 'http://0.0.0.0:8000${response.profile}';
+          final profileUrl = 'http://10.0.2.2:8000${response.profile}';
 
           await downloadImage(profileUrl).then((value) async {
             print(profileUrl);
