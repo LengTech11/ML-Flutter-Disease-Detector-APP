@@ -12,8 +12,63 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * @OA\Info(
+ *    version="1.0.0",
+ *    title="Disease Prediction API",
+ *    description="Disease Prediction API Documentation"
+ *  )
+ *
+ * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     scheme="bearer",
+ *     bearerFormat="JWT",
+ *     description="Enter your bearer token"
+ *  )
+ */
+
 class ApiController extends Controller
 {
+    /**
+     * @OA\Post(
+     *     path="/api/register",
+     *     summary="Register a new user",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(property="first_name", type="string"),
+     *                 @OA\Property(property="last_name", type="string"),
+     *                 @OA\Property(property="email", type="string"),
+     *                 @OA\Property(property="age", type="integer"),
+     *                 @OA\Property(property="gender", type="integer"),
+     *                 @OA\Property(property="password", type="string")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="User created successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string"),
+     *             @OA\Property(property="message", type="string"),
+     *             @OA\Property(property="token", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string"),
+     *             @OA\Property(property="message", type="string"),
+     *             @OA\Property(property="errors", type="object")
+     *         )
+     *     )
+     * )
+     */
     public function register(Request $request)
     {
         try
@@ -57,6 +112,49 @@ class ApiController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="Login a user",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(property="email", type="string", example="visioncare@gmail.com"),
+     *                 @OA\Property(property="password", type="string", example="061706202")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="User logged in successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string"),
+     *             @OA\Property(property="message", type="string"),
+     *             @OA\Property(property="token", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Invalid login details",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string"),
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string"),
+     *             @OA\Property(property="message", type="string"),
+     *             @OA\Property(property="errors", type="object")
+     *         )
+     *     )
+     * )
+     */
     public function login(Request $request)
     {
         try
@@ -96,18 +194,38 @@ class ApiController extends Controller
         }
     }
 
-    // public function getProfile(Request $request)
-    // {
-    //     $userData  = auth()->user();
-    //     return response()->json([
-    //         'id' => auth()->user()->id,
-    //         'status' => 'success',
-    //         'message' => 'User profile',
-    //         'data' => $userData,
-    //     ], 200);
-    // }
-
-
+    /**
+     * @OA\Get(
+     *     path="/api/profile",
+     *     summary="Get user profile",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="User profile",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string"),
+     *             @OA\Property(property="message", type="string"),
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="id", type="integer"),
+     *                 @OA\Property(property="first_name", type="string"),
+     *                 @OA\Property(property="last_name", type="string"),
+     *                 @OA\Property(property="email", type="string"),
+     *                 @OA\Property(property="age", type="integer"),
+     *                 @OA\Property(property="gender", type="integer"),
+     *                 @OA\Property(property="profile", type="string", format="uri")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string"),
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     )
+     * )
+     */
     public function getProfile(Request $request)
     {
         $user = auth()->user();
