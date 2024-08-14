@@ -47,7 +47,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
         // height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(140.r)),
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.primaryContainer,
         ),
         margin:
             EdgeInsets.symmetric(horizontal: AppSize.md, vertical: AppSize.sm),
@@ -58,7 +58,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           children: widget.tabs
               .map(
                 (tab) => TabButton(
-                  activeColor: Theme.of(context).colorScheme.primary,
+                  activeColor: Theme.of(context).colorScheme.primaryContainer,
                   color:
                       Theme.of(context).colorScheme.secondary.withOpacity(0.10),
                   active: selectedIndex == widget.tabs.indexOf(tab),
