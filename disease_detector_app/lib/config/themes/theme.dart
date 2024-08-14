@@ -28,9 +28,9 @@ class ThemeProvider extends ChangeNotifier {
 class AppTheme {
   static final lightTheme = ThemeData(
     useMaterial3: true,
-    scaffoldBackgroundColor: const Color(0xFFE3E5E8),
+    scaffoldBackgroundColor: M3Theme.light().surface,
     fontFamily: 'Poppins',
-    secondaryHeaderColor: const Color(0xFF707B89),
+    secondaryHeaderColor: M3Theme.light().onSecondary,
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: EdgeInsets.symmetric(
         horizontal: 20.w,
@@ -39,21 +39,23 @@ class AppTheme {
       border: InputBorder.none,
       floatingLabelBehavior: FloatingLabelBehavior.always,
     ),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: AppColor.primary,
-      foregroundColor: AppColor.light,
+    appBarTheme: AppBarTheme(
+      backgroundColor: M3Theme.light().primaryContainer,
+      foregroundColor: M3Theme.light().onPrimaryContainer,
     ),
-    hintColor: AppColor.primary,
-    splashColor: AppColor.light,
-    iconTheme: const IconThemeData(color: AppColor.dark),
+    hintColor: M3Theme.light().primaryContainer,
+    splashColor: M3Theme.light().surface,
+    iconTheme: IconThemeData(
+      color: M3Theme.light().onPrimaryContainer,
+    ),
     colorScheme: M3Theme.light(),
   );
 
   static final darkTheme = ThemeData(
     useMaterial3: true,
-    scaffoldBackgroundColor: AppColor.dark,
+    scaffoldBackgroundColor: M3Theme.dark().surface,
     fontFamily: 'Poppins',
-    secondaryHeaderColor: AppColor.darkGrey,
+    secondaryHeaderColor: M3Theme.dark().onSecondary,
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: EdgeInsets.symmetric(
         horizontal: 20.w,
@@ -62,12 +64,15 @@ class AppTheme {
       border: InputBorder.none,
       floatingLabelBehavior: FloatingLabelBehavior.always,
     ),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: AppColor.primary,
+    appBarTheme: AppBarTheme(
+      backgroundColor: M3Theme.dark().primaryContainer,
+      foregroundColor: M3Theme.dark().onPrimaryContainer,
     ),
-    hintColor: AppColor.primary,
-    splashColor: AppColor.splashColor,
-    iconTheme: const IconThemeData(color: AppColor.light),
+    hintColor: M3Theme.dark().primaryContainer,
+    splashColor: M3Theme.dark().surface,
+    iconTheme: IconThemeData(
+      color: M3Theme.dark().onPrimaryContainer,
+    ),
     colorScheme: M3Theme.dark(),
   );
 }
