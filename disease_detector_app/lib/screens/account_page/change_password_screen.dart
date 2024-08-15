@@ -4,7 +4,7 @@ import 'package:disease_detector_app/model/change_password/change_password_respo
 import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
-import 'package:disease_detector_app/widgets/my_text_form_field.dart';
+import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -89,8 +89,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             const SizedBox(
               height: 20,
             ),
-            MyTextFormField(
-              dark: dark,
+            VcTextField(
               hint:
                   AppLocalizations.of(context)?.new_password ?? 'New Password',
               controller: newPasswordController,
@@ -101,8 +100,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             const SizedBox(
               height: 20,
             ),
-            MyTextFormField(
-              dark: dark,
+            VcTextField(
               hint: AppLocalizations.of(context)?.confirm_password ??
                   'Confirm Password',
               controller: confirmPasswordController,
@@ -123,9 +121,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   }
 
   Widget buildCurrentPwdField(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
-    return MyTextFormField(
-      dark: dark,
+    return VcTextField(
       visible: isShowPassword,
       suffix: isShowPassword
           ? IconButton(
