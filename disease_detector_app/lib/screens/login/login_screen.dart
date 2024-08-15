@@ -6,7 +6,7 @@ import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:disease_detector_app/screens/register/register_screen.dart';
 import 'package:disease_detector_app/storage/token_storage.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
-import 'package:disease_detector_app/widgets/outlined_button.dart';
+import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +18,6 @@ import '../../config/themes/color.dart';
 import '../../utils/custom_text_theme/custom_text_theme.dart';
 import '../../utils/helper/helper_function.dart';
 import '../../widgets/my_button.dart';
-import '../../widgets/my_text_form_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -91,8 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: AppSize.sm),
-                  child: MyTextFormField(
-                    dark: dark,
+                  child: VcTextField(
                     prefixIcon: const Icon(Icons.email_rounded),
                     hint: AppLocalizations.of(context)?.email ?? 'Email',
                     controller: emailController,
@@ -106,8 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: AppSize.sm),
-                  child: MyTextFormField(
-                    dark: dark,
+                  child: VcTextField(
                     prefixIcon: const Icon(Iconsax.password_check),
                     visible: isPassword,
                     suffix: isPassword

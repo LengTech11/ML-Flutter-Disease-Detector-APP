@@ -9,7 +9,7 @@ import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.d
 import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/my_button.dart';
-import 'package:disease_detector_app/widgets/my_text_form_field.dart';
+import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -86,7 +86,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         emailController.text = response.email ?? '';
         phoneNumberController.text = response.phoneNumber ?? '';
         if (response.profile != null && response.profile!.isNotEmpty) {
-          final profileUrl = 'http://10.0.2.2:8000${response.profile}';
+          final profileUrl = 'http://0.0.0.0:8000${response.profile}';
 
           await downloadImage(profileUrl).then((value) async {
             print(profileUrl);
@@ -267,11 +267,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             children: [
               SizedBox(
                 width: DeviceUtils.getScreenWidth(context) * 0.45,
-                child: MyTextFormField(
+                child: VcTextField(
                   prefixIcon: const Icon(
                     Icons.person,
                   ),
-                  dark: dark,
                   hint:
                       AppLocalizations.of(context)?.first_name ?? 'First Name',
                   controller: firstNameController,
@@ -285,8 +284,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               SizedBox(
                 width: DeviceUtils.getScreenWidth(context) * 0.45,
-                child: MyTextFormField(
-                  dark: dark,
+                child: VcTextField(
                   prefixIcon: const Icon(
                     Icons.person,
                   ),
@@ -308,8 +306,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             children: [
               SizedBox(
                 width: DeviceUtils.getScreenWidth(context) * 0.45,
-                child: MyTextFormField(
-                  dark: dark,
+                child: VcTextField(
                   hint: AppLocalizations.of(context)?.age ?? 'Age',
                   controller: ageController,
                   keyBoardType: TextInputType.number,
@@ -359,11 +356,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           const SizedBox(
             height: 16,
           ),
-          MyTextFormField(
+          VcTextField(
             prefixIcon: const Icon(
               Icons.email,
             ),
-            dark: dark,
             hint: AppLocalizations.of(context)?.email ?? 'Email',
             controller: emailController,
             keyBoardType: TextInputType.name,
@@ -373,11 +369,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           const SizedBox(
             height: 16,
           ),
-          MyTextFormField(
+          VcTextField(
             prefixIcon: const Icon(
               Icons.phone,
             ),
-            dark: dark,
             hint: AppLocalizations.of(context)?.phone_number ?? 'Phone Number',
             controller: phoneNumberController,
             keyBoardType: TextInputType.number,

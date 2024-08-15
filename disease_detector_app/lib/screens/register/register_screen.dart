@@ -3,6 +3,7 @@ import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/model/register_model/register_response_model.dart';
 import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
+import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +15,6 @@ import '../../config/themes/color.dart';
 import '../../utils/custom_text_theme/custom_text_theme.dart';
 import '../../utils/helper/helper_function.dart';
 import '../../widgets/my_button.dart';
-import '../../widgets/my_text_form_field.dart';
 import '../login/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -136,11 +136,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     children: [
                       SizedBox(
                         width: DeviceUtils.getScreenWidth(context) * 0.45,
-                        child: MyTextFormField(
+                        child: VcTextField(
                           prefixIcon: const Icon(
                             Icons.person,
                           ),
-                          dark: dark,
                           hint: AppLocalizations.of(context)?.first_name ??
                               'First Name',
                           controller: firstNameController,
@@ -154,8 +153,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       SizedBox(
                         width: DeviceUtils.getScreenWidth(context) * 0.45,
-                        child: MyTextFormField(
-                          dark: dark,
+                        child: VcTextField(
                           prefixIcon: const Icon(
                             Icons.person,
                           ),
@@ -175,8 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     children: [
                       SizedBox(
                         width: DeviceUtils.getScreenWidth(context) * 0.45,
-                        child: MyTextFormField(
-                          dark: dark,
+                        child: VcTextField(
                           hint: AppLocalizations.of(context)?.age ?? 'Age',
                           controller: ageController,
                           keyBoardType: TextInputType.number,
@@ -223,8 +220,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ],
                   ),
-                  MyTextFormField(
-                    dark: dark,
+                  VcTextField(
                     prefixIcon: const Icon(Icons.phone),
                     hint: AppLocalizations.of(context)?.phone_number ??
                         'Phone Number',
@@ -233,8 +229,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textInputAction: TextInputAction.next,
                     visible: false,
                   ),
-                  MyTextFormField(
-                    dark: dark,
+                  VcTextField(
                     prefixIcon: const Icon(Icons.email_rounded),
                     hint: AppLocalizations.of(context)?.email ?? 'Email',
                     controller: emailController,
@@ -242,8 +237,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textInputAction: TextInputAction.next,
                     visible: false,
                   ),
-                  MyTextFormField(
-                    dark: dark,
+                  VcTextField(
                     prefixIcon: const Icon(Iconsax.password_check),
                     visible: isPassword,
                     suffix: isPassword
@@ -270,8 +264,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     keyBoardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.next,
                   ),
-                  MyTextFormField(
-                    dark: dark,
+                  VcTextField(
                     prefixIcon: const Icon(Iconsax.password_check),
                     visible: isCnfPassword,
                     suffix: isCnfPassword
