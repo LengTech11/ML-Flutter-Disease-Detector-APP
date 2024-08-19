@@ -1,7 +1,5 @@
-// import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/config/themes/m3_theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
-// import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

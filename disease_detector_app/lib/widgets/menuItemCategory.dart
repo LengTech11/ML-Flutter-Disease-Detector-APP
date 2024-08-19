@@ -47,31 +47,41 @@ class _MenuItemCategoryState extends State<MenuItemCategory>
       duration: const Duration(milliseconds: 400),
       height: (_expanded ? widget.subitems.length * 76.w : 0) + 74.w,
       decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
-          borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
+        border: Border.all(
+          width: 1.1,
+          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3)
+        ),
+      ),
       child: Stack(children: [
         AnimatedPositioned(
-            duration: const Duration(milliseconds: 400),
-            top: _expanded ? 74.w : 10.w,
-            child: Column(
-              children: [...widget.subitems],
-            )),
+          duration: const Duration(
+            milliseconds: 400,
+          ),
+          top: _expanded ? 74.w : 10.w,
+          child: Column(
+            children: [...widget.subitems],
+          ),
+        ),
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
           ),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
               borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
               onTap: () {
-                setState(() {
-                  _expanded = !_expanded;
-                  _expanded
-                      ? animationController.forward()
-                      : animationController.reverse();
-                });
+                setState(
+                  () {
+                    _expanded = !_expanded;
+                    _expanded
+                        ? animationController.forward()
+                        : animationController.reverse();
+                  },
+                );
               },
               child: Container(
                 padding: EdgeInsets.symmetric(
@@ -81,13 +91,20 @@ class _MenuItemCategoryState extends State<MenuItemCategory>
                 child: Row(
                   children: [
                     RotationTransition(
-                        turns: Tween(begin: 0.0, end: 0.25)
-                            .animate(CurvedAnimation(
+                      turns: Tween(begin: 0.0, end: 0.25).animate(
+                        CurvedAnimation(
                           parent: animationController,
                           curve: Curves.easeOut,
-                        )),
-                        child: Icon(widget.prefix)),
-                    SizedBox(width: 20.w),
+                        ),
+                      ),
+                      child: Icon(
+                        widget.prefix,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20.w,
+                    ),
                     Text(
                       widget.text,
                       style: TextStyle(
@@ -96,15 +113,18 @@ class _MenuItemCategoryState extends State<MenuItemCategory>
                     ),
                     const Spacer(),
                     RotationTransition(
-                        turns:
-                            Tween(begin: 0.0, end: 0.5).animate(CurvedAnimation(
+                      turns: Tween(begin: 0.0, end: 0.5).animate(
+                        CurvedAnimation(
                           parent: animationController,
                           curve: Curves.easeOut,
-                        )),
-                        child: Icon(
-                          Iconsax.arrow_down_1,
-                          size: 22.sp,
-                        ))
+                        ),
+                      ),
+                      child: Icon(
+                        Iconsax.arrow_down_1,
+                        size: 22.sp,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -142,7 +162,8 @@ class SubMenuItem extends StatelessWidget {
           onTap: onTap,
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
+              borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
+            ),
             padding: EdgeInsets.symmetric(
               vertical: kDefaultPadding,
               horizontal: kDefaultPadding,
@@ -151,6 +172,7 @@ class SubMenuItem extends StatelessWidget {
               children: [
                 Icon(
                   icon,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
                 const SizedBox(width: 20),
                 Text(

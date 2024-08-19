@@ -20,7 +20,7 @@ class _ToggleThemeSwitcherState extends State<ToggleThemeSwitcher> {
       child: Transform.scale(
         scale: 0.8,
         child: CupertinoSwitch(
-          activeColor: Theme.of(context).colorScheme.primary,
+          activeColor: Theme.of(context).colorScheme.primaryContainer,
           value: widget.value,
           onChanged: widget.onChanged,
         ),
