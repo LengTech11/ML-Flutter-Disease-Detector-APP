@@ -48,6 +48,7 @@ class _profileInfoState extends State<ProfileInfo> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           InkWell(
+            customBorder: const CircleBorder(),
             onTap: () {
               setState(
                 () {
@@ -61,6 +62,7 @@ class _profileInfoState extends State<ProfileInfo> {
                         width: 320.w,
                         height: 320.h,
                         decoration: BoxDecoration(
+                          shape: BoxShape.circle,
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             image: profileImageUrl == noImg
@@ -68,7 +70,6 @@ class _profileInfoState extends State<ProfileInfo> {
                                 : NetworkImage(profileImageUrl)
                                     as ImageProvider<Object>,
                           ),
-                          borderRadius: BorderRadius.circular(200),
                         ),
                       ),
                     ),
@@ -83,7 +84,7 @@ class _profileInfoState extends State<ProfileInfo> {
                 shape: BoxShape.circle,
                 border: Border.all(
                   width: 2.w,
-                  color: Colors.transparent,
+                  color: Theme.of(context).colorScheme.outline.withOpacity(0.5),
                 ),
               ),
               child: ClipRRect(
@@ -118,8 +119,12 @@ class _profileInfoState extends State<ProfileInfo> {
                   Text(
                     email,
                     style: TextStyle(
-                        fontSize: 14.sp,
-                        color: Theme.of(context).colorScheme.onSecondary),
+                      fontSize: 14.sp,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurfaceVariant
+                          .withOpacity(0.6),
+                    ),
                   ),
                 ],
               ),

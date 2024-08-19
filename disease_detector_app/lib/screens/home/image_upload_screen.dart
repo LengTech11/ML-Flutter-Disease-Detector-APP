@@ -593,12 +593,15 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
       builder: (context, value, _) {
         return value.dis == null
             ? SizedBox(
-                height: 300,
+                height: 200,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)?.internal_server_error ??
                         'Internal Server Error',
-                    style: MyTextTheme.lightTextTheme.titleLarge,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 16
+                    ),
                   ),
                 ),
               )
@@ -717,7 +720,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
             child: Container(
               height: 260,
               width: 260,
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).colorScheme.tertiaryFixed,
               child: _image == null
                   ? const Icon(
                       Icons.add_photo_alternate_outlined,

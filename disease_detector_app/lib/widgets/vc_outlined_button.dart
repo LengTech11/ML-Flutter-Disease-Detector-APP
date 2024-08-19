@@ -8,33 +8,37 @@ class VcOutlinedButton extends StatelessWidget {
     this.onPressed,
     required this.title,
     this.icon,
+    this.style,
   });
 
   final void Function()? onPressed;
   final String title;
   final Icon? icon;
+  final ButtonStyle? style;
 
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return OutlinedButton(
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all<Color>(
-          dark
-              ? M3Theme.dark().surface
-              : M3Theme.light().surface,
-        ),
-        foregroundColor: WidgetStateProperty.all<Color>(
-          dark
-              ? M3Theme.dark().primary
-              : M3Theme.light().primary,
-        ),
-        overlayColor: WidgetStateProperty.all<Color>(
-          dark
-              ? M3Theme.dark().tertiaryContainer.withOpacity(0.25)
-              : M3Theme.light().tertiaryContainer.withOpacity(0.25),
-        ),
-      ),
+      style: style ??
+          ButtonStyle(
+            backgroundColor: WidgetStateProperty.all<Color>(
+              dark ? M3Theme.dark().surface : M3Theme.light().surface,
+            ),
+            foregroundColor: WidgetStateProperty.all<Color>(
+              dark ? M3Theme.dark().primary : M3Theme.light().primary,
+            ),
+            overlayColor: WidgetStateProperty.all<Color>(
+              dark
+                  ? M3Theme.dark().tertiaryContainer.withOpacity(0.25)
+                  : M3Theme.light().tertiaryContainer.withOpacity(0.25),
+            ),
+            textStyle: WidgetStateProperty.all<TextStyle>(
+              const TextStyle(
+                fontSize: 16,
+              ),
+            ),
+          ),
       onPressed: onPressed,
       child: icon != null
           ? Row(

@@ -8,7 +8,6 @@ import 'package:disease_detector_app/screens/home/home_screen.dart';
 import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
-import 'package:disease_detector_app/widgets/my_button.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -67,8 +66,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   UserProfileProvider userProfileProvider = UserProfileProvider();
 
-  File? image;
-  final ImagePicker _picker = ImagePicker();
+    File? image;
+    final ImagePicker _picker = ImagePicker();
   bool isPicked = false;
   int? selectedGender;
 
@@ -86,7 +85,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         emailController.text = response.email ?? '';
         phoneNumberController.text = response.phoneNumber ?? '';
         if (response.profile != null && response.profile!.isNotEmpty) {
-          final profileUrl = 'http://0.0.0.0:8000${response.profile}';
+          final profileUrl = 'http://10.0.2.2:8000${response.profile}';
 
           await downloadImage(profileUrl).then((value) async {
             print(profileUrl);
@@ -173,7 +172,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 : isPicked
                     ? FileImage(image!)
                     : NetworkImage(
-                        'http://0.0.0.0:8000${widget.user.userProfileModel?.data?.profile}',
+                        'http://10.0.2.2:8000${widget.user.userProfileModel?.data?.profile}',
                       ) as ImageProvider<Object>,
           ),
           const SizedBox(
@@ -386,10 +385,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             margin: EdgeInsets.symmetric(horizontal: 16.w),
             width: DeviceUtils.getScreenWidth(context),
             height: 50.h,
-            child: MyButton(
-              dark: dark,
-              name: 'Update',
-              onPress: () async {
+            child: VcFilledButton(
+              title: 'Update',
+              onPressed: () async {
                 showLoaderDialog(context);
                 await widget.user.editUserProfile(
                   firstName: firstNameController.text,

@@ -3,7 +3,6 @@ import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/screens/diseases/disease_screen.dart';
 import 'package:disease_detector_app/screens/home/image_upload_screen.dart';
 import 'package:disease_detector_app/storage/token_storage.dart';
-import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -46,12 +45,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
     return Builder(
       builder: (context) {
         return Scaffold(
           appBar: AppBar(
-            surfaceTintColor: dark ? AppColor.dark : AppColor.light,
+            surfaceTintColor: Theme.of(context).colorScheme.surface,
             centerTitle: true,
             automaticallyImplyLeading: false,
             title: Text(
@@ -60,12 +58,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontFamily: 'Poppins',
                   fontSize: 28,
                   fontWeight: FontWeight.w900,
-                  color: dark ? AppColor.white : AppColor.black,
+                  color: Theme.of(context).colorScheme.onSurface,
                   letterSpacing: 0.8),
             ),
-            backgroundColor: dark ? AppColor.dark : AppColor.light,
+            backgroundColor: Theme.of(context).colorScheme.surface,
           ),
-          backgroundColor: dark ? AppColor.dark : AppColor.light,
           body: pages[currentPage],
           bottomNavigationBar: BottomNavigator(
             onTabChange: (currentIndex) {

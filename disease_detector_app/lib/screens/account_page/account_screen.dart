@@ -36,33 +36,30 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
     return Consumer<UserProfileProvider>(
       builder: (context, value, child) {
-        return Container(
-          decoration: BoxDecoration(
-            color: dark ? AppColor.dark : AppColor.light,
-          ),
-          padding: appPadding,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ProfileInfo(
-                userProvider: value,
-              ),
-              SizedBox(height: 16.h),
-              SizedBox(height: 16.h),
-              profileMenuItems(context),
-              SizedBox(
-                height: 16.h,
-              ),
-              const LogoutButton(),
-            ],
+        return SingleChildScrollView(
+          child: Padding(
+            padding: appPadding,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ProfileInfo(
+                  userProvider: value,
+                ),
+                SizedBox(height: 16.h),
+                SizedBox(height: 16.h),
+                profileMenuItems(context),
+                SizedBox(
+                  height: 16.h,
+                ),
+                const LogoutButton(),
+              ],
+            ),
           ),
         );
       },
-      // child: ,
     );
   }
 
@@ -217,11 +214,20 @@ class _AccountScreenState extends State<AccountScreen> {
       actions: [
         TextButton(
           style: ButtonStyle(
-              overlayColor: WidgetStateProperty.all(Colors.transparent)),
+            overlayColor: WidgetStateProperty.all(
+              Colors.transparent,
+            ),
+          ),
           onPressed: () async {
             Navigator.pop(context);
           },
-          child: Text(AppLocalizations.of(context)?.close ?? 'Close'),
+          child: Text(
+            AppLocalizations.of(context)?.close ?? 'Close',
+            style: const TextStyle(
+              color: AppColor.error,
+              fontSize: 17,
+            ),
+          ),
         ),
       ],
     );
