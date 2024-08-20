@@ -8,30 +8,26 @@ class VcFilledButton extends StatelessWidget {
     this.onPressed,
     required this.title,
     this.icon,
+    this.style,
   });
 
   final void Function()? onPressed;
   final String title;
   final Icon? icon;
+  final ButtonStyle? style;
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return FilledButton(
-      style: ButtonStyle(
+      style: style ?? ButtonStyle(
         backgroundColor: WidgetStateProperty.all<Color>(
-          dark
-              ? M3Theme.dark().primary
-              : M3Theme.light().primary,
+          dark ? M3Theme.dark().primary : M3Theme.light().primary,
         ),
         foregroundColor: WidgetStateProperty.all<Color>(
-          dark
-              ? M3Theme.dark().onPrimary
-              : M3Theme.light().onPrimary,
+          dark ? M3Theme.dark().onPrimary : M3Theme.light().onPrimary,
         ),
         surfaceTintColor: WidgetStateProperty.all<Color>(
-          dark
-              ? M3Theme.dark().surface
-              : M3Theme.light().surface,
+          dark ? M3Theme.dark().surface : M3Theme.light().surface,
         ),
         overlayColor: WidgetStateProperty.all<Color>(
           dark
