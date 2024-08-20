@@ -7,6 +7,7 @@ import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:disease_detector_app/screens/doctor/doctor_screen.dart';
 
 import '../account_page/account_screen.dart';
 
@@ -23,6 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List pages = [
     const ImageUploadScreen(),
+    const DoctorScreen(),
+    // const DoctorCardScreen(),
     const DiseaseScreen(),
     const AccountScreen()
   ];
@@ -78,6 +81,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 activeColor: AppColor.light,
                 icon: Iconsax.camera,
                 text: AppLocalizations.of(context)?.camera ?? 'Camera',
+              ),
+              TabButton(
+                color: AppColor.white,
+                activeColor: AppColor.light,
+                icon: Iconsax.people,
+                text: AppLocalizations.of(context)?.doctor ?? 'Doctors',
               ),
               TabButton(
                 color: AppColor.white,

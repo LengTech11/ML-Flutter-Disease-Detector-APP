@@ -54,5 +54,8 @@
   "delete_history_success": "ប្រវត្តិទស្សន៍ទាយត្រូវបានលុបដោយជោគជ័យ",
   "delete_history_failed": "បរាជ័យក្នុងការលុបការព្យាករណ៍",
   "confirm_delete": "បញ្ជាក់ការលុប",
+  "available_doctor": "វេជ្ជបណ្ឌិតដែលទំនេរ",
+  "doctor": "វេជ្ជបណ្ឌិត",
+  "doctor": "វេជ្ជបណ្ឌិត",
   "login_to_change_password": "សូមចូលដើម្បីប្ដូរពាក្យសម្ងាត់"
 }

@@ -54,5 +54,7 @@
   "delete_history_success": "Prediction deleted successfully",
   "delete_history_failed": "Failed to delete prediction",
   "confirm_delete": "Confirm Delete",
+  "available_doctor": "Available Doctor",
+  "doctor": "Doctors",
   "login_to_change_password": "Please login to change password"
 }
