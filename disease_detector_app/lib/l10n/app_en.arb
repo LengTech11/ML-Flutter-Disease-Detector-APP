@@ -56,5 +56,9 @@
   "confirm_delete": "Confirm Delete",
   "available_doctor": "Available Doctor",
   "doctor": "Doctors",
+  "appointment": "Appointment",
+  "confirm_appointment": "Confirm Appointment",
+  "time": "Time Slots",
+  "please_select_time_slot": "Please select a time slot and enter your phone number",
   "login_to_change_password": "Please login to change password"
 }

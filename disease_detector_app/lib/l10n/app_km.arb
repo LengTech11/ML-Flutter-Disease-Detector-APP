@@ -57,5 +57,9 @@
   "available_doctor": "វេជ្ជបណ្ឌិតដែលទំនេរ",
   "doctor": "វេជ្ជបណ្ឌិត",
   "doctor": "វេជ្ជបណ្ឌិត",
+  "appointment": "ការណាត់ជួប",
+  "confirm_appointment": "បញ្ជាក់ការណាត់ជួប",
+  "time": "ពេលវេលា",
+  "please_select_time_slot": "សូមជ្រើសរើសពេលវេលា និងបញ្ចូលលេខទូរស័ព្ទរបស់អ្នក",
   "login_to_change_password": "សូមចូលដើម្បីប្ដូរពាក្យសម្ងាត់"
 }

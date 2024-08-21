@@ -1,6 +1,8 @@
 import 'package:disease_detector_app/widgets/vc_filled_button.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
+import 'package:disease_detector_app/screens/doctor/appointment.dart';
 
 class DoctorCardScreen extends StatelessWidget {
   @override
@@ -13,7 +15,7 @@ class DoctorCardScreen extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           'Dr. Serena Gome',
           overflow: TextOverflow.ellipsis,
         ),
@@ -29,7 +31,8 @@ class DoctorCardScreen extends StatelessWidget {
                 CircleAvatar(
                   radius: 50.0,
                   backgroundImage: AssetImage(
-                      'assets/doctor/doctor1.png'), // Add your doctor image path
+                    'assets/doctor/doctor1.png',
+                  ),
                 ),
                 SizedBox(width: 20.0),
                 Expanded(
@@ -79,15 +82,18 @@ class DoctorCardScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             // Action Buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 VcFilledButton(
-                  title: '01234456',
+                  title: '012344567',
                   icon: Icon(Icons.phone),
-                  onPressed: () {},
+                  onPressed: () async {
+                    final call = Uri.parse('tel:+85512345678');
+                    UrlLauncher.launchUrl(call);
+                  },
                   style: FilledButton.styleFrom(
                     backgroundColor:
                         Theme.of(context).colorScheme.onPrimaryFixed,
@@ -99,7 +105,10 @@ class DoctorCardScreen extends StatelessWidget {
                 VcFilledButton(
                   title: 'Telegram',
                   icon: Icon(Icons.telegram),
-                  onPressed: () {},
+                  onPressed: () async {
+                    final telegram = Uri.parse('https://t.me/hulsambath');
+                    UrlLauncher.launchUrl(telegram);
+                  },
                   style: FilledButton.styleFrom(
                     backgroundColor:
                         Theme.of(context).colorScheme.onPrimaryFixed,
@@ -150,12 +159,18 @@ class DoctorCardScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 30.0),
-            // Book an Appointment Button
             SizedBox(
               width: double.infinity,
               child: VcFilledButton(
                 title: 'Book Appointment',
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AppointmentScreen(),
+                    ),
+                  );
+                },
                 style: FilledButton.styleFrom(
                   backgroundColor:
                       Theme.of(context).colorScheme.primaryContainer,
