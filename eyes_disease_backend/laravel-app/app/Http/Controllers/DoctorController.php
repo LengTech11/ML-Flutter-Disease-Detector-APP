@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Doctor;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 
 class DoctorController extends Controller
 {
@@ -42,7 +45,7 @@ class DoctorController extends Controller
             $doctor->title = trim($request->title);
             $doctor->first_name = trim($request->first_name);
             $doctor->last_name = trim($request->last_name);
-            $doctor->clinic = trim($request->clinic);
+            $doctor->user_id = auth()->user()->id;
             $doctor->specialist = trim($request->specialist);
             $doctor->description = trim($request->description);
             $doctor->phone_number = trim($request->phone_number);
@@ -65,19 +68,16 @@ class DoctorController extends Controller
             $doctor->title = trim($request->title);
             $doctor->first_name = trim($request->first_name);
             $doctor->last_name = trim($request->last_name);
-            $doctor->clinic = trim($request->clinic);
             $doctor->specialist = trim($request->specialist);
-            $doctor->description = trim($request->specialist);
+            $doctor->description = trim($request->description);
             $doctor->phone_number = trim($request->phone_number);
             $doctor->telegram = trim($request->telegram);
             $doctor->experience = trim($request->experience);
-            $doctor->patient = trim($request->patient);
             $doctor->profile_pic = trim($request->profile_pic);
             $doctor->status = $validatedStatus['status'];
+            $doctor->save();
 
-            $user->save();
-
-            return redirect('user/list')->with('success', 'Account has been edited.');
+            return redirect('doctor/list')->with('success', 'Account has been edited.');
         }
     }
 

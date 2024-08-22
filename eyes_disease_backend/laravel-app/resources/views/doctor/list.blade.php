@@ -65,13 +65,6 @@
                                                 placeholder="Green" required>
                                         </div>
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label for="clinic"
-                                                class="text-sm font-medium text-gray-900 block mb-2">Clinic</label>
-                                            <input type="text" name="clinic" id="clinic" value="{{ old('clinic') }}"
-                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                                placeholder="Health Clinic" required>
-                                        </div>
-                                        <div class="col-span-6 sm:col-span-3">
                                             <label for="specialist"
                                                 class="text-sm font-medium text-gray-900 block mb-2">Specialist</label>
                                             <input type="text" name="specialist" id="specialist" value="{{ old('specialist') }}"
@@ -99,9 +92,9 @@
                                         <div class="col-span-6 sm:col-span-3">
                                             <label class="text-sm font-medium text-gray-900 block mb-2">
                                                 Telegram</label>
-                                            <input type="number" name="telegram" id="telegram" value="{{ old('telegram') }}"
+                                            <input type="text" name="telegram" id="telegramInput" value="{{ old('telegram', 'https://t.me/+855') }}"
                                                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                                placeholder="https://+855#######">
+                                                placeholder="">
                                         </div>
                                         <div class="col-span-6 sm:col-span-3">
                                             <label class="text-sm font-medium text-gray-900 block mb-2">
@@ -114,14 +107,10 @@
                                                 <option value="1">Avaible</option>
                                             </select>
                                         </div>
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for=""
-                                                class="text-sm font-medium text-gray-900 block mb-2">Description
-                                                </label>
-                                            <input type="text" name="description" id="description"
-                                                value="{{ old('description') }}"
-                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                                placeholder="description">
+                                        <div class="col-span-8 sm:col-span-6">
+                                            <label class="text-sm font-medium text-gray-900 block mb-2">Description</label>
+                                            <textarea name="description" id="description" cols="auto" rows="3" placeholder="Write description here" style="resize: none"
+                                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">{{old('description')}}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -231,7 +220,10 @@
                                         Name
                                     </th>
                                     <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
-                                        Clinic
+                                        Telegram
+                                    </th>
+                                    <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Patient
                                     </th>
                                     <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                                         Status
@@ -262,13 +254,17 @@
                                                 <div class="text-sm font-normal text-gray-500"> {{ $value->specialist }} </div>
                                             </div>
                                         </td>
+
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
-                                            {{$value->clinic}}
+                                            {{$value->telegram}}
+                                        </td>
+                                        <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
+                                            {{$value->patient}}
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
                                             @if($value->status == 0)
                                                 Unavailable
-                                            @elseif($value->gender == 1)
+                                            @elseif($value->status == 1)
                                                 Available
                                             @endif
                                         </td>
@@ -301,7 +297,7 @@
                                         </td>
                                     </tr>
 
-                                    <!--edit user modal-->
+                                    <!--edit doctor modal-->
                                     <div class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
                                         id="editUser{{ $value->id }}" data-twe-modal-init tabindex="-1"
                                         aria-modal="true">
@@ -314,7 +310,7 @@
                                                     <!-- Modal title -->
                                                     <h5 class="text-xl font-medium leading-normal text-surface dark:text-white"
                                                         id="addUserModalTitle">
-                                                        edit User
+                                                        Edit Doctor
                                                     </h5>
                                                     <!-- Close button -->
                                                     <button type="button"
@@ -334,7 +330,6 @@
                                                 <form action="" method="POST">
                                                     @csrf
                                                     <!-- Modal body -->
-
                                                     <div class="p-6 space-y-6">
                                                         <div class="grid grid-cols-6 gap-6">
                                                             <div class="col-span-6 sm:col-span-3">
@@ -367,13 +362,6 @@
                                                                     placeholder="Green" required>
                                                             </div>
                                                             <div class="col-span-6 sm:col-span-3">
-                                                                <label for="clinic"
-                                                                    class="text-sm font-medium text-gray-900 block mb-2">Clinic</label>
-                                                                <input type="text" name="clinic" id="clinic" value="{{ old('clinic', $value->clinic) }}"
-                                                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                                                    placeholder="Health Clinic" required>
-                                                            </div>
-                                                            <div class="col-span-6 sm:col-span-3">
                                                                 <label for="specialist"
                                                                     class="text-sm font-medium text-gray-900 block mb-2">Specialist</label>
                                                                 <input type="text" name="specialist" id="specialist" value="{{ old('specialist', $value->specialist) }}"
@@ -401,15 +389,15 @@
                                                             <div class="col-span-6 sm:col-span-3">
                                                                 <label class="text-sm font-medium text-gray-900 block mb-2">
                                                                     Telegram</label>
-                                                                <input type="number" name="telegram" id="telegram" value="{{ old('telegram', $value->telegram) }}"
+                                                                <input type="text" name="telegram" id="telegramInput" value="{{ old('telegram', $value->telegram ?? 'https://t.me/+855') }}"
                                                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                                                    placeholder="https://+855#######">
+                                                                    placeholder="">
                                                             </div>
                                                             <div class="col-span-6 sm:col-span-3">
-                                                                <label for="phone-number"
+                                                                <label for=""
                                                                     class="text-sm font-medium text-gray-900 block mb-2">
-                                                                    title</label>
-                                                                    <select name="title" id="title"
+                                                                    Status</label>
+                                                                    <select name="status" id="status"
                                                                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                                                                             required>
                                                                         <option value="" disabled {{ empty($value->status) ? 'selected' : '' }}>Select Status</option>
@@ -417,20 +405,13 @@
                                                                         <option value="1" {{ $value->status == '1' ? 'selected' : '' }}>Available</option>
                                                                     </select>
                                                             </div>
-                                                            <div class="col-span-6 sm:col-span-3">
-                                                                <label for=""
-                                                                    class="text-sm font-medium text-gray-900 block mb-2">Description
-                                                                    </label>
-                                                                <input type="text" name="description" id="description"
-                                                                    value="{{ old('description') }}"
-                                                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                                                    placeholder="description">
+                                                            <div class="col-span-8 sm:col-span-6">
+                                                                <label class="text-sm font-medium text-gray-900 block mb-2">Description</label>
+                                                                <textarea name="description" id="description" cols="auto" rows="4" placeholder="write descrition here" style="resize: none"
+                                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">{{$value->description}}</textarea>
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-
                                                     <!-- Modal footer -->
                                                     <div
                                                         class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 p-4 dark:border-white/10">
@@ -441,7 +422,7 @@
                                                             Close
                                                         </button>
                                                         <input type="hidden" name="id"
-                                                            value="{{ $value->id }}">
+                                                            value="{{ $value->id}}">
                                                         <button type="submit" name="form_type" value="edit"
                                                             class="ms-1 inline-block rounded bg-cyan-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-cyan-700 hover:shadow-primary-2 focus:bg-cyan-700 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-cyan-700 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
                                                             data-twe-ripple-init data-twe-ripple-color="light">
@@ -487,9 +468,9 @@
                                                             </path>
                                                         </svg>
                                                         <h3 class="text-xl font-normal text-gray-500 mt-5 mb-6">Are you
-                                                            sure you want to delete this user?
+                                                            sure you want to delete this doctor?
                                                         </h3>
-                                                        <a href="{{ url('user/delete/'.$value->id)}}"
+                                                        <a href="{{ url('doctor/delete/'.$value->id)}}"
                                                             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2">
                                                             Yes, I'm sure
                                                         </a>
@@ -562,4 +543,29 @@
             checkboxes[i].checked = source.checked;
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const input = document.getElementById('telegramInput');
+        const prefix = 'https://t.me/+855';
+
+        // Ensure the input starts with the correct prefix
+        if (!input.value.startsWith(prefix)) {
+            input.value = prefix;
+        }
+
+        // Prevent the user from modifying the prefix
+        input.addEventListener('keydown', function (e) {
+            if (input.selectionStart < prefix.length) {
+                e.preventDefault();
+            }
+        });
+
+        // Ensure that prefix stays at the beginning
+        input.addEventListener('input', function () {
+            if (!input.value.startsWith(prefix)) {
+                input.value = prefix + input.value.slice(prefix.length);
+            }
+        });
+    });
+
 </script>
