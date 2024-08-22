@@ -1,0 +1,109 @@
+import 'package:disease_detector_app/config/app_constants/app_constants.dart';
+import 'package:disease_detector_app/config/themes/color.dart';
+import 'package:disease_detector_app/screens/diseases/disease_screen.dart';
+import 'package:disease_detector_app/screens/home/home_screen.dart';
+import 'package:disease_detector_app/screens/home/image_upload_screen.dart';
+import 'package:disease_detector_app/storage/token_storage.dart';
+import 'package:disease_detector_app/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:iconsax/iconsax.dart';
+
+import '../account_page/account_screen.dart';
+
+class BottomNavigationBarScreen extends StatefulWidget {
+  static const String route = '/';
+  const BottomNavigationBarScreen({super.key});
+
+  @override
+  State<BottomNavigationBarScreen> createState() =>
+      _BottomNavigationBarScreenState();
+}
+
+class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
+  int currentPage = 0;
+
+  final List pages = [
+    const HomeScreen(),
+    const ImageUploadScreen(),
+    const DiseaseScreen(),
+    const AccountScreen()
+  ];
+
+  Future<void> checkIsLogin() async {
+    final token = await TokenStorage.getToken();
+    if (token == null || token == '') {
+      AppConstant.USER_TOKEN = '';
+    } else {
+      AppConstant.USER_TOKEN = token;
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkIsLogin();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(
+      builder: (context) {
+        return Scaffold(
+          appBar: AppBar(
+            surfaceTintColor: Theme.of(context).colorScheme.surface,
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+            title: Text(
+              AppLocalizations.of(context)?.app_name ?? 'VisionCare AI',
+              style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 28,
+                  fontWeight: FontWeight.w900,
+                  color: Theme.of(context).colorScheme.onSurface,
+                  letterSpacing: 0.8),
+            ),
+            backgroundColor: Theme.of(context).colorScheme.surface,
+          ),
+          body: pages[currentPage],
+          bottomNavigationBar: BottomNavigator(
+            onTabChange: (currentIndex) {
+              setState(
+                () {
+                  currentPage = currentIndex;
+                },
+              );
+            },
+            tabs: [
+              TabButton(
+                color: AppColor.white,
+                activeColor: AppColor.light,
+                icon: Iconsax.home,
+                text: AppLocalizations.of(context)?.home ?? 'Home',
+              ),
+              TabButton(
+                color: AppColor.white,
+                activeColor: AppColor.light,
+                icon: Iconsax.camera,
+                text: AppLocalizations.of(context)?.camera ?? 'Camera',
+              ),
+              TabButton(
+                color: AppColor.white,
+                activeColor: AppColor.light,
+                icon: Iconsax.save_add,
+                text: AppLocalizations.of(context)?.my_eye ?? 'My Eye',
+              ),
+              TabButton(
+                color: AppColor.white,
+                activeColor: AppColor.black,
+                icon: Iconsax.profile_circle4,
+                text: AppLocalizations.of(context)?.profile ?? 'Profile',
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+}

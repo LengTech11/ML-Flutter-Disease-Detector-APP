@@ -2,7 +2,7 @@ import 'package:disease_detector_app/api_service/api/login_api.dart';
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/config/themes/theme.dart';
 import 'package:disease_detector_app/model/login_model/login_response_model.dart';
-import 'package:disease_detector_app/screens/home/home_screen.dart';
+import 'package:disease_detector_app/screens/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
 import 'package:disease_detector_app/screens/register/register_screen.dart';
 import 'package:disease_detector_app/storage/token_storage.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
       TokenStorage.saveToken(AppConstant.USER_TOKEN!);
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(builder: (context) => const BottomNavigationBarScreen()),
           (route) => false);
     } catch (e) {
       HelperFunctions.debug(e.toString());
@@ -219,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const HomeScreen(),
+                  builder: (context) => const BottomNavigationBarScreen(),
                 ),
               );
             },
