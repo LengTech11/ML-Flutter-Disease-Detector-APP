@@ -18,7 +18,7 @@ class UserController extends Controller
         $search = $request->input('search');
         $query = User::select('users.*')
                         ->orderBy('count', 'desc')
-                        ->where('user_role', 0);
+                        ->where('user_role', '!=' , 1);
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
@@ -67,6 +67,7 @@ class UserController extends Controller
             $user->age = trim($request->age);
             $user->gender = trim($request->gender);
             $user->phone_number = trim($request->phone_number);
+            $user->user_role = trim($request->user_role);
 
             $user->save();
 
