@@ -25,4 +25,7 @@ class AppColor {
   static const Color grey = Color(0xFF808080);
   static const Color darkGrey = Color(0xFF606060);
   static const Color lightGrey = Color(0xFFC9C9C9);
+
+  static const Color telegramColor = Color(0xFF229ED9);
+  static const Color phoneCallColor = Color(0xFF4CAF50);
 }

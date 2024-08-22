@@ -1,3 +1,4 @@
+import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/widgets/vc_filled_button.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -95,8 +96,7 @@ class DoctorCardScreen extends StatelessWidget {
                     UrlLauncher.launchUrl(call);
                   },
                   style: FilledButton.styleFrom(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.onPrimaryFixed,
+                    backgroundColor: AppColor.phoneCallColor,
                     foregroundColor:
                         Theme.of(context).colorScheme.onTertiaryContainer,
                   ),
@@ -110,8 +110,7 @@ class DoctorCardScreen extends StatelessWidget {
                     UrlLauncher.launchUrl(telegram);
                   },
                   style: FilledButton.styleFrom(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.onPrimaryFixed,
+                    backgroundColor: AppColor.telegramColor,
                     foregroundColor:
                         Theme.of(context).colorScheme.onTertiaryContainer,
                   ),
