@@ -234,7 +234,7 @@
                                             </div>
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
-                                            <div>{{ $value->count  }}</div>
+                                            <div>{{$value->count}}</div>
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
                                             <button type="button" data-twe-toggle="modal"

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('clinic');
+            $table->integer('user_id');
             $table->string('specialist');
             $table->string('description')->nullable();
             $table->integer('patient')->default(0);
