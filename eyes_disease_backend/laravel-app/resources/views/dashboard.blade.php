@@ -144,10 +144,16 @@
                                     {{$totalNormalClass}}</td>
                                 <td class="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
                                     <div class="flex items-center">
-                                        <span class="mr-2 text-xs font-medium">{{ number_format(($totalNormalClass / $totalDiseaseCount) * 100, 0) }}%</span>
+                                        <span class="mr-2 text-xs font-medium">
+                                            @if ($totalDiseaseCount > 0)
+                                                {{ number_format(($totalNormalClass / $totalDiseaseCount) * 100, 0) }}%
+                                            @else
+                                                0%
+                                            @endif
+                                        </span>
                                         <div class="relative w-full">
                                             <div class="w-full bg-gray-200 rounded-sm h-2">
-                                                <div class="bg-cyan-600 h-2 rounded-sm" style="width: {{ ($totalNormalClass / $totalDiseaseCount) * 100 }}%;"></div>
+                                                <div class="bg-cyan-600 h-2 rounded-sm" style="width: {{ $totalDiseaseCount > 0 ? ($totalNormalClass / $totalDiseaseCount) * 100 : 0 }}%;"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -162,10 +168,18 @@
                                     {{$totalDiabeticClass}}</td>
                                 <td class="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
                                     <div class="flex items-center">
-                                        <span class="mr-2 text-xs font-medium">{{ number_format(($totalDiabeticClass / $totalDiseaseCount) * 100, 0) }}%</span>
+                                        <span class="mr-2 text-xs font-medium">
+                                            @if ($totalDiseaseCount > 0)
+                                                {{ number_format(($totalDiabeticClass / $totalDiseaseCount) * 100, 0) }}%
+                                            @else
+                                                0%
+                                            @endif
+                                        </span>
                                         <div class="relative w-full">
                                             <div class="w-full bg-gray-200 rounded-sm h-2">
-                                                <div class="bg-orange-300 h-2 rounded-sm" style="width: {{ ($totalDiabeticClass / $totalDiseaseCount) * 100}}%;"></div>
+                                                <div class="bg-orange-300 h-2 rounded-sm"
+                                                    style="width: {{ $totalDiseaseCount > 0 ? ($totalDiabeticClass / $totalDiseaseCount) * 100 : 0 }}%;">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -180,10 +194,16 @@
                                     {{$totalCataractClass}}</td>
                                 <td class="border-t-0 px-4 align-left text-xs whitespace-nowrap p-4">
                                     <div class="flex items-center">
-                                        <span class="mr-2 text-xs font-medium">{{ number_format(($totalCataractClass / $totalDiseaseCount) * 100, 0) }}%</span>
+                                        <span class="mr-2 text-xs font-medium">
+                                            @if ($totalDiseaseCount > 0)
+                                                {{ number_format(($totalCataractClass / $totalDiseaseCount) * 100, 0) }}%
+                                            @else
+                                                0%
+                                            @endif
+                                        </span>
                                         <div class="relative w-full">
                                             <div class="w-full bg-gray-200 rounded-sm h-2">
-                                                <div class="bg-teal-400 h-2 rounded-sm" style="width: {{ ($totalCataractClass / $totalDiseaseCount) * 100}}%;"></div>
+                                                <div class="bg-teal-400 h-2 rounded-sm" style="width: {{ $totalDiseaseCount > 0 ? ($totalCataractClass / $totalDiseaseCount) * 100 : 0}}%;"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -198,10 +218,16 @@
                                     {{$totalUnknownClass}}</td>
                                 <td class="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
                                     <div class="flex items-center">
-                                        <span class="mr-2 text-xs font-medium"> {{ number_format(($totalUnknownClass / $totalDiseaseCount) * 100, 0) }}%</span>
+                                        <span class="mr-2 text-xs font-medium">
+                                            @if ($totalDiseaseCount > 0)
+                                                {{ number_format(($totalUnknownClass / $totalDiseaseCount) * 100, 0) }}%
+                                            @else
+                                                0%
+                                            @endif
+                                        </span>
                                         <div class="relative w-full">
                                             <div class="w-full bg-gray-200 rounded-sm h-2">
-                                                <div class="bg-teal-400 h-2 rounded-sm" style="width: {{ ($totalUnknownClass / $totalDiseaseCount) * 100}}%;"></div>
+                                                <div class="bg-teal-400 h-2 rounded-sm" style="width: {{ $totalDiseaseCount > 0 ? ($totalUnknownClass / $totalDiseaseCount) * 100 : 0}}%;"></div>
                                             </div>
                                         </div>
                                     </div>

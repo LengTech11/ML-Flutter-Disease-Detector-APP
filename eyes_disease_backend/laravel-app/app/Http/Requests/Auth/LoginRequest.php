@@ -64,6 +64,12 @@ class LoginRequest extends FormRequest
         RateLimiter::clear($this->throttleKey());
     }
 
+    protected function checkUserRole($user): bool
+    {
+        // Check if user_role is 1
+        return $user->user_role === 2 or $user->user_role === 1;
+    }
+
     /**
      * Ensure the login request is not rate limited.
      *
@@ -101,9 +107,5 @@ class LoginRequest extends FormRequest
      * @param  \App\Models\User $user
      * @return bool
      */
-    protected function checkUserRole($user): bool
-    {
-        // Check if user_role is 1
-        return $user->user_role === 1;
-    }
+
 }

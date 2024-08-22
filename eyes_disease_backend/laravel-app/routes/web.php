@@ -7,6 +7,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PredictionController;
+use App\Http\Controllers\ClinicDashboardController;
+use App\Http\Controllers\DoctorController;
 
 
 
@@ -37,6 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/history/list', [PredictionController::class, 'list']);
     Route::get('/history/delete/{id}', [PredictionController::class, 'delete']);
+
+    Route::get('/clinic/dashboard', [ClinicDashboardController::class, 'dashboard'])->name('clinic.dashboard');
+    Route::get('/doctor/list', [DoctorController::class, 'list']);
+    Route::post('/doctor/list', [DoctorController::class, 'insert']);
+    Route::get('/doctor/delete/{id}', [DoctorController::class, 'delete']);
 });
 
 require __DIR__.'/auth.php';

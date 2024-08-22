@@ -5,6 +5,7 @@
         <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
             <div class="flex-1 px-3 bg-white divide-y space-y-1">
                 <ul class="space-y-2 pb-2">
+                    @if(Auth::user()->user_role == 1)
                     <li>
                         <form action="#" method="GET" class="lg:hidden">
                             <label for="mobile-search" class="sr-only">Search</label>x
@@ -75,8 +76,39 @@
                             <span class="ml-3 flex-1 whitespace-nowrap">History</span>
                         </a>
                     </li>
+                    @endif
+                    @if(Auth::user()->user_role == 2)
+                    <li>
+                        <a href=" {{url('clinic/dashboard')}} "
+                            class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+                              </svg>
+                            <span class="ml-3">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href=" {{url('doctor/list')}} "
+                            class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>
 
+                            <span class="ml-3 flex-1 whitespace-nowrap">Doctors</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href=" {{url('appoinement/list')}} "
+                            class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>
 
+                            <span class="ml-3 flex-1 whitespace-nowrap">Appointment</span>
+                        </a>
+                    </li>
+                    @endif
                 </ul>
                 <div class="space-y-2 pt-2">
                     <form method="POST" action="{{ route('logout') }}">
