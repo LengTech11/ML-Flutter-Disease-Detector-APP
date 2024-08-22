@@ -32,11 +32,20 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   double? _confidence;
   Map<String, double> _classProbabilities = {};
 
+  DiseaseProvider provider = DiseaseProvider();
+
   @override
   void initState() {
     super.initState();
-    final provider = Provider.of<DiseaseProvider>(context, listen: false);
+    provider = Provider.of<DiseaseProvider>(context, listen: false);
     provider.fetchDisease();
+  }
+
+  @override
+  void dispose() {
+    provider = Provider.of<DiseaseProvider>(context, listen: false);
+    provider.fetchDisease();
+    super.dispose();
   }
 
   Future<void> _pickImage() async {
@@ -599,9 +608,8 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                     AppLocalizations.of(context)?.internal_server_error ??
                         'Internal Server Error',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
-                      fontSize: 16
-                    ),
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontSize: 16),
                   ),
                 ),
               )

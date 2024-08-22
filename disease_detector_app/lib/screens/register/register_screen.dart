@@ -1,7 +1,7 @@
 import 'package:disease_detector_app/api_service/api/register_api.dart';
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/model/register_model/register_response_model.dart';
-import 'package:disease_detector_app/screens/home/home_screen.dart';
+import 'package:disease_detector_app/screens/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (!context.mounted) return;
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(builder: (context) => const BottomNavigationBarScreen()),
           (route) => false);
     } catch (e) {
       HelperFunctions.debug(e.toString());

@@ -4,7 +4,7 @@ import 'package:disease_detector_app/provider/disease_provider.dart';
 import 'package:disease_detector_app/provider/document_provider.dart';
 import 'package:disease_detector_app/provider/get_history_provider.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
-import 'package:disease_detector_app/screens/home/home_screen.dart';
+import 'package:disease_detector_app/screens/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
 import 'package:disease_detector_app/screens/login/login_screen.dart';
 import 'package:disease_detector_app/screens/onboarding/onboarding_view.dart';
 import 'package:disease_detector_app/storage/check_first_install.dart';
@@ -125,7 +125,7 @@ class _MyAppState extends State<MyApp> {
                   home: isFirstInstall == true
                       ? const OnboardingView()
                       : isLogin == true
-                          ? const HomeScreen()
+                          ? const BottomNavigationBarScreen()
                           : const LoginScreen(),
                 );
               },

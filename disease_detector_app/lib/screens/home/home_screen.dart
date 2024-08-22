@@ -1,18 +1,15 @@
-import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
-import 'package:disease_detector_app/screens/diseases/disease_screen.dart';
-import 'package:disease_detector_app/screens/home/image_upload_screen.dart';
-import 'package:disease_detector_app/storage/token_storage.dart';
+import 'package:disease_detector_app/provider/disease_provider.dart';
+import 'package:disease_detector_app/provider/document_provider.dart';
+import 'package:disease_detector_app/screens/doctor/doctor_screen.dart';
+import 'package:disease_detector_app/widgets/eca_listtile.dart';
+import 'package:disease_detector_app/widgets/eca_show_btm_sheet.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:disease_detector_app/screens/doctor/doctor_screen.dart';
-
-import '../account_page/account_screen.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const String route = '/';
   const HomeScreen({super.key});
 
   @override
@@ -20,90 +17,158 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentPage = 0;
-
-  final List pages = [
-    const ImageUploadScreen(),
-    const DoctorScreen(),
-    // const DoctorCardScreen(),
-    const DiseaseScreen(),
-    const AccountScreen()
-  ];
-
-  Future<void> checkIsLogin() async {
-    final token = await TokenStorage.getToken();
-    if (token == null || token == '') {
-      AppConstant.USER_TOKEN = '';
-    } else {
-      AppConstant.USER_TOKEN = token;
-    }
-  }
+  DiseaseProvider provider = DiseaseProvider();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    checkIsLogin();
+    provider = Provider.of<DiseaseProvider>(context, listen: false);
+    provider.fetchDisease();
+  }
+
+  @override
+  void dispose() {
+    provider = Provider.of<DiseaseProvider>(context, listen: false);
+    provider.fetchDisease();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
-        return Scaffold(
-          appBar: AppBar(
-            surfaceTintColor: Theme.of(context).colorScheme.surface,
-            centerTitle: true,
-            automaticallyImplyLeading: false,
-            title: Text(
-              AppLocalizations.of(context)?.app_name ?? 'VisionCare AI',
-              style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 28,
-                  fontWeight: FontWeight.w900,
-                  color: Theme.of(context).colorScheme.onSurface,
-                  letterSpacing: 0.8),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          VcListTile(
+            title: 'Popular Clinics',
+            trailing: VcTextButton(
+              title: 'View All',
+              onPressed: () {
+                print('clinic');
+              },
             ),
-            backgroundColor: Theme.of(context).colorScheme.surface,
           ),
-          body: pages[currentPage],
-          bottomNavigationBar: BottomNavigator(
-            onTabChange: (currentIndex) {
-              setState(
-                () {
-                  currentPage = currentIndex;
-                },
-              );
+          SingleChildScrollView(
+            primary: true,
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(5, (index) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: VcClinicCard(
+                    headline: 'Card $index',
+                    subHeadline: 'Sub headline',
+                    supportingText: 'Supporting text',
+                    imageUrl:
+                        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTEsnSc3FKMyZI0jm4nvzJF42tCShDY9de5pHf4FwVw7fo-SSnn',
+                    onTap: () {},
+                  ),
+                );
+              }),
+            ),
+          ),
+          const SizedBox(height: 16),
+          VcListTile(
+            title: 'Popular Doctors',
+            trailing: VcTextButton(
+              title: 'View All',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DoctorScreen(),
+                  ),
+                );
+              },
+            ),
+          ),
+          SingleChildScrollView(
+            primary: true,
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(5, (index) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: VcDoctorCard(
+                    headline: 'Card $index',
+                    subHeadline: 'Sub headline',
+                    supportingText: 'Supporting text',
+                    imageUrl:
+                        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTEsnSc3FKMyZI0jm4nvzJF42tCShDY9de5pHf4FwVw7fo-SSnn',
+                    onTap: () {},
+                  ),
+                );
+              }),
+            ),
+          ),
+          const SizedBox(height: 16),
+          const VcListTile(
+            title: 'Disease Documents',
+          ),
+          Consumer<DiseaseProvider>(
+            builder: (context, value, _) {
+              return value.isLoading
+                  ? const SizedBox(
+                      height: 200,
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8),
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: value.dis?.data!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        var disease = value.dis?.data![index];
+                        final documentProvider = Provider.of<DocumentProvider>(
+                          context,
+                          listen: false,
+                        );
+                        documentProvider.fetchDocument(disease!.title);
+
+                        return value.dis!.data!.isEmpty
+                            ? Center(
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                          ?.internal_server_error ??
+                                      'Internal Server Error',
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 8,
+                                ),
+                                child: EcaListtile(
+                                  leading: const Icon(
+                                    Icons.visibility,
+                                    color: AppColor.primary,
+                                  ),
+                                  title: Text(disease.title),
+                                  onTap: () {
+                                    ECABtmSheet().ecaShowBtmSheet(
+                                      context: context,
+                                      title: disease.title,
+                                      description: disease.description,
+                                      fileName: disease.title,
+                                    );
+                                  },
+                                ),
+                              );
+                      },
+                    );
             },
-            tabs: [
-              TabButton(
-                color: AppColor.white,
-                activeColor: AppColor.light,
-                icon: Iconsax.camera,
-                text: AppLocalizations.of(context)?.camera ?? 'Camera',
-              ),
-              TabButton(
-                color: AppColor.white,
-                activeColor: AppColor.light,
-                icon: Iconsax.people,
-                text: AppLocalizations.of(context)?.doctor ?? 'Doctors',
-              ),
-              TabButton(
-                color: AppColor.white,
-                activeColor: AppColor.light,
-                icon: Iconsax.save_add,
-                text: AppLocalizations.of(context)?.my_eye ?? 'My Eye',
-              ),
-              TabButton(
-                color: AppColor.white,
-                activeColor: AppColor.black,
-                icon: Iconsax.profile_circle4,
-                text: AppLocalizations.of(context)?.profile ?? 'Profile',
-              )
-            ],
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }
