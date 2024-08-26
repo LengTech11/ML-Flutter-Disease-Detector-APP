@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\PredictionController;
+use App\Http\Controllers\Api\ClinicController;
+use App\Http\Controllers\Api\DoctorController;
 
 // Register
 Route::post("register", [ApiController::class, "register"]);
@@ -29,6 +31,14 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::delete('/predictions/{id}', [PredictionController::class, 'destroy']);
     Route::delete('/predictions/all', [PredictionController::class, 'destroyAll']);
 
+    // New routes for Clinic and Doctor
+    Route::get('/clinics', [ClinicController::class, 'index']);
+    Route::get('/clinics/{id}', [ClinicController::class, 'show']);
+
+    // Get all doctors
+    Route::get('/doctors', [DoctorController::class, 'index']);
+    Route::get('/doctors/{id}', [DoctorController::class, 'show']);
+
 });
 
 // Public routes
@@ -39,6 +49,3 @@ Route::get('/documents', [ApiController::class, 'showDocument']);
 Route::post('/update-disease-count', [ApiController::class, 'updateCount']);
 
 Route::post('/change-password', [ApiController::class, 'changePassword'])->middleware('auth:sanctum');
-
-
-

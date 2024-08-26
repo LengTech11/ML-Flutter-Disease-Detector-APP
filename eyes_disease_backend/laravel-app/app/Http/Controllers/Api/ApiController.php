@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Doctor;
 use App\Models\Document;
 use App\Models\Disease;
 use Illuminate\Support\Facades\Hash;
@@ -423,4 +424,23 @@ class ApiController extends Controller
         }
     }
 
+    public function getClinicUser(Request $request)
+    {
+        $user = User::where('user_role', 2)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $user
+        ], 200);
+    }
+
+    public function getAllDoctors(Request $request)
+    {
+        $doctors = Doctor::all();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $doctors
+        ], 200);
+    }
 }
