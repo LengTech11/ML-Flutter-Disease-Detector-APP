@@ -20,11 +20,18 @@ class DoctorController extends Controller
 
     public function show($id)
     {
-        $doctor = Doctor::findOrFail($id);
+        try {
+            $doctor = Doctor::findOrFail($id);
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $doctor,
-        ], 200);
+            return response()->json([
+                'status' => 'success',
+                'data' => $doctor,
+            ], 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Doctor not found',
+            ], 404);
+        }
     }
 }
