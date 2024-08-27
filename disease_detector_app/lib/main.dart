@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:disease_detector_app/api_service/client/dio_http_client.dart';
 import 'package:disease_detector_app/l10n/l10n.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
@@ -7,6 +9,7 @@ import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:disease_detector_app/screens/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
 import 'package:disease_detector_app/screens/login/login_screen.dart';
 import 'package:disease_detector_app/screens/onboarding/onboarding_view.dart';
+import 'package:disease_detector_app/provider/network_status_provider.dart';
 import 'package:disease_detector_app/storage/check_first_install.dart';
 import 'package:disease_detector_app/storage/token_storage.dart';
 import 'package:disease_detector_app/view_model/provider.dart';
@@ -31,7 +34,6 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
   runApp(
     MultiProvider(
       providers: [
@@ -41,7 +43,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => DiseaseProvider()),
         ChangeNotifierProvider(create: (_) => DocumentProvider()),
         ChangeNotifierProvider(create: (_) => GetHistoryProvider()),
-        // Add more providers as needed
+        ChangeNotifierProvider(create: (_) => NetworkProvider()),
       ],
       child: const MyApp(),
     ),
@@ -92,6 +94,15 @@ class _MyAppState extends State<MyApp> {
     checkIsFirstInstall();
     checkIsLogin();
     BaseHttpClient.init();
+    
+    NetworkProvider().initConnectivity();
+    // NetworkProvider().updateStatus();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    NetworkProvider().connectivitySubscription.cancel();
   }
 
   @override
@@ -101,7 +112,7 @@ class _MyAppState extends State<MyApp> {
         return ScreenUtilInit(
           designSize: const Size(430, 932),
           minTextAdapt: true,
-          splitScreenMode: true,  
+          splitScreenMode: true,
           builder: (context, child) {
             return ScreenUtilInit(
               designSize: const Size(430, 932),

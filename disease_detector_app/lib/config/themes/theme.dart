@@ -1,6 +1,8 @@
+
 import 'package:disease_detector_app/config/themes/m3_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.system;
@@ -28,7 +30,7 @@ class AppTheme {
   static final lightTheme = ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: M3Theme.light().surface,
-    fontFamily: 'Poppins',
+    fontFamily: GoogleFonts.khmer().fontFamily,
     secondaryHeaderColor: M3Theme.light().onSecondary,
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: EdgeInsets.symmetric(
@@ -48,12 +50,13 @@ class AppTheme {
       color: M3Theme.light().onPrimaryContainer,
     ),
     colorScheme: M3Theme.light(),
+    textTheme: GoogleFonts.khmerTextTheme(),
   );
 
   static final darkTheme = ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: M3Theme.dark().surface,
-    fontFamily: 'Poppins',
+    fontFamily: GoogleFonts.khmer().fontFamily,
     secondaryHeaderColor: M3Theme.dark().onSecondary,
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: EdgeInsets.symmetric(
@@ -73,5 +76,6 @@ class AppTheme {
       color: M3Theme.dark().onPrimaryContainer,
     ),
     colorScheme: M3Theme.dark(),
+    textTheme: GoogleFonts.khmerTextTheme(),
   );
 }
