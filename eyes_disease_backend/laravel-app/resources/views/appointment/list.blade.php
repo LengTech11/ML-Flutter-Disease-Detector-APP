@@ -115,10 +115,10 @@
                                             {{$value->phone_number}}
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
-                                            @if ({{$value->booking_status}} == 0)
+                                            @if ($value->booking_status == 0)
                                                 Padding
-                                            @elseif ({{$value->booking_status}} == 1)
-                                                Schedule
+                                            @elseif ($value->booking_status == 1)
+                                                Scheduled
                                             @endif
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
