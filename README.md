@@ -25,6 +25,7 @@ Ensure you have the following installed on your system:
 - [Android Studio](https://developer.android.com/studio) or [Xcode](https://developer.apple.com/xcode/) (for iOS development)
 
 ## Setup
+hello
 
 ### Backend Setup (Laravel)
 
