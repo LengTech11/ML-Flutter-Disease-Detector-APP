@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\PredictionController;
 use App\Http\Controllers\Api\ClinicController;
 use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\AppointmentRequestController;
 
 // Register
 Route::post("register", [ApiController::class, "register"]);
@@ -38,6 +39,14 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     // Get all doctors
     Route::get('/doctors', [DoctorController::class, 'index']);
     Route::get('/doctors/{id}', [DoctorController::class, 'show']);
+
+    // Appointment API
+    Route::post('/appointment-requests', [AppointmentRequestController::class, 'store']);
+    Route::get('/appointment-requests', [AppointmentRequestController::class, 'index']);
+    Route::get('/appointment-requests/{id}', [AppointmentRequestController::class, 'show']);
+    Route::put('/appointment-requests/{id}', [AppointmentRequestController::class, 'update']);
+    Route::delete('/appointment-requests/{id}', [AppointmentRequestController::class, 'destroy']);
+
 
 });
 
