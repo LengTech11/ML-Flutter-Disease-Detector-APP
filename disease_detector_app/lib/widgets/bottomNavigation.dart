@@ -1,10 +1,10 @@
 import 'dart:math' show pow;
+
 import 'package:disease_detector_app/config/themes/app_size.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/config/themes/theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
-import 'package:disease_detector_app/config/constants.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BottomNavigator extends StatefulWidget {
@@ -44,15 +44,13 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        // height: 50,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(140.r)),
           color: Theme.of(context).colorScheme.primaryContainer,
         ),
-        margin:
-            EdgeInsets.symmetric(horizontal: AppSize.md, vertical: AppSize.sm),
-        padding:
-            EdgeInsets.symmetric(horizontal: AppSize.sm, vertical: AppSize.sm),
+        padding: EdgeInsets.symmetric(
+          horizontal: AppSize.md,
+          vertical: AppSize.md,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: widget.tabs
@@ -179,7 +177,9 @@ class _TabButtonState extends State<TabButton> with TickerProviderStateMixin {
       child: AnimatedContainer(
         curve: Curves.easeOut,
         padding: EdgeInsets.symmetric(
-            horizontal: kDefaultPadding / 2, vertical: kDefaultPadding * 0.5),
+          horizontal: AppSize.sm,
+          vertical: AppSize.sm,
+        ),
         duration: const Duration(milliseconds: 400),
         decoration: BoxDecoration(
           color: _expanded ? AppColor.light.withOpacity(0) : AppColor.light,

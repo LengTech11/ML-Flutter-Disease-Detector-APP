@@ -12,14 +12,16 @@ import 'package:provider/provider.dart';
 class ECABtmSheet {
   DocumentProvider documentProvider = DocumentProvider();
   ScrollController scrollController = ScrollController();
-  void ecaShowBtmSheet(
-      {required BuildContext context,
-      required String title,
-      String? description,
-      String? fileUrl,
-      String? fileName}) {
+  void ecaShowBtmSheet({
+    required BuildContext context,
+    required String title,
+    String? description,
+    String? fileUrl,
+    String? fileName,
+  }) {
     documentProvider = Provider.of<DocumentProvider>(context, listen: false);
     documentProvider.fetchDocument(fileName!);
+    
     showModalBottomSheet(
       showDragHandle: true,
       useSafeArea: true,

@@ -44,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
             trailing: VcTextButton(
               title: 'View All',
               onPressed: () {
-                print('clinic');
               },
             ),
           ),
