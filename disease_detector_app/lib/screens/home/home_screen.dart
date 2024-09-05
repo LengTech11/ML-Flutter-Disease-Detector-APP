@@ -1,6 +1,9 @@
+import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
+import 'package:disease_detector_app/provider/doctor_list.dart';
 import 'package:disease_detector_app/provider/document_provider.dart';
+import 'package:disease_detector_app/screens/doctor/doctor_card.dart';
 import 'package:disease_detector_app/screens/doctor/doctor_screen.dart';
 import 'package:disease_detector_app/widgets/eca_listtile.dart';
 import 'package:disease_detector_app/widgets/eca_show_btm_sheet.dart';
@@ -18,18 +21,33 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   DiseaseProvider provider = DiseaseProvider();
+  DoctorListProvider? doctorProvider;
+
+  String doctorImage =
+      'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1725408000&semt=ais_hybrid';
+
+  String clinicImg =
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfj5u4Bp_IBF-l7ZX_w_QX7TQKaV1GTi4e_Q&s';
 
   @override
   void initState() {
     super.initState();
+
     provider = Provider.of<DiseaseProvider>(context, listen: false);
     provider.fetchDisease();
+
+    doctorProvider = Provider.of<DoctorListProvider>(context, listen: false);
+    doctorProvider!.fetchDotorList();
   }
 
   @override
   void dispose() {
     provider = Provider.of<DiseaseProvider>(context, listen: false);
     provider.fetchDisease();
+
+    doctorProvider = Provider.of<DoctorListProvider>(context, listen: false);
+    doctorProvider!.fetchDotorList();
+
     super.dispose();
   }
 
@@ -43,8 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Popular Clinics',
             trailing: VcTextButton(
               title: 'View All',
-              onPressed: () {
-              },
+              onPressed: () {},
             ),
           ),
           SingleChildScrollView(
@@ -58,8 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     headline: 'Card $index',
                     subHeadline: 'Sub headline',
                     supportingText: 'Supporting text',
-                    imageUrl:
-                        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTEsnSc3FKMyZI0jm4nvzJF42tCShDY9de5pHf4FwVw7fo-SSnn',
+                    imageUrl: clinicImg,
                     onTap: () {},
                   ),
                 );
@@ -75,7 +91,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const DoctorScreen(),
+                    builder: (context) {
+                      return DoctorScreen(
+                        doctorListProvider: doctorProvider!,
+                      );
+                    },
                   ),
                 );
               },
@@ -84,20 +104,51 @@ class _HomeScreenState extends State<HomeScreen> {
           SingleChildScrollView(
             primary: true,
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: List.generate(5, (index) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: VcDoctorCard(
-                    headline: 'Card $index',
-                    subHeadline: 'Sub headline',
-                    supportingText: 'Supporting text',
-                    imageUrl:
-                        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTEsnSc3FKMyZI0jm4nvzJF42tCShDY9de5pHf4FwVw7fo-SSnn',
-                    onTap: () {},
-                  ),
-                );
-              }),
+            child: Consumer<DoctorListProvider>(
+              builder: (context, value, child) {
+                return value.isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : value.doctors?.data != null
+                        ? Row(
+                            children: List.generate(
+                              value.doctors!.data.length,
+                              (index) {
+                                var doctor = value.doctors?.data[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: VcDoctorCard(
+                                    headline:
+                                        '${doctor?.title}. ${doctor?.firstName} ${doctor?.lastName}',
+                                    subHeadline: doctor?.specialist,
+                                    supportingText: doctor?.description,
+                                    imageUrl: clinicImg,
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return DoctorCardScreen(
+                                              doctorListProvider:
+                                                  doctorProvider!,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                        : Center(
+                            child: Padding(
+                              padding: appPadding,
+                              child: const Text(
+                                'No Doctor Found',
+                              ),
+                            ),
+                          );
+              },
             ),
           ),
           const SizedBox(height: 16),
