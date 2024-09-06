@@ -1,5 +1,6 @@
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/model/login_model/login_response_model.dart';
+
 import '../base_api_service.dart';
 
 class LoginApiService {
@@ -9,7 +10,7 @@ class LoginApiService {
 
     return BaseApiService().onRequest(
         path: "/login",
-        method: HttpMethod.POST,
+        method: HttpMethod.post,
         requiredToken: true,
         autoRefreshToken: true,
         headers: {

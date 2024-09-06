@@ -7,10 +7,9 @@ import 'package:disease_detector_app/model/user_profile_model/user_profile_model
 
 class UserProfileApiService {
   Future<UserProfileModel> getUserProfile() async {
-    print('bart: ${AppConstant.USER_TOKEN}');
     return BaseApiService().onRequest(
         path: "/profile",
-        method: HttpMethod.GET,
+        method: HttpMethod.get,
         requiredToken: true,
         autoRefreshToken: true,
         headers: {
@@ -18,7 +17,7 @@ class UserProfileApiService {
           'Content-Type': 'application/json',
           'Accept-Encoding': 'Accept-Encoding',
           'Connection': 'keep-alive',
-          'Authorization': 'Bearer ${AppConstant.USER_TOKEN}'
+          'Authorization': 'Bearer ${AppConstant.userToken}'
         },
         onSuccess: (response) {
           return UserProfileModel.fromJson(response.data);
@@ -34,7 +33,7 @@ class UserProfileApiService {
     required String phoneNumber,
     required File? image,
   }) async {
-    print('bart: ${image?.isAbsolute}');
+
     final formData = image!.isAbsolute
         ? FormData.fromMap({
             "first_name": firstName,
@@ -55,7 +54,7 @@ class UserProfileApiService {
           });
     return BaseApiService().onRequest(
         path: "/edit-profile",
-        method: HttpMethod.POST,
+        method: HttpMethod.post,
         requiredToken: true,
         autoRefreshToken: true,
         data: formData,
@@ -64,7 +63,7 @@ class UserProfileApiService {
           'Content-Type': 'application/json',
           'Accept-Encoding': 'Accept-Encoding',
           'Connection': 'keep-alive',
-          'Authorization': 'Bearer ${AppConstant.USER_TOKEN}'
+          'Authorization': 'Bearer ${AppConstant.userToken}'
         },
         onSuccess: (response) {
           return UserProfileModel.fromJson(response.data);

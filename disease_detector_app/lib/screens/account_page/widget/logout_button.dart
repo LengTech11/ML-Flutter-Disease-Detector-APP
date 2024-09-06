@@ -40,7 +40,7 @@ class _LogoutButtonState extends State<LogoutButton> {
                   showLoaderDialog(context);
                   value.clearUser();
 
-                  AppConstant.USER_TOKEN = '';
+                  AppConstant.userToken = '';
 
                   TokenStorage.removeToken();
 

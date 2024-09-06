@@ -48,15 +48,14 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
   Future<void> checkIsLogin() async {
     final token = await TokenStorage.getToken();
     if (token == null || token == '') {
-      AppConstant.USER_TOKEN = '';
+      AppConstant.userToken = '';
     } else {
-      AppConstant.USER_TOKEN = token;
+      AppConstant.userToken = token;
     }
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     checkIsLogin();
 

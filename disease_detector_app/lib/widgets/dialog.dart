@@ -50,13 +50,13 @@ class DialogWidget extends StatelessWidget {
                       child: Text(
                         title,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 17, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Text(
                       text,
-                      style: TextStyle(fontSize: 13),
+                      style: const TextStyle(fontSize: 13),
                     )
                   ],
                 ),
@@ -73,7 +73,7 @@ class DialogWidget extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Theme.of(context)
                             .colorScheme
-                            .background
+                            .surface
                             .withOpacity(0.7),
                         borderRadius: BorderRadius.vertical(
                             bottom: Radius.circular(kDefaultBorderRaduis))),
@@ -101,7 +101,7 @@ class DeleteDialog extends StatelessWidget {
             Expanded(
                 child: SecondaryButton(
                     text: "Cancel", onPressed: () => Navigator.pop(context))),
-            DividerWidget(),
+            const DividerWidget(),
             Expanded(
               child: SecondaryButton(
                 text: 'Delete',

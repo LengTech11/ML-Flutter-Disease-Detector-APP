@@ -43,32 +43,32 @@ class SecondaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
-        child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-                splashColor: Colors.transparent,
-                borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-                onTap: () {
-                  onPressed();
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
-                  child: Text(
-                    text,
-                    style: TextStyle(
-                        color: (color != null)
-                            ? color
-                            : Theme.of(context)
-                                .colorScheme
-                                .onBackground
-                                .withAlpha(100)),
-                  ),
-                ))));
+      decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(kDefaultBorderRaduis)),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          splashColor: Colors.transparent,
+          borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
+          onTap: () {
+            onPressed();
+          },
+          child: Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: (color != null)
+                    ? color
+                    : Theme.of(context).colorScheme.onSurface.withAlpha(100),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -80,6 +80,7 @@ class IconButtonWidget extends StatefulWidget {
     this.color,
     required this.icon,
   });
+
   final Color? color;
   final IconData icon;
   final Function? onPressed;

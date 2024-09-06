@@ -3,11 +3,13 @@ import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppointmentScreen extends StatefulWidget {
+  const AppointmentScreen({super.key});
+
   @override
-  _AppointmentScreenState createState() => _AppointmentScreenState();
+  AppointmentScreenState createState() => AppointmentScreenState();
 }
 
-class _AppointmentScreenState extends State<AppointmentScreen> {
+class AppointmentScreenState extends State<AppointmentScreen> {
   DateTime selectedDate = DateTime.now();
   String selectedTime = '';
   TextEditingController phoneController = TextEditingController();
@@ -80,7 +82,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                             ),
                           ),
                           Text(
-                            "${[
+                            [
                               'Mon',
                               'Tue',
                               'Wed',
@@ -88,7 +90,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                               'Fri',
                               'Sat',
                               'Sun'
-                            ][date.weekday - 1]}",
+                            ][date.weekday - 1],
                             style: TextStyle(
                               color: selectedDate.day == date.day
                                   ? Colors.white
@@ -106,7 +108,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
             Text(
               AppLocalizations.of(context)?.time ?? 'Time Slots',
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10.0),
             Wrap(
@@ -156,7 +158,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)?.phone_number ??
                     'Phone Number',
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
               keyboardType: TextInputType.phone,
             ),
@@ -185,14 +187,14 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                       );
                     }
                   },
-                  child: Text(
-                    AppLocalizations.of(context)?.confirm_appointment ??
-                        'Confirm Appointment',
-                  ),
                   style: FilledButton.styleFrom(
                     backgroundColor:
                         Theme.of(context).colorScheme.primaryContainer,
                     foregroundColor: Colors.white,
+                  ),
+                  child: Text(
+                    AppLocalizations.of(context)?.confirm_appointment ??
+                        'Confirm Appointment',
                   ),
                 ),
               ),

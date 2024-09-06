@@ -39,19 +39,24 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               confirmPassword: confirmPassword);
 
       if (responseModel.status == 'success') {
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Password Changed Successfully',
-              style: MyTextTheme.lightTextTheme.bodyMedium,
+        if (context.mounted) {
+          Navigator.pop(context);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Password Changed Successfully',
+                style: MyTextTheme.lightTextTheme.bodyMedium,
+              ),
+              backgroundColor: Colors.green,
             ),
-            backgroundColor: Colors.green,
-          ),
-        );
+          );
+        }
       }
     } catch (e) {
-      showErrorMsg(context, e.toString(), dark);
+      if (context.mounted) {
+        showErrorMsg(context, e.toString(), dark);
+      }
     }
   }
 

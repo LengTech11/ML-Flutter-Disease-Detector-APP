@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:io';
 
 import 'package:disease_detector_app/config/constants.dart';
@@ -66,8 +68,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   UserProfileProvider userProfileProvider = UserProfileProvider();
 
-    File? image;
-    final ImagePicker _picker = ImagePicker();
+  File? image;
+  final ImagePicker _picker = ImagePicker();
   bool isPicked = false;
   int? selectedGender;
 
@@ -88,7 +90,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           final profileUrl = 'http://10.0.2.2:8000${response.profile}';
 
           await downloadImage(profileUrl).then((value) async {
-            print(profileUrl);
             setState(() {
               image = value;
             });
@@ -140,7 +141,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       final documentDirectory = await getApplicationDocumentsDirectory();
       final file = File('${documentDirectory.path}/profile_picture.jpg');
       file.deleteSync();
-      print('file : ${file.path}');
       HelperFunctions.debug('Image deleted successfully');
     } catch (e) {
       HelperFunctions.debug('Error deleting image: $e');
@@ -149,7 +149,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     deleteImage();
     initializeField(widget.user);
@@ -195,7 +194,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ListTile(
                         onTap: () async {
                           await openCamera();
-                          Navigator.pop(context);
+                          if (context.mounted) {
+                            Navigator.pop(context);
+                          }
                         },
                         leading: const Icon(
                           Icons.camera_alt,
@@ -210,7 +211,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ListTile(
                         onTap: () async {
                           await pickImage();
-                          Navigator.pop(context);
+                          if (context.mounted) {
+                            Navigator.pop(context);
+                          }
                         },
                         leading: const Icon(
                           Icons.image,
@@ -228,7 +231,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           setState(() {
                             image = null;
                           });
-                          Navigator.pop(context);
+                          if (context.mounted) {
+                            Navigator.pop(context);
+                          }
                         },
                         leading: const Icon(
                           Iconsax.trash4,
@@ -399,14 +404,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   image: image ?? File('assets/images/blank_profile.jpg'),
                 );
                 await widget.user.getUserProfile();
-                Navigator.pop(context);
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
                 await deleteImage();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const BottomNavigationBarScreen(),
-                  ),
-                );
+                if (context.mounted) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const BottomNavigationBarScreen(),
+                    ),
+                  );
+                }
               },
             ),
           )
@@ -425,6 +434,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         });
       }
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error picking image: $e')),
       );
@@ -442,6 +452,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           },
         );
       }
+      if (!mounted) return;
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error picking image: $e')),

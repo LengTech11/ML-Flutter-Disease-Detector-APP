@@ -1,8 +1,10 @@
+// ignore_for_file: file_names
+
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/widgets/buttons.dart';
 import 'package:disease_detector_app/widgets/dialog.dart';
 import 'package:disease_detector_app/widgets/divider.dart';
-import 'package:disease_detector_app/widgets/historyList.dart';
+import 'package:disease_detector_app/widgets/history_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

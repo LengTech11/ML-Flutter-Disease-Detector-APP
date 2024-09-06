@@ -24,7 +24,7 @@ class DiseaseDetectScreenOffline extends StatefulWidget {
 class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
-  bool _isLoading = false;
+  bool isLoading = false;
   DiseaseProvider provider = DiseaseProvider();
 
   ModelService modelService = ModelService();
@@ -68,8 +68,6 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
     if (cataract > confidence!) {
       confidence = cataract;
     }
-
-    print('The largest value is $confidence');
   }
 
   Future<void> loadModel() async {
@@ -95,8 +93,6 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
 
       try {
         List result = await modelService.runModelOnImage(imageBytes);
-
-        print('Prediction Result: $result');
 
         setState(() {
           _prediction = result;
@@ -124,9 +120,23 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
           name = 'Cataract';
         }
 
+        if (!mounted) return;
         _showPredictionBottomSheet(context);
       } catch (e) {
-        print("Error running model: $e");
+        if (!mounted) return;
+        show(
+          context,
+          'Error',
+          [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+          description: 'Error predicting image: $e',
+        );
       }
     }
   }
@@ -143,6 +153,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
         await predictImage(_image);
       }
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error picking image: $e')),
       );
@@ -386,7 +397,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
           const SizedBox(height: 20),
           buildDescription(context),
           const SizedBox(height: 20),
-          if (_isLoading) const Center(child: CircularProgressIndicator()),
+          if (isLoading) const Center(child: CircularProgressIndicator()),
         ],
       ),
     );

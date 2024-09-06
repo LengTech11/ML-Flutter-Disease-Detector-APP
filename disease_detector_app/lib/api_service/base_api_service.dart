@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/utils/logger/logger.dart';
@@ -36,7 +37,7 @@ class BaseApiService {
       final httpOption = Options(method: method, headers: {});
       // printMe("AppToken:${AppConstant.USER_TOKEN}");
 
-      if (requiredToken && AppConstant.USER_TOKEN != null) {
+      if (requiredToken && AppConstant.userToken != null) {
         //printMe("AppTokenTime :${JwtDecoder.getTokenTime(AppConstant.USER_TOKEN!)}");
         // printMe("AppTokenExpirationDate :${JwtDecoder.getExpirationDate(AppConstant.USER_TOKEN!)}");
         // printMe("AppTokenRemainingTime :${JwtDecoder.getRemainingTime(AppConstant.USER_TOKEN!)}");
@@ -49,7 +50,7 @@ class BaseApiService {
       }
       if (customToken != null) {
         httpOption.headers!['Authorization'] =
-            "Bearer ${AppConstant.USER_TOKEN}";
+            "Bearer ${AppConstant.userToken}";
       }
       httpOption.headers!.addAll(headers);
       query ??= {};
@@ -91,7 +92,7 @@ String _onTypeError(dynamic exception) {
   ///Logic or syntax error on some condition
   errorLog(
       "Type Error :=> ${exception.toString()}\nStackTrace:  ${exception.stackTrace.toString()}");
-  return ErrorMessage.SOMETHING_WRONG;
+  return ErrorMessage.somethingWrong;
 }
 
 //
@@ -99,23 +100,23 @@ DioErrorException _onDioError(DioException exception) {
   _logDioError(exception);
   if (exception.error is SocketException) {
     ///Socket exception mostly from internet connection or host
-    return DioErrorException(ErrorMessage.CONNECTION_ERROR);
+    return DioErrorException(ErrorMessage.connectionError);
   } else if (exception.type == DioExceptionType.connectionTimeout) {
     ///Connection timeout due to internet connection or server not responding
-    return DioErrorException(ErrorMessage.TIMEOUT_ERROR);
+    return DioErrorException(ErrorMessage.timeOutError);
   } else if (exception.type == DioExceptionType.badResponse) {
     ///Error that range from 400-500
     String serverMessage;
     if (exception.response!.data is Map) {
       serverMessage =
-          exception.response?.data["message"] ?? ErrorMessage.UNEXPECTED_ERROR;
+          exception.response?.data["message"] ?? ErrorMessage.unexpectedError;
     } else {
-      serverMessage = ErrorMessage.UNEXPECTED_ERROR;
+      serverMessage = ErrorMessage.unexpectedError;
     }
     return DioErrorException(serverMessage,
         code: exception.response!.statusCode);
   }
-  throw DioErrorException(ErrorMessage.UNEXPECTED_ERROR);
+  throw DioErrorException(ErrorMessage.unexpectedError);
 }
 
 ServerResponseException _onServerResponseException(
@@ -140,21 +141,21 @@ void _logDioError(DioException exception) {
 String handleExceptionError(dynamic error, [String path = ""]) {
   printMe(
       "Exception caught [${error.runtimeType}][$path]: ${error.toString()}");
-  String errorMessage = ErrorMessage.UNEXPECTED_ERROR;
+  String errorMessage = ErrorMessage.unexpectedError;
   //Dio Error
   if (error is DioException) {
     if (error.error is SocketException) {
-      errorMessage = ErrorMessage.CONNECTION_ERROR;
+      errorMessage = ErrorMessage.connectionError;
     } else if (error.type == DioExceptionType.connectionTimeout) {
-      errorMessage = ErrorMessage.TIMEOUT_ERROR;
+      errorMessage = ErrorMessage.timeOutError;
     } else if (error.type == DioExceptionType.badResponse) {
       printMe("Dio Response error on: ${error.requestOptions.path}");
       if (error.response!.statusCode == 502) {
         errorMessage =
-            "${error.response!.statusCode}: ${ErrorMessage.SERVER_ERROR}";
+            "${error.response!.statusCode}: ${ErrorMessage.serverError}";
       } else {
         errorMessage =
-            "${error.response!.statusCode}: ${ErrorMessage.UNEXPECTED_ERROR}";
+            "${error.response!.statusCode}: ${ErrorMessage.unexpectedError}";
       }
     }
     return errorMessage;

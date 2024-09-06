@@ -27,7 +27,6 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     userProfileProvider =
         Provider.of<UserProfileProvider>(context, listen: false);
@@ -107,8 +106,8 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               SubMenuItem(
                 onTap: () {
-                  if (AppConstant.USER_TOKEN == null ||
-                      AppConstant.USER_TOKEN == '') {
+                  if (AppConstant.userToken == null ||
+                      AppConstant.userToken == '') {
                     ScaffoldMessenger.of(context).clearSnackBars();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

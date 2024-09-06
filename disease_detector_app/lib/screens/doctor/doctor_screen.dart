@@ -1,5 +1,5 @@
 import 'package:disease_detector_app/config/constants.dart';
-import 'package:disease_detector_app/provider/doctor_list.dart';
+import 'package:disease_detector_app/provider/doctor_provider.dart';
 import 'package:disease_detector_app/screens/doctor/doctor_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,7 +11,7 @@ class DoctorScreen extends StatelessWidget {
     required this.doctorListProvider,
   });
 
-  final DoctorListProvider doctorListProvider;
+  final DoctorProvider doctorListProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class DoctorScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: appPadding,
-        child: Consumer<DoctorListProvider>(
+        child: Consumer<DoctorProvider>(
           builder: (context, value, child) {
             var doctors = value.doctors?.data;
             return Column(
@@ -58,7 +58,10 @@ class DoctorScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DoctorCardScreen(),
+                                builder: (context) => DoctorCardScreen(
+                                  doctorProvider: doctorListProvider,
+                                  id: doctor.id,
+                                ),
                               ),
                             );
                           },

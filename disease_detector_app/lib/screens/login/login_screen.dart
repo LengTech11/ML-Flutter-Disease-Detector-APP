@@ -45,9 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       LoginResponseModel response =
           await loginApiService.postLogin(email: email, password: password);
-      AppConstant.USER_TOKEN = response.token;
+      AppConstant.userToken = response.token;
       if (!context.mounted) return;
-      TokenStorage.saveToken(AppConstant.USER_TOKEN!);
+      TokenStorage.saveToken(AppConstant.userToken!);
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const BottomNavigationBarScreen()),

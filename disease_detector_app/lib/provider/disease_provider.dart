@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 
 class DiseaseProvider extends ChangeNotifier {
   DiseaseModel? dis;
-  DiseaseModel? get _dis => dis;
-
   bool isLoading = true;
 
 

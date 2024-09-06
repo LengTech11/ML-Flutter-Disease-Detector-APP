@@ -1,6 +1,6 @@
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
-import 'package:disease_detector_app/widgets/menuItem.dart';
+import 'package:disease_detector_app/widgets/menu_item.dart';
 import 'package:flutter/material.dart';
 
 class TileButton extends StatefulWidget {

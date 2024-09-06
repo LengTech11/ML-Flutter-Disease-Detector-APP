@@ -6,7 +6,7 @@ class DocumentApiService {
   Future<DocumentModel> getDocument({required String diseaseName}) async {
     return BaseApiService().onRequest(
         path: "/documents",
-        method: HttpMethod.GET,
+        method: HttpMethod.get,
         requiredToken: true,
         autoRefreshToken: true,
         headers: {
@@ -14,7 +14,7 @@ class DocumentApiService {
           'Content-Type': 'application/json',
           'Accept-Encoding': 'Accept-Encoding',
           'Connection': 'keep-alive',
-          'Authorization': 'Bearer ${AppConstant.USER_TOKEN}'
+          'Authorization': 'Bearer ${AppConstant.userToken}'
         },
         query: {
           'disease': diseaseName,

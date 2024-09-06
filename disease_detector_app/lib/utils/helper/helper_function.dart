@@ -1,3 +1,4 @@
+import 'package:disease_detector_app/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 
 class HelperFunctions {
@@ -34,6 +35,6 @@ class HelperFunctions {
   }
 
   static void debug(String titile){
-    print("+++++++++++++++++++++++++++++++++ ${titile} +++++++++++++++++++++++++++++++++");
+    printMe("++++++++++++++++++++++++ $titile ++++++++++++++++++++++++");
   }
 }

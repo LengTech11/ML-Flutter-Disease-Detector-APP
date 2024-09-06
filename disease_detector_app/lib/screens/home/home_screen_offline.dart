@@ -10,8 +10,8 @@ class HomeScreenOffline extends StatefulWidget {
 class _HomeScreenOfflineState extends State<HomeScreenOffline> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: const Text(
+    return const Center(
+      child: Text(
         'No Internet Connection',
       ),
     );

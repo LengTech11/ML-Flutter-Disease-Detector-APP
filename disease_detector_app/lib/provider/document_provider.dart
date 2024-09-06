@@ -14,7 +14,7 @@ class DocumentProvider extends ChangeNotifier {
         doc = null;
       }
     } catch (error) {
-      print('Error fetching document: $error');
+      doc = null;
     }
     notifyListeners();
   }
