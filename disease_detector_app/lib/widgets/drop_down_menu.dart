@@ -1,6 +1,7 @@
 import 'package:disease_detector_app/config/themes/app_size.dart';
 import 'package:disease_detector_app/screens/register/register_screen.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
+import 'package:disease_detector_app/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -29,17 +30,19 @@ class _DropDownMenuItemState extends State<DropDownMenuItem> {
           setState(() {
             DeviceUtils.hideKeyboard(context);
             widget.selected = gender;
-            print(widget.selected);
+            printMe(widget.selected);
           });
         },
-        dropdownMenuEntries: GenderLabel.values
-            .map<DropdownMenuEntry<GenderLabel>>((GenderLabel gender) {
-          return DropdownMenuEntry<GenderLabel>(
-            value: gender,
-            label: gender.label,
-            style: MenuItemButton.styleFrom(),
-          );
-        }).toList(),
+        dropdownMenuEntries:
+            GenderLabel.values.map<DropdownMenuEntry<GenderLabel>>(
+          (GenderLabel gender) {
+            return DropdownMenuEntry<GenderLabel>(
+              value: gender,
+              label: gender.label,
+              style: MenuItemButton.styleFrom(),
+            );
+          },
+        ).toList(),
       ),
     );
   }

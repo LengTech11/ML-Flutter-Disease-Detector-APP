@@ -16,7 +16,6 @@ class GetHistoryProvider extends ChangeNotifier {
       isloading = false;
     } catch (e) {
       isloading = false;
-      print(e);
     }
     notifyListeners();
   }
@@ -24,13 +23,13 @@ class GetHistoryProvider extends ChangeNotifier {
   Future<void> deletePrediction(String id) async {
     return BaseApiService().onRequest(
       path: "/predictions/$id",
-      method: HttpMethod.DELETE,
+      method: HttpMethod.delete,
       requiredToken: true,
       autoRefreshToken: true,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${AppConstant.USER_TOKEN}'
+        'Authorization': 'Bearer ${AppConstant.userToken}'
       },
       onSuccess: (response) {
         return;

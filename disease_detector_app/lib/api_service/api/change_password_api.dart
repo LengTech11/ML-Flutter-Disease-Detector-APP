@@ -16,7 +16,7 @@ class ChangePasswordApiService {
 
     return BaseApiService().onRequest(
         path: "/change-password",
-        method: HttpMethod.POST,
+        method: HttpMethod.post,
         requiredToken: true,
         autoRefreshToken: true,
         headers: {
@@ -24,7 +24,7 @@ class ChangePasswordApiService {
           'Content-Type': 'application/json',
           'Accept-Encoding': 'Accept-Encoding',
           'Connection': 'keep-alive',
-          'Authorization':'Bearer ${AppConstant.USER_TOKEN}'
+          'Authorization':'Bearer ${AppConstant.userToken}'
         },
         data: query,
         onSuccess: (response) {

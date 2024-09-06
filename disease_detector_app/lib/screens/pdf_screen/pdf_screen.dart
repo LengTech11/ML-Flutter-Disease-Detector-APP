@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:disease_detector_app/utils/logger/logger.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
@@ -17,10 +18,11 @@ class PDFScreen extends StatefulWidget {
   final String url, title;
   final String? path;
 
-  _PDFScreenState createState() => _PDFScreenState();
+  @override
+  PDFScreenState createState() => PDFScreenState();
 }
 
-class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
+class PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
   final Completer<PDFViewController> _controller =
       Completer<PDFViewController>();
   int? pages = 0;
@@ -57,7 +59,9 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
         return file;
       }
 
-      print('URL: ${widget.url}');
+      if (kDebugMode) {
+        print('URL: ${widget.url}');
+      }
       final response = await Dio()
           .download(widget.url, filePath); // Use url instead of widget.url
       if (response.statusCode == 200) {
@@ -77,7 +81,7 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
         title: const Text("Document"),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.share),
+            icon: const Icon(Icons.share),
             onPressed: () {},
           ),
         ],
@@ -97,9 +101,9 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
                   fitPolicy: FitPolicy.WIDTH,
                   preventLinkNavigation:
                       false, // if set to true the link is handled in flutter
-                  onRender: (_pages) {
+                  onRender: (pages) {
                     setState(() {
-                      pages = _pages;
+                      pages = pages;
                       isReady = true;
                     });
                   },
@@ -107,22 +111,22 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
                     setState(() {
                       errorMessage = error.toString();
                     });
-                    print(error.toString());
+                    printMe(error.toString());
                   },
                   onPageError: (page, error) {
                     setState(() {
                       errorMessage = '$page: ${error.toString()}';
                     });
-                    print('$page: ${error.toString()}');
+                    printMe('$page: ${error.toString()}');
                   },
                   onViewCreated: (PDFViewController pdfViewController) {
                     _controller.complete(pdfViewController);
                   },
                   onLinkHandler: (String? uri) {
-                    print('goto uri: $uri');
+                    printMe('goto uri: $uri');
                   },
                   onPageChanged: (int? page, int? total) {
-                    print('page change: $page/$total');
+                    printMe('page change: $page/$total');
                     setState(() {
                       currentPage = page;
                     });

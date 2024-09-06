@@ -1,4 +1,5 @@
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
+
 import '../base_api_service.dart';
 
 class SampleApiService {
@@ -14,7 +15,7 @@ class SampleApiService {
     }
     return BaseApiService().onRequest(
         path: "YOUR PATH",
-        method: HttpMethod.GET,
+        method: HttpMethod.get,
         requiredToken: true,
         autoRefreshToken: true,
         data: query,

@@ -1,12 +1,12 @@
 import 'package:disease_detector_app/api_service/base_api_service.dart';
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
-import 'package:disease_detector_app/model/doctor/doctor_list_model.dart';
-import 'package:disease_detector_app/model/doctor/doctor_model.dart';
+import 'package:disease_detector_app/model/clinic/clinic_model.dart';
+import 'package:disease_detector_app/model/clinic/list_clinic_model.dart';
 
-class DoctorListApi {
-  Future<DoctorListModel> getDoctorsList() async {
+class ClinicApiService {
+  Future<ListClinicModel> getClinicList() async {
     return BaseApiService().onRequest(
-      path: "/doctors",
+      path: "/clinics",
       method: HttpMethod.get,
       autoRefreshToken: true,
       headers: {
@@ -17,14 +17,14 @@ class DoctorListApi {
         'Authorization': 'Bearer ${AppConstant.userToken}'
       },
       onSuccess: (response) {
-        return DoctorListModel.fromJson(response.data);
+        return ListClinicModel.fromJson(response.data);
       },
     );
   }
 
-  Future<DoctorModel> getDoctorById(int id) async {
+    Future<ClinicModel> getClinicById(int id) async {
     return BaseApiService().onRequest(
-      path: "/doctors/$id",
+      path: "/clinics/$id",
       method: HttpMethod.get,
       autoRefreshToken: true,
       headers: {
@@ -35,7 +35,7 @@ class DoctorListApi {
         'Authorization': 'Bearer ${AppConstant.userToken}'
       },
       onSuccess: (response) {
-        return DoctorModel.fromJson(response.data);
+        return ClinicModel.fromJson(response.data);
       },
     );
   }

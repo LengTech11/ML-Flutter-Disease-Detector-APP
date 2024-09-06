@@ -1,5 +1,6 @@
-import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
+// ignore: depend_on_referenced_packages
 import 'package:image/image.dart' as img;
 
 class ModelService {
@@ -7,11 +8,14 @@ class ModelService {
 
   Future<void> loadModel() async {
     try {
-      // Load the TensorFlow Lite model from the assets folder
       interpreter = await Interpreter.fromAsset('assets/model/DenseNet.tflite');
-      print("Model loaded");
+      if (kDebugMode) {
+        print("Model loaded");
+      }
     } catch (e) {
-      print("Error loading model: $e");
+      if (kDebugMode) {
+        print("Error loading model: $e");
+      }
       rethrow;
     }
   }

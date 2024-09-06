@@ -1,7 +1,8 @@
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
+import 'package:disease_detector_app/provider/clinic_provider.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
-import 'package:disease_detector_app/provider/doctor_list.dart';
+import 'package:disease_detector_app/provider/doctor_provider.dart';
 import 'package:disease_detector_app/provider/document_provider.dart';
 import 'package:disease_detector_app/screens/doctor/doctor_card.dart';
 import 'package:disease_detector_app/screens/doctor/doctor_screen.dart';
@@ -21,7 +22,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   DiseaseProvider provider = DiseaseProvider();
-  DoctorListProvider? doctorProvider;
+  DoctorProvider? doctorProvider;
+  ClinicProvider? clinicProvider;
+
 
   String doctorImage =
       'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1725408000&semt=ais_hybrid';
@@ -36,7 +39,10 @@ class _HomeScreenState extends State<HomeScreen> {
     provider = Provider.of<DiseaseProvider>(context, listen: false);
     provider.fetchDisease();
 
-    doctorProvider = Provider.of<DoctorListProvider>(context, listen: false);
+    clinicProvider = Provider.of<ClinicProvider>(context, listen: false);
+    clinicProvider!.fetchListClinics();
+
+    doctorProvider = Provider.of<DoctorProvider>(context, listen: false);
     doctorProvider!.fetchDotorList();
   }
 
@@ -45,8 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
     provider = Provider.of<DiseaseProvider>(context, listen: false);
     provider.fetchDisease();
 
-    doctorProvider = Provider.of<DoctorListProvider>(context, listen: false);
+    doctorProvider = Provider.of<DoctorProvider>(context, listen: false);
     doctorProvider!.fetchDotorList();
+
+    clinicProvider = Provider.of<ClinicProvider>(context, listen: false);
+    clinicProvider!.fetchListClinics();
 
     super.dispose();
   }
@@ -67,19 +76,30 @@ class _HomeScreenState extends State<HomeScreen> {
           SingleChildScrollView(
             primary: true,
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: List.generate(5, (index) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: VcClinicCard(
-                    headline: 'Card $index',
-                    subHeadline: 'Sub headline',
-                    supportingText: 'Supporting text',
-                    imageUrl: clinicImg,
-                    onTap: () {},
-                  ),
+            child: Consumer<ClinicProvider>(
+              builder: (
+                BuildContext context,
+                ClinicProvider value,
+                Widget? child,
+              ) {
+                return value.listClinic != null ? Row(
+                  children: List.generate(value.listClinic?.data.length ?? 0, (index) {
+                var clinic = value.listClinic?.data;
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: VcClinicCard(
+                        headline: '${clinic?[index].firstName} ${clinic?[index].lastName}',
+                        subHeadline: clinic?[index].age.toString(),
+                        supportingText:  clinic?[index].email,
+                        imageUrl: clinicImg,
+                        onTap: () {},
+                      ),
+                    );
+                  }),
+                ) : const Center(
+                  child: CircularProgressIndicator(),
                 );
-              }),
+              },
             ),
           ),
           const SizedBox(height: 16),
@@ -104,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SingleChildScrollView(
             primary: true,
             scrollDirection: Axis.horizontal,
-            child: Consumer<DoctorListProvider>(
+            child: Consumer<DoctorProvider>(
               builder: (context, value, child) {
                 return value.isLoading
                     ? const Center(child: CircularProgressIndicator())
@@ -128,8 +148,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         MaterialPageRoute(
                                           builder: (context) {
                                             return DoctorCardScreen(
-                                              doctorListProvider:
-                                                  doctorProvider!,
+                                              doctorProvider: doctorProvider!,
+                                              id: doctor!.id,
                                             );
                                           },
                                         ),

@@ -84,13 +84,11 @@ class FirebaseAuthHelper {
   }
 
   void signOut() async {
-    print("====== Sign Out Email ======");
     await _auth.signOut();
   }
 
   final GoogleSignIn googleSignIn = GoogleSignIn();
   Future<void> handleSignOut() async {
-    print("====== Sign Out Gmail ======");
     googleSignIn.signOut();
   }
 

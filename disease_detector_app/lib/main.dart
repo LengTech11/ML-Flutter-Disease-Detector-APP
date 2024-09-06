@@ -2,15 +2,16 @@ import 'dart:async';
 
 import 'package:disease_detector_app/api_service/client/dio_http_client.dart';
 import 'package:disease_detector_app/l10n/l10n.dart';
+import 'package:disease_detector_app/provider/clinic_provider.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
-import 'package:disease_detector_app/provider/doctor_list.dart';
+import 'package:disease_detector_app/provider/doctor_provider.dart';
 import 'package:disease_detector_app/provider/document_provider.dart';
 import 'package:disease_detector_app/provider/get_history_provider.dart';
+import 'package:disease_detector_app/provider/network_status_provider.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:disease_detector_app/screens/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
 import 'package:disease_detector_app/screens/login/login_screen.dart';
 import 'package:disease_detector_app/screens/onboarding/onboarding_view.dart';
-import 'package:disease_detector_app/provider/network_status_provider.dart';
 import 'package:disease_detector_app/storage/check_first_install.dart';
 import 'package:disease_detector_app/storage/token_storage.dart';
 import 'package:disease_detector_app/view_model/provider.dart';
@@ -45,7 +46,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => DocumentProvider()),
         ChangeNotifierProvider(create: (_) => GetHistoryProvider()),
         ChangeNotifierProvider(create: (_) => NetworkProvider()),
-        ChangeNotifierProvider(create: (_) => DoctorListProvider()),
+        ChangeNotifierProvider(create: (_) => DoctorProvider()),
+        ChangeNotifierProvider(create: (_) => ClinicProvider()),
       ],
       child: const MyApp(),
     ),
@@ -91,20 +93,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
     checkIsFirstInstall();
     checkIsLogin();
     BaseHttpClient.init();
-    
     NetworkProvider().initConnectivity();
-    // NetworkProvider().updateStatus();
   }
 
   @override
   void dispose() {
     super.dispose();
+
     NetworkProvider().connectivitySubscription.cancel();
+    checkIsFirstInstall();
+    checkIsLogin();
   }
 
   @override

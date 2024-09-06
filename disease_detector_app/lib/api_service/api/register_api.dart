@@ -1,5 +1,6 @@
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/model/register_model/register_response_model.dart';
+
 import '../base_api_service.dart';
 
 class RegisterApiService {
@@ -23,7 +24,7 @@ class RegisterApiService {
 
     return BaseApiService().onRequest(
         path: "/register",
-        method: HttpMethod.POST,
+        method: HttpMethod.post,
         requiredToken: true,
         autoRefreshToken: true,
         headers: {

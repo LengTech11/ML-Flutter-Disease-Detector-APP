@@ -93,7 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           phonNumber: phoneNumber,
           age: int.parse(age),
           gender: gender);
-      AppConstant.USER_TOKEN = response.token;
+      AppConstant.userToken = response.token;
       if (!context.mounted) return;
       Navigator.pushAndRemoveUntil(
           context,

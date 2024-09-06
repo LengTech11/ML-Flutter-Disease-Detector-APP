@@ -13,6 +13,7 @@ import 'package:disease_detector_app/widgets/eca_listtile.dart';
 import 'package:disease_detector_app/widgets/eca_show_btm_sheet.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
@@ -72,6 +73,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
         await _predictDisease();
       }
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error picking image: $e')),
       );
@@ -89,12 +91,18 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
       );
 
       if (response.statusCode == 200) {
-        print('Disease count updated successfully');
+        if (kDebugMode) {
+          print('Disease count updated successfully');
+        }
       } else {
-        print('Failed to update disease count: ${response.statusCode}');
+        if (kDebugMode) {
+          print('Failed to update disease count: ${response.statusCode}');
+        }
       }
     } catch (e) {
-      print('Error updating disease count: $e');
+      if (kDebugMode) {
+        print('Error updating disease count: $e');
+      }
     }
   }
 
@@ -102,10 +110,12 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
     const String apiUrl = 'http://0.0.0.0:8000/api/user-count';
 
     // Get the user token
-    String? userToken = AppConstant.USER_TOKEN;
+    String? userToken = AppConstant.userToken;
 
     if (userToken == null) {
-      print('User is not authenticated');
+      if (kDebugMode) {
+        print('User is not authenticated');
+      }
       return;
     }
 
@@ -125,13 +135,16 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonResponse =
             response.data as Map<String, dynamic>;
-        print(jsonResponse['message']);
+        if (kDebugMode) {
+          print(jsonResponse['message']);
+        }
       } else {
-        // If the server did not return a 200 OK response, throw an exception.
         throw Exception('Failed to update user count: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error updating user count: $e');
+      if (kDebugMode) {
+        print('Error updating user count: $e');
+      }
     }
   }
 
@@ -185,7 +198,9 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
         );
       }
     } catch (e) {
-      print('Error predicting disease: $e');
+      if (kDebugMode) {
+        print('Error predicting disease: $e');
+      }
       setState(
         () {
           _predictedClass = 'Failed to predict';
@@ -205,10 +220,12 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
   Future<bool> savePrediction(String predictedClass, double confidence) async {
     const String apiUrl = 'http://0.0.0.0:8000/api/save-history';
 
-    String? token = AppConstant.USER_TOKEN;
+    String? token = AppConstant.userToken;
 
     if (token == null) {
-      print('User is not authenticated');
+      if (kDebugMode) {
+        print('User is not authenticated');
+      }
       return false;
     }
 
@@ -235,14 +252,20 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
       );
 
       if (response.statusCode == 200) {
-        print('Prediction saved successfully');
+        if (kDebugMode) {
+          print('Prediction saved successfully');
+        }
         return true;
       } else {
-        print('Failed to save prediction: ${response.statusCode}');
+        if (kDebugMode) {
+          print('Failed to save prediction: ${response.statusCode}');
+        }
         return false;
       }
     } catch (e) {
-      print('Error saving prediction: $e');
+      if (kDebugMode) {
+        print('Error saving prediction: $e');
+      }
       return false;
     }
   }
@@ -549,7 +572,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
           TextButton(
             onPressed: () async {
               // Check authentication status and show a snackbar if not authenticated
-              String? token = AppConstant.USER_TOKEN;
+              String? token = AppConstant.userToken;
               if (token == null) {
                 Navigator.of(context).popUntil(
                   (route) => route.isFirst,
@@ -569,23 +592,31 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
                     _predictedClass!,
                     _confidence!,
                   );
-                  Navigator.of(context).popUntil(
-                    (route) => route.isFirst,
-                  ); // Close all dialogs
-                  if (success) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SuccessScreen(),
-                      ),
-                    ); // Navigate to SuccessScreen
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(AppLocalizations.of(context)!
-                            .failed_to_save_prediction),
-                      ),
+                  if (context.mounted) {
+                    // Close all dialogs
+                    Navigator.of(context).popUntil(
+                      (route) => route.isFirst,
                     );
+                  }
+                  if (success) {
+                    if (context.mounted) {
+                      // Navigate to SuccessScreen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SuccessScreen(),
+                        ),
+                      );
+                    }
+                  } else {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(AppLocalizations.of(context)!
+                              .failed_to_save_prediction),
+                        ),
+                      );
+                    }
                   }
                 }
               }
