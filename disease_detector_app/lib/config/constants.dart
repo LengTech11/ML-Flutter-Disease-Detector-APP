@@ -1,5 +1,5 @@
 import 'package:disease_detector_app/config/themes/color.dart';
-import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
+// import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -78,9 +78,9 @@ showErrorMsg(BuildContext context, String msg, bool dark) {
     title: Center(
       child: Text(
         msg,
-        style: dark
-            ? MyTextTheme.darkTextTheme.labelLarge
-            : MyTextTheme.lightTextTheme.labelLarge,
+        // style: dark
+        //     ? MyTextTheme.darkTextTheme.labelLarge
+        //     : MyTextTheme.lightTextTheme.labelLarge,
       ),
     ),
     actions: [

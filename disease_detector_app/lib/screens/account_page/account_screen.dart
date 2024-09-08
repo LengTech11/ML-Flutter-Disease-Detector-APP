@@ -8,7 +8,6 @@ import 'package:disease_detector_app/screens/account_page/widget/logout_button.d
 import 'package:disease_detector_app/screens/account_page/widget/profile_menu_item.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -149,8 +148,8 @@ class _AccountScreenState extends State<AccountScreen> {
     );
     final local = Localizations.localeOf(context);
 
-    CupertinoAlertDialog alert = CupertinoAlertDialog(
-      insetAnimationDuration: const Duration(microseconds: 50),
+    AlertDialog alert = AlertDialog(
+      contentPadding: const EdgeInsets.all(16),
       title: Text(
         AppLocalizations.of(context)?.switch_language ?? 'Switch Language',
         style: const TextStyle(
@@ -159,53 +158,61 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
       ),
       content: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          CupertinoActionSheetAction(
-            onPressed: () {
+          InkWell(
+            onTap: () {
               provider.setEnglishLanguage();
               Navigator.pop(context);
             },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  AppLocalizations.of(context)?.switch_to_english ?? 'English',
-                  style: const TextStyle(
-                    fontSize: 16,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)?.switch_to_english ??
+                        'English',
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                local == const Locale('en')
-                    ? const Icon(
-                        Icons.check_rounded,
-                        color: Colors.green,
-                      )
-                    : const SizedBox(),
-              ],
+                  local == const Locale('en')
+                      ? const Icon(
+                          Icons.check_rounded,
+                          color: Colors.green,
+                        )
+                      : const SizedBox(),
+                ],
+              ),
             ),
           ),
-          CupertinoActionSheetAction(
-            onPressed: () {
+          InkWell(
+            onTap: () {
               provider.setKhmerLanguage();
               Navigator.pop(context);
             },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  AppLocalizations.of(context)?.switch_to_khmer ?? 'Khmer',
-                  style: const TextStyle(
-                    fontSize: 16,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)?.switch_to_khmer ?? 'Khmer',
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                local == const Locale('km')
-                    ? const Icon(
-                        Icons.check_rounded,
-                        color: Colors.green,
-                      )
-                    : const SizedBox(),
-              ],
+                  local == const Locale('km')
+                      ? const Icon(
+                          Icons.check_rounded,
+                          color: Colors.green,
+                        )
+                      : const SizedBox(),
+                ],
+              ),
             ),
           ),
         ],

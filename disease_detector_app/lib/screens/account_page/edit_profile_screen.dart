@@ -7,7 +7,6 @@ import 'package:disease_detector_app/config/themes/app_size.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:disease_detector_app/screens/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
-import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
@@ -156,7 +155,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
     return Padding(
       padding: appPadding,
       child: Column(
@@ -331,9 +329,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   requestFocusOnTap: false,
                   label: Text(
                     AppLocalizations.of(context)?.gender ?? 'Gender',
-                    style: dark
-                        ? MyTextTheme.darkTextTheme.labelLarge
-                        : MyTextTheme.lightTextTheme.labelLarge,
                   ),
                   onSelected: (GenderLabel? gender) {
                     setState(

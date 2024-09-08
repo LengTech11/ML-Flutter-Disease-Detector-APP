@@ -1,7 +1,7 @@
 import 'package:disease_detector_app/api_service/api/change_password_api.dart';
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/model/change_password/change_password_response_model.dart';
-import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
+// import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
@@ -43,11 +43,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           Navigator.pop(context);
 
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Password Changed Successfully',
-                style: MyTextTheme.lightTextTheme.bodyMedium,
-              ),
+            const SnackBar(
+              content: Text('Password Changed Successfully'),
               backgroundColor: Colors.green,
             ),
           );
@@ -62,7 +59,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: buildAppBar(context),
       body: Padding(
@@ -73,9 +69,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             Text(
               AppLocalizations.of(context)?.change_password ??
                   'Change Password',
-              style: dark
-                  ? MyTextTheme.darkTextTheme.headlineMedium
-                  : MyTextTheme.lightTextTheme.headlineMedium,
+              // style: dark
+              //     ? MyTextTheme.darkTextTheme.headlineMedium
+              //     : MyTextTheme.lightTextTheme.headlineMedium,
             ),
             const SizedBox(
               height: 20,
@@ -83,9 +79,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             Text(
               AppLocalizations.of(context)?.password_tip ??
                   'Your password must be at least 8 characters and should contain letters, number one special character.',
-              style: dark
-                  ? MyTextTheme.darkTextTheme.bodyLarge
-                  : MyTextTheme.lightTextTheme.bodyLarge,
+              // style: dark
+              //     ? MyTextTheme.darkTextTheme.bodyLarge
+              //     : MyTextTheme.lightTextTheme.bodyLarge,
             ),
             const SizedBox(
               height: 30,
@@ -168,7 +164,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   }
 
   SizedBox buildFloatingButton(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
     return SizedBox(
       width: DeviceUtils.getScreenWidth(context) * 0.95,
       child: FloatingActionButton(
@@ -185,9 +180,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         },
         child: Text(
           AppLocalizations.of(context)?.change ?? 'Change',
-          style: dark
-              ? MyTextTheme.darkTextTheme.labelLarge
-              : MyTextTheme.lightTextTheme.labelLarge,
         ),
       ),
     );

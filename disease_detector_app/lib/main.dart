@@ -21,9 +21,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:app_ui/app_ui.dart';
 
 import 'config/themes/theme.dart';
 import 'firebase_options.dart';
+import 'storage/theme_mode_storage.dart';
+
+bool isFirstInstall = true;
+ThemeMode thememode = ThemeMode.light;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +36,20 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  final getFirstInstall = await CheckFirstInstall.getFirstInstall();
+  if (getFirstInstall == false) {
+    isFirstInstall = false;
+  } else {
+    isFirstInstall = true;
+  }
+
+  var isDarkModeOn = await ThemeModeStorage.getThemeMode() ?? false;
+  if (isDarkModeOn) {
+    thememode = ThemeMode.dark;
+  } else {
+    thememode = ThemeMode.light;
+  }
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -62,8 +81,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool? isFirstInstall;
-  bool? isLogin;
+  bool isLogin = false;
+  ThemeProvider themeProvider = ThemeProvider();
 
   Future<void> checkIsLogin() async {
     final token = await TokenStorage.getToken();
@@ -78,27 +97,14 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  Future<void> checkIsFirstInstall() async {
-    final getFirstInstall = await CheckFirstInstall.getFirstInstall();
-    if (getFirstInstall == false) {
-      setState(() {
-        isFirstInstall = false;
-      });
-    } else {
-      setState(() {
-        isFirstInstall = true;
-      });
-    }
-  }
-
   @override
   void initState() {
     super.initState();
 
-    checkIsFirstInstall();
-    checkIsLogin();
+    if (!isFirstInstall) checkIsLogin();
     BaseHttpClient.init();
     NetworkProvider().initConnectivity();
+    CheckFirstInstall.setFirstInstall();
   }
 
   @override
@@ -106,8 +112,9 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
 
     NetworkProvider().connectivitySubscription.cancel();
-    checkIsFirstInstall();
-    checkIsLogin();
+    NetworkProvider().initConnectivity();
+    if (!isFirstInstall) checkIsLogin();
+    CheckFirstInstall.setFirstInstall();
   }
 
   @override
@@ -124,12 +131,29 @@ class _MyAppState extends State<MyApp> {
               minTextAdapt: true,
               splitScreenMode: true,
               builder: (context, child) {
-                return MaterialApp(
+                return ShadApp.material(
                   debugShowCheckedModeBanner: false,
                   title: 'VisionCareAI',
-                  themeMode: themeProvider.themeMode,
-                  theme: AppTheme.lightTheme,
-                  darkTheme: AppTheme.darkTheme,
+                  themeMode: themeProvider.themeMode ?? thememode,
+                  theme: const AppTheme().theme,
+                  darkTheme: const AppDarkTheme().theme,
+                  materialThemeBuilder: (context, theme) {
+                    return theme.copyWith(
+                      appBarTheme: theme.appBarTheme.copyWith(
+                        surfaceTintColor: AppColors.transparent,
+                      ),
+                      textTheme: theme.brightness == Brightness.light
+                          ? const AppTheme().textTheme
+                          : const AppDarkTheme().textTheme,
+                      snackBarTheme: const SnackBarThemeData(
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                      bottomNavigationBarTheme:
+                          const BottomNavigationBarThemeData(
+                        type: BottomNavigationBarType.fixed,
+                      ),
+                    );
+                  },
                   supportedLocales: L10n.all,
                   locale: Locale(themeProvider.languageCode ?? 'km'),
                   localizationsDelegates: const [

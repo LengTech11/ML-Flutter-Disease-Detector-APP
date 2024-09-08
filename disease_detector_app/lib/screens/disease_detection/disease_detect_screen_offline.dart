@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
 import 'package:disease_detector_app/screens/disease_detection/widgets/class_probabilities.dart';
-import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -218,17 +217,9 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
                         RichText(
                           text: TextSpan(
                             children: [
-                              TextSpan(
-                                text: 'Disease: ',
-                                style: dark
-                                    ? MyTextTheme.darkTextTheme.titleLarge
-                                    : MyTextTheme.lightTextTheme.titleLarge,
-                              ),
+                              const TextSpan(text: 'Disease: '),
                               TextSpan(
                                 text: name ?? 'Unknown',
-                                style: dark
-                                    ? MyTextTheme.darkTextTheme.titleLarge
-                                    : MyTextTheme.lightTextTheme.titleLarge,
                               ),
                             ],
                           ),
@@ -244,19 +235,11 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
                             RichText(
                               text: TextSpan(
                                 children: [
-                                  TextSpan(
-                                    text: 'Confidence: ',
-                                    style: dark
-                                        ? MyTextTheme.darkTextTheme.titleLarge
-                                        : MyTextTheme.lightTextTheme.titleLarge,
-                                  ),
+                                  const TextSpan(text: 'Confidence: '),
                                   TextSpan(
                                     text: confidence != null
                                         ? '${confidence!.toStringAsFixed(2)}%'
                                         : 'N/A',
-                                    style: dark
-                                        ? MyTextTheme.darkTextTheme.titleLarge
-                                        : MyTextTheme.lightTextTheme.titleLarge,
                                   ),
                                 ],
                               ),
@@ -426,9 +409,9 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
       title: Text(
         AppLocalizations.of(context)?.upload_eye_disease_image ??
             'Upload Image',
-        style: dark
-            ? MyTextTheme.darkTextTheme.titleLarge
-            : MyTextTheme.lightTextTheme.titleLarge,
+        // style: dark
+        //     ? MyTextTheme.darkTextTheme.titleLarge
+        //     : MyTextTheme.lightTextTheme.titleLarge,
       ),
     );
   }
@@ -484,12 +467,8 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
   }
 
   Widget buildDescription(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
     return Text(
       AppLocalizations.of(context)?.after_upload_info ?? 'Disease Description',
-      style: dark
-          ? MyTextTheme.darkTextTheme.titleLarge
-          : MyTextTheme.lightTextTheme.titleLarge,
     );
   }
 }

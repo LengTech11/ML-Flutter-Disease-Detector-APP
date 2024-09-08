@@ -1,4 +1,3 @@
-import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 
@@ -31,12 +30,6 @@ class EcaListtile extends ListTile {
         title: title,
         subtitle: subtitle,
         onTap: onTap,
-        titleTextStyle: dark
-            ? MyTextTheme.darkTextTheme.titleLarge
-            : MyTextTheme.lightTextTheme.titleLarge,
-        subtitleTextStyle: dark
-            ? MyTextTheme.darkTextTheme.bodyMedium
-            : MyTextTheme.lightTextTheme.bodyMedium,
       ),
     );
   }

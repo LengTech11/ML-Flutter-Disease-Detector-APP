@@ -1,6 +1,5 @@
 import 'package:disease_detector_app/api_service/api/login_api.dart';
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
-import 'package:disease_detector_app/config/themes/theme.dart';
 import 'package:disease_detector_app/model/login_model/login_response_model.dart';
 import 'package:disease_detector_app/screens/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
 import 'package:disease_detector_app/screens/register/register_screen.dart';
@@ -15,7 +14,6 @@ import 'package:iconsax/iconsax.dart';
 import '../../config/constants.dart';
 import '../../config/themes/app_size.dart';
 import '../../config/themes/color.dart';
-import '../../utils/custom_text_theme/custom_text_theme.dart';
 import '../../utils/helper/helper_function.dart';
 import '../../widgets/my_button.dart';
 
@@ -79,9 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: AppSize.appbarHeight),
                 Text(
                   AppLocalizations.of(context)?.welcome ?? 'Welcome Back',
-                  style: dark
-                      ? MyTextTheme.darkTextTheme.headlineLarge
-                      : MyTextTheme.lightTextTheme.headlineLarge,
+                  // style: dark
+                  //     ? MyTextTheme.darkTextTheme.headlineLarge
+                  //     : MyTextTheme.lightTextTheme.headlineLarge,
                 ),
                 Image.asset(
                   'assets/logo/logo.png',
@@ -162,9 +160,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       AppLocalizations.of(context)?.dont_have_account ??
                           'Don\'t have account?',
-                      style: dark
-                          ? MyTextTheme.darkTextTheme.titleMedium
-                          : MyTextTheme.lightTextTheme.titleMedium,
                     ),
                     SizedBox(
                       width: AppSize.xs,
@@ -206,9 +201,9 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 50.h,
           child: OutlinedButtonWidget(
             borderColor: dark ? AppColor.primary : Colors.white,
-            backgroundColor: dark
-                ? AppTheme.darkTheme.colorScheme.surface
-                : AppTheme.darkTheme.colorScheme.surface,
+            // backgroundColor: dark
+            //     ? MyTheme.darkTheme.colorScheme.surface
+            //     : MyTheme.darkTheme.colorScheme.surface,
             icon: Icon(
               Iconsax.user,
               color: dark ? AppColor.primary : Colors.white,

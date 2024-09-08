@@ -44,6 +44,10 @@ dependencies:
     sdk: flutter
   google_fonts: ^6.2.1
   connectivity_plus: ^6.0.5
+  app_ui:
+    path: package/app_ui
+  shadcn_ui: ^0.8.1
+  
 
 dev_dependencies:
   flutter_lints: ^4.0.0

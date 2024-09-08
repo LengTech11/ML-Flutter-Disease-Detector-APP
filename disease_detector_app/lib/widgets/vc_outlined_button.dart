@@ -33,11 +33,6 @@ class VcOutlinedButton extends StatelessWidget {
                   ? M3Theme.dark().tertiaryContainer.withOpacity(0.25)
                   : M3Theme.light().tertiaryContainer.withOpacity(0.25),
             ),
-            textStyle: WidgetStateProperty.all<TextStyle>(
-              const TextStyle(
-                fontSize: 16,
-              ),
-            ),
           ),
       onPressed: onPressed,
       child: icon != null
