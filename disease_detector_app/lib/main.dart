@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:disease_detector_app/api_service/client/dio_http_client.dart';
 import 'package:disease_detector_app/l10n/l10n.dart';
+import 'package:disease_detector_app/provider/appointment_provider.dart';
 import 'package:disease_detector_app/provider/clinic_provider.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
 import 'package:disease_detector_app/provider/doctor_provider.dart';
@@ -67,6 +68,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => NetworkProvider()),
         ChangeNotifierProvider(create: (_) => DoctorProvider()),
         ChangeNotifierProvider(create: (_) => ClinicProvider()),
+        ChangeNotifierProvider(create: (_) => AppointmentProvider()),
       ],
       child: const MyApp(),
     ),

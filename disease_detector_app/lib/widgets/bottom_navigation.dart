@@ -2,8 +2,6 @@ import 'dart:math' show pow;
 
 import 'package:disease_detector_app/config/themes/app_size.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
-// import 'package:disease_detector_app/config/themes/theme.dart';
-// import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -141,15 +139,14 @@ class _TabButtonState extends State<TabButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // final dark = HelperFunctions.isDarkMode(context);
     var curveValue = expandController
-        .drive(CurveTween(
-            curve: _expanded ? Curves.easeInCubic : Curves.easeInCubic.flipped))
+        .drive(
+          CurveTween(
+            curve: _expanded ? Curves.easeInCubic : Curves.easeInCubic.flipped,
+          ),
+        )
         .value;
     var colorTween = ColorTween(
-      // begin: dark
-      //     ? MyTheme.darkTheme.iconTheme.color
-      //     : MyTheme.darkTheme.iconTheme.color,
       end: widget.activeColor,
     );
     var colorTweenAnimation = colorTween.animate(
@@ -207,28 +204,33 @@ class _TabButtonState extends State<TabButton> with TickerProviderStateMixin {
                           opacity: _expanded
                               ? pow(expandController.value, 13) as double
                               : expandController
-                                  .drive(CurveTween(curve: Curves.easeIn))
+                                  .drive(
+                                    CurveTween(
+                                      curve: Curves.easeIn,
+                                    ),
+                                  )
                                   .value,
                           child: Padding(
                             padding: EdgeInsets.only(
-                                    left: 16 -
-                                        (8 *
-                                                expandController
-                                                    .drive(
-                                                      CurveTween(
-                                                          curve: Curves
-                                                              .easeOutSine),
-                                                    )
-                                                    .value)
-                                            .w,
-                                    right: 8 *
-                                        expandController
-                                            .drive(
-                                              CurveTween(
-                                                  curve: Curves.easeOutSine),
-                                            )
-                                            .value)
-                                .w,
+                              left: 16 -
+                                  (8 *
+                                          expandController
+                                              .drive(
+                                                CurveTween(
+                                                  curve: Curves.easeOutSine,
+                                                ),
+                                              )
+                                              .value)
+                                      .w,
+                              right: 8 *
+                                  expandController
+                                      .drive(
+                                        CurveTween(
+                                          curve: Curves.easeOutSine,
+                                        ),
+                                      )
+                                      .value,
+                            ).w,
                             child: Text(
                               widget.text,
                               style: TextStyle(
