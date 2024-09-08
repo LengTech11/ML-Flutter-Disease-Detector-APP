@@ -1,4 +1,3 @@
-import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 
@@ -22,18 +21,8 @@ class ClassProbabilities extends StatelessWidget {
           child: RichText(
             text: TextSpan(
               children: [
-                TextSpan(
-                  text: '$name: ',
-                  style: dark
-                      ? MyTextTheme.darkTextTheme.titleLarge
-                      : MyTextTheme.lightTextTheme.titleLarge,
-                ),
-                TextSpan(
-                  text: '${confidence!.toStringAsFixed(2)}%',
-                  style: dark
-                      ? MyTextTheme.darkTextTheme.titleLarge
-                      : MyTextTheme.lightTextTheme.titleLarge,
-                ),
+                TextSpan(text: '$name: '),
+                TextSpan(text: '${confidence!.toStringAsFixed(2)}%'),
               ],
             ),
           ),

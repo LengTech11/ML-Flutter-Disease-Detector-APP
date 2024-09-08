@@ -7,7 +7,6 @@ import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
 import 'package:disease_detector_app/provider/document_provider.dart';
 import 'package:disease_detector_app/screens/validate/success_screen.dart';
-import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/eca_listtile.dart';
 import 'package:disease_detector_app/widgets/eca_show_btm_sheet.dart';
@@ -296,16 +295,16 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
                             children: [
                               TextSpan(
                                 text: '${entry.key}: ',
-                                style: dark
-                                    ? MyTextTheme.darkTextTheme.titleLarge
-                                    : MyTextTheme.lightTextTheme.titleLarge,
+                                // style: dark
+                                //     ? MyTextTheme.darkTextTheme.titleLarge
+                                //     : MyTextTheme.lightTextTheme.titleLarge,
                               ),
                               TextSpan(
                                 text:
                                     '${(entry.value * 100).toStringAsFixed(2)}%',
-                                style: dark
-                                    ? MyTextTheme.darkTextTheme.titleLarge
-                                    : MyTextTheme.lightTextTheme.titleLarge,
+                                // style: dark
+                                //     ? MyTextTheme.darkTextTheme.titleLarge
+                                //     : MyTextTheme.lightTextTheme.titleLarge,
                               ),
                             ],
                           ),
@@ -395,17 +394,12 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
                         RichText(
                           text: TextSpan(
                             children: [
-                              TextSpan(
-                                text: 'Disease: ',
-                                style: dark
-                                    ? MyTextTheme.darkTextTheme.titleLarge
-                                    : MyTextTheme.lightTextTheme.titleLarge,
-                              ),
+                              const TextSpan(text: 'Disease: '),
                               TextSpan(
                                 text: _predictedClass ?? 'Unknown',
-                                style: dark
-                                    ? MyTextTheme.darkTextTheme.titleLarge
-                                    : MyTextTheme.lightTextTheme.titleLarge,
+                                // style: dark
+                                //     ? MyTextTheme.darkTextTheme.titleLarge
+                                //     : MyTextTheme.lightTextTheme.titleLarge,
                               ),
                             ],
                           ),
@@ -421,20 +415,11 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
                             RichText(
                               text: TextSpan(
                                 children: [
+                                  const TextSpan(text: 'Confidence: '),
                                   TextSpan(
-                                    text: 'Confidence: ',
-                                    style: dark
-                                        ? MyTextTheme.darkTextTheme.titleLarge
-                                        : MyTextTheme.lightTextTheme.titleLarge,
-                                  ),
-                                  TextSpan(
-                                    text: _confidence != null
-                                        ? '${(_confidence! * 100).toStringAsFixed(2)}%'
-                                        : 'N/A',
-                                    style: dark
-                                        ? MyTextTheme.darkTextTheme.titleLarge
-                                        : MyTextTheme.lightTextTheme.titleLarge,
-                                  ),
+                                      text: _confidence != null
+                                          ? '${(_confidence! * 100).toStringAsFixed(2)}%'
+                                          : 'N/A'),
                                 ],
                               ),
                             ),
@@ -705,14 +690,16 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // const SizedBox(height: 65),
           buildUploadImageContent(context),
           const SizedBox(height: 20),
           buildDescription(context),
           const SizedBox(height: 20),
           buildListDiseases(context),
           const SizedBox(height: 20),
-          if (_isLoading) const Center(child: CircularProgressIndicator()),
+          if (_isLoading)
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
         ],
       ),
     );
@@ -741,9 +728,6 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
       title: Text(
         AppLocalizations.of(context)?.upload_eye_disease_image ??
             'Upload Image',
-        style: dark
-            ? MyTextTheme.darkTextTheme.titleLarge
-            : MyTextTheme.lightTextTheme.titleLarge,
       ),
     );
   }
@@ -799,12 +783,8 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
   }
 
   Widget buildDescription(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
     return Text(
       AppLocalizations.of(context)?.after_upload_info ?? 'Disease Description',
-      style: dark
-          ? MyTextTheme.darkTextTheme.titleLarge
-          : MyTextTheme.lightTextTheme.titleLarge,
     );
   }
 }

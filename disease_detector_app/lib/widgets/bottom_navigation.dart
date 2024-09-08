@@ -2,8 +2,8 @@ import 'dart:math' show pow;
 
 import 'package:disease_detector_app/config/themes/app_size.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
-import 'package:disease_detector_app/config/themes/theme.dart';
-import 'package:disease_detector_app/utils/helper/helper_function.dart';
+// import 'package:disease_detector_app/config/themes/theme.dart';
+// import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -141,15 +141,15 @@ class _TabButtonState extends State<TabButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
+    // final dark = HelperFunctions.isDarkMode(context);
     var curveValue = expandController
         .drive(CurveTween(
             curve: _expanded ? Curves.easeInCubic : Curves.easeInCubic.flipped))
         .value;
     var colorTween = ColorTween(
-      begin: dark
-          ? AppTheme.darkTheme.iconTheme.color
-          : AppTheme.darkTheme.iconTheme.color,
+      // begin: dark
+      //     ? MyTheme.darkTheme.iconTheme.color
+      //     : MyTheme.darkTheme.iconTheme.color,
       end: widget.activeColor,
     );
     var colorTweenAnimation = colorTween.animate(

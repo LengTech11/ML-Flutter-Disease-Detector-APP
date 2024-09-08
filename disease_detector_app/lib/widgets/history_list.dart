@@ -1,7 +1,7 @@
 import 'package:disease_detector_app/config/constants.dart';
-import 'package:disease_detector_app/config/themes/theme.dart';
+// import 'package:disease_detector_app/config/themes/theme.dart';
 import 'package:disease_detector_app/provider/get_history_provider.dart';
-import 'package:disease_detector_app/utils/helper/helper_function.dart';
+// import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -48,7 +48,7 @@ class HistoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
+    // final dark = HelperFunctions.isDarkMode(context);
     return Dismissible(
       key: Key(_historyCard.id), // Unique key for each item
       direction: DismissDirection.endToStart, // Swipe from right to left
@@ -91,9 +91,9 @@ class HistoryTile extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: dark
-                  ? AppTheme.darkTheme.colorScheme.onError
-                  : AppTheme.lightTheme.colorScheme.onError,
+              // color: dark
+              //     ? MyTheme.darkTheme.colorScheme.onError
+              //     : MyTheme.lightTheme.colorScheme.onError,
               blurRadius: kDefaultBorderRaduis,
             ),
           ],

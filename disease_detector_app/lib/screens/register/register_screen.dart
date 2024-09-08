@@ -8,11 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../config/constants.dart';
 import '../../config/themes/app_size.dart';
 import '../../config/themes/color.dart';
-import '../../utils/custom_text_theme/custom_text_theme.dart';
 import '../../utils/helper/helper_function.dart';
 import '../../widgets/my_button.dart';
 import '../login/login_screen.dart';
@@ -123,9 +121,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   Text(
                     AppLocalizations.of(context)?.register ?? 'Register',
-                    style: dark
-                        ? MyTextTheme.darkTextTheme.headlineLarge
-                        : MyTextTheme.lightTextTheme.headlineLarge,
+                    // style: dark
+                    //     ? MyTextTheme.darkTextTheme.headlineLarge
+                    //     : MyTextTheme.lightTextTheme.headlineLarge,
                   ),
                   SizedBox(
                     height: AppSize.md,
@@ -194,9 +192,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           requestFocusOnTap: false,
                           label: Text(
                             AppLocalizations.of(context)?.gender ?? 'Gender',
-                            style: dark
-                                ? MyTextTheme.darkTextTheme.labelLarge
-                                : MyTextTheme.lightTextTheme.labelLarge,
+                            // style: dark
+                            //     ? MyTextTheme.darkTextTheme.labelLarge
+                            //     : MyTextTheme.lightTextTheme.labelLarge,
                           ),
                           onSelected: (GenderLabel? gender) {
                             setState(
@@ -332,9 +330,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Text(
                         AppLocalizations.of(context)?.already_have_account ??
                             'Already have an account?',
-                        style: dark
-                            ? MyTextTheme.darkTextTheme.titleMedium
-                            : MyTextTheme.lightTextTheme.titleMedium,
+                        // style: dark
+                        //     ? MyTextTheme.darkTextTheme.titleMedium
+                        //     : MyTextTheme.lightTextTheme.titleMedium,
                       ),
                       SizedBox(
                         width: AppSize.xs,
