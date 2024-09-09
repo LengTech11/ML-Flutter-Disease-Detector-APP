@@ -23,7 +23,8 @@ class AppointmentApiService {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Accept-Encoding': 'Accept-Encoding'
+        'Accept-Encoding': 'Accept-Encoding',
+        'Authorization': 'Bearer ${AppConstant.userToken}'
       },
       data: query,
       onSuccess: (response) {
