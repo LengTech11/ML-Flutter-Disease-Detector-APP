@@ -22,13 +22,7 @@ class DoctorScreen extends StatelessWidget {
         surfaceTintColor: Theme.of(context).colorScheme.surface,
         title: Text(
           AppLocalizations.of(context)?.available_doctor ?? 'Available Doctor',
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-            color: Theme.of(context).colorScheme.onSurface,
-            letterSpacing: 0.8,
-          ),
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
         backgroundColor: Theme.of(context).colorScheme.surface,
       ),

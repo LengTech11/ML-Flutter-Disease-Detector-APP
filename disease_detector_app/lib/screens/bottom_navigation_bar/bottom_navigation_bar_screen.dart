@@ -1,5 +1,4 @@
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
-import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/network_status_provider.dart';
 import 'package:disease_detector_app/screens/account_page/account_screen_offline.dart';
 import 'package:disease_detector_app/screens/disease_detection/disease_detect_screen.dart';
@@ -60,7 +59,6 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
     checkIsLogin();
 
     networkProvider = Provider.of<NetworkProvider>(context, listen: false);
-
     networkProvider.updateStatus();
   }
 
@@ -87,10 +85,11 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
                 title: Text(
                   AppLocalizations.of(context)?.app_name ?? 'VisionCare AI',
                   style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w900,
-                      color: Theme.of(context).colorScheme.onSurface,
-                      letterSpacing: 0.8),
+                    fontSize: 28,
+                    fontWeight: FontWeight.w900,
+                    color: Theme.of(context).colorScheme.onSurface,
+                    letterSpacing: 0.8,
+                  ),
                 ),
                 backgroundColor: Theme.of(context).colorScheme.surface,
               ),
@@ -107,26 +106,18 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
                 },
                 tabs: [
                   TabButton(
-                    color: AppColor.white,
-                    activeColor: AppColor.light,
                     icon: Iconsax.home,
                     text: AppLocalizations.of(context)?.home ?? 'Home',
                   ),
                   TabButton(
-                    color: AppColor.white,
-                    activeColor: AppColor.light,
                     icon: Iconsax.camera,
                     text: AppLocalizations.of(context)?.camera ?? 'Camera',
                   ),
                   TabButton(
-                    color: AppColor.white,
-                    activeColor: AppColor.light,
-                    icon: Iconsax.save_add,
-                    text: AppLocalizations.of(context)?.my_eye ?? 'My Eye',
+                    icon: Icons.history_rounded,
+                    text: AppLocalizations.of(context)?.history ?? 'History',
                   ),
                   TabButton(
-                    color: AppColor.white,
-                    activeColor: AppColor.black,
                     icon: Iconsax.profile_circle4,
                     text: AppLocalizations.of(context)?.profile ?? 'Profile',
                   )

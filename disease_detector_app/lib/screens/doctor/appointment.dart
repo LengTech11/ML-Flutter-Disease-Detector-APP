@@ -1,21 +1,83 @@
+import 'package:disease_detector_app/api_service/api/appointment_api.dart';
+import 'package:disease_detector_app/model/appointment_model/appointment_model.dart';
+import 'package:disease_detector_app/widgets/vc_outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppointmentScreen extends StatefulWidget {
-  const AppointmentScreen({super.key});
+  const AppointmentScreen({
+    super.key,
+    required this.doctorId,
+  });
+
+  final int doctorId;
 
   @override
   AppointmentScreenState createState() => AppointmentScreenState();
 }
 
 class AppointmentScreenState extends State<AppointmentScreen> {
-  DateTime selectedDate = DateTime.now();
+  DateTime? selectedDate;
   String selectedTime = '';
   TextEditingController phoneController = TextEditingController();
 
+  Future<void> requestAppointment(
+    int doctorId,
+    String preferredDate,
+    String phoneNumber,
+  ) async {
+    AppointmentApiService requestAppointmentApi = AppointmentApiService();
+    try {
+      AppointmentModel response =
+          await requestAppointmentApi.requestAppointment(
+        doctorId: doctorId,
+        preferredDate: preferredDate,
+        phoneNumber: phoneNumber,
+      );
+      if (response.requestStatus != null) {
+        if (mounted) {
+          Navigator.pop(context);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Password Changed Successfully'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (!mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != selectedDate) {
+      setState(
+        () {
+          selectedDate = picked;
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final bool dark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -36,86 +98,45 @@ class AppointmentScreenState extends State<AppointmentScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20.0),
-            // Text(
-            //   "${selectedDate.month} ${selectedDate.year}",
-            //   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            // ),
             Text(
-              "${DateFormat.MMMM().format(selectedDate)} ${selectedDate.year}",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10.0),
-            SizedBox(
-              height: 80,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  DateTime date = selectedDate.add(Duration(days: index));
-                  double itemWidth = MediaQuery.of(context).size.width / 6;
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedDate = date;
-                      });
-                    },
-                    child: Container(
-                      width: itemWidth,
-                      padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                      decoration: BoxDecoration(
-                        color: selectedDate.day == date.day
-                            ? Theme.of(context).colorScheme.primaryContainer
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(color: Colors.grey),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            "${date.day}",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: selectedDate.day == date.day
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                          ),
-                          Text(
-                            [
-                              'Mon',
-                              'Tue',
-                              'Wed',
-                              'Thu',
-                              'Fri',
-                              'Sat',
-                              'Sun'
-                            ][date.weekday - 1],
-                            style: TextStyle(
-                              color: selectedDate.day == date.day
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+              "${DateFormat.MMMM().format(selectedDate ?? DateTime.now())} ${selectedDate?.year}",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: dark ? Colors.white : Colors.black,
               ),
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: VcOutlinedButton(
+                onPressed: () => _selectDate(context),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                ),
+                title: selectedDate != null
+                    ? DateFormat('dd-MMM-yyyy')
+                        .format(selectedDate ?? DateTime.now())
+                    : 'Pick a Date',
+              ),
+            ),
+            const SizedBox(height: 10.0),
             const SizedBox(height: 20.0),
             Text(
               AppLocalizations.of(context)?.time ?? 'Time Slots',
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: dark ? Colors.white : Colors.black),
             ),
             const SizedBox(height: 10.0),
             Wrap(
               spacing: 15.0,
               runSpacing: 15.0,
-              children: ['9:00 am', '10:30 am', '1:00 pm', '2:30 pm', '4:00 pm']
-                  .map((time) {
+              children: ['9:00', '10:30', '1:00', '2:30', '4:00'].map((time) {
                 return GestureDetector(
                   onTap: () {
                     setState(() {
@@ -126,7 +147,9 @@ class AppointmentScreenState extends State<AppointmentScreen> {
                     width: (MediaQuery.of(context).size.width - 70) / 3,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20.0),
+                        vertical: 10.0,
+                        horizontal: 20.0,
+                      ),
                       decoration: BoxDecoration(
                         color: selectedTime == time
                             ? Theme.of(context).colorScheme.primaryContainer
@@ -142,8 +165,7 @@ class AppointmentScreenState extends State<AppointmentScreen> {
                                 ? Colors.white
                                 : Colors.black,
                           ),
-                          textAlign:
-                              TextAlign.center, // Ensure text is centered
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
@@ -151,7 +173,6 @@ class AppointmentScreenState extends State<AppointmentScreen> {
                 );
               }).toList(),
             ),
-
             const SizedBox(height: 25),
             TextField(
               controller: phoneController,
@@ -170,12 +191,10 @@ class AppointmentScreenState extends State<AppointmentScreen> {
                   onPressed: () {
                     if (selectedTime.isNotEmpty &&
                         phoneController.text.isNotEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Appointment confirmed for $selectedDate at $selectedTime',
-                          ),
-                        ),
+                      requestAppointment(
+                        widget.doctorId,
+                        '${DateFormat('yyyy-MM-dd').format(selectedDate ?? DateTime.now())} $selectedTime',
+                        phoneController.text,
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

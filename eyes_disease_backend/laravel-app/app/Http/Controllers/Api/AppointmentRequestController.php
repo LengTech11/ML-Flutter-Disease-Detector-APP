@@ -14,7 +14,10 @@ class AppointmentRequestController extends Controller
     public function index()
     {
         $appointmentRequests = AppointmentRequest::all();
-        return response()->json($appointmentRequests);
+        return response()->json([
+            'status' => 'success',
+            'data' => $appointmentRequests,
+        ], 200);
     }
 
     /**

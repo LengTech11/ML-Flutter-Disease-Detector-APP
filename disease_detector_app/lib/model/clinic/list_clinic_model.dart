@@ -1,4 +1,4 @@
-
+// To parse this JSON data, do
 //
 //     final listClinicModel = listClinicModelFromJson(jsonString);
 
@@ -36,7 +36,7 @@ class Datum {
     dynamic profile;
     dynamic emailVerifiedAt;
     int age;
-    String phoneNumber;
+    dynamic phoneNumber;
     int gender;
     int userRole;
     DateTime createdAt;

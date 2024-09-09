@@ -192,7 +192,9 @@ class _DoctorCardScreenState extends State<DoctorCardScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const AppointmentScreen(),
+                                builder: (context) => AppointmentScreen(
+                                  doctorId: doctor.data.id,
+                                ),
                               ),
                             );
                           },
