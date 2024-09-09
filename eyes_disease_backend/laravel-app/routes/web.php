@@ -9,6 +9,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PredictionController;
 use App\Http\Controllers\ClinicDashboardController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\AppointmentController;
 
 
 
@@ -44,6 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/doctor/list', [DoctorController::class, 'list']);
     Route::post('/doctor/list', [DoctorController::class, 'insert']);
     Route::get('/doctor/delete/{id}', [DoctorController::class, 'delete']);
+    Route::get('/appointment/list', [AppointmentController::class, 'list']);
+    Route::post('/appointment/list', [AppointmentController::class, 'acceptAppointment']);
+
 });
 
 require __DIR__.'/auth.php';
