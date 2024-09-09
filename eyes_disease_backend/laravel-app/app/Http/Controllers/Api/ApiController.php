@@ -428,6 +428,10 @@ class ApiController extends Controller
     {
         $user = User::where('user_role', 2)->get();
 
+    public function getClinicUser(Request $request)
+    {
+        $user = User::where('user_role', 2)->get();
+
         return response()->json([
             'status' => 'success',
             'data' => $user

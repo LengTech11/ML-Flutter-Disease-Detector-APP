@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../config/themes/color.dart';
 
@@ -21,7 +22,10 @@ class MyTextTheme {
 
     /// title
     titleLarge: const TextStyle().copyWith(
-        fontSize: 16.0.sp, fontWeight: FontWeight.w600, color: AppColor.dark),
+        fontFamily: GoogleFonts.khmer().fontFamily,
+        fontSize: 16.0.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColor.dark),
     titleMedium: const TextStyle().copyWith(
         fontSize: 16.0.sp, fontWeight: FontWeight.w500, color: AppColor.dark),
     titleSmall: const TextStyle().copyWith(
@@ -46,7 +50,7 @@ class MyTextTheme {
         fontWeight: FontWeight.w500,
         color: AppColor.grey,
         letterSpacing: 0.2),
-  );
+  ).apply(fontFamily: GoogleFonts.khmer().fontFamily);
 
   static TextTheme darkTextTheme = TextTheme(
     ///headline
@@ -90,5 +94,5 @@ class MyTextTheme {
         fontWeight: FontWeight.w500,
         color: AppColor.lightGrey,
         letterSpacing: 0.2),
-  );
+  ).apply(fontFamily: GoogleFonts.khmer().fontFamily,);
 }

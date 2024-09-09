@@ -20,20 +20,18 @@ class ClinicController extends Controller
     }
 
     public function show($id)
-    {
-        try {
-            // Retrieve a specific user where user_role is 2
-            $clinic = User::where('user_role', 2)->findOrFail($id);
-
-            return response()->json([
-                'status' => 'success',
-                'data' => $clinic,
-            ], 200);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Clinic not found',
-            ], 404);
-        }
+    {        try {
+        // Retrieve a specific user where user_role is 2
+        $clinic = User::where('user_role', 2)->findOrFail($id);
+        return response()->json([
+            'status' => 'success',
+            'data' => $clinic,
+        ], 200);
+    } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Clinic not found',
+        ], 404);
+    }
     }
 }

@@ -22,7 +22,6 @@ class DoctorController extends Controller
     {
         try {
             $doctor = Doctor::findOrFail($id);
-
             return response()->json([
                 'status' => 'success',
                 'data' => $doctor,

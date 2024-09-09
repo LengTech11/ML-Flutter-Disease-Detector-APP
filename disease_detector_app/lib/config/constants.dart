@@ -13,8 +13,8 @@ List<String> bottomPageKeys = ['/', '/', '/', '/account'];
 void showMessage(String message) {
   Fluttertoast.showToast(
     msg: message,
-    backgroundColor: Colors.red,
-    textColor: Colors.white,
+    backgroundColor: AppColor.error,
+    textColor: AppColor.onError,
     fontSize: 16.0.sp,
   );
 }

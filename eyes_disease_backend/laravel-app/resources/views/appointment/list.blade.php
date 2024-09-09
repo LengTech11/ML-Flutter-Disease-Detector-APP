@@ -27,7 +27,7 @@
                                             clip-rule="evenodd"></path>
                                     </svg>
                                     <a href="#"
-                                        class="text-gray-700 hover:text-gray-900 ml-1 md:ml-2 text-sm font-medium">Doctor</a>
+                                        class="text-gray-700 hover:text-gray-900 ml-1 md:ml-2 text-sm font-medium">Appointments</a>
                                 </div>
                             </li>
                         </ol>
@@ -40,7 +40,7 @@
                             <div class="mt-1 relative lg:w-64 xl:w-96">
                                 <input type="text" name="search" id="users-search"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                    placeholder="Search for patient" value="{{ request()->input('search') }}">
+                                    placeholder="Search Name" value="{{ request()->input('search') }}">
                             </div>
                         </form>
                         <div class="flex space-x-1 pl-0 sm:pl-2 mt-3 sm:mt-0 ">
@@ -106,7 +106,7 @@
                                             </div>
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
-                                            {{$value->date}}
+                                            {{$value->preferred_date}}
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
                                             {{$value->user_first_name}} {{$value->user_last_name}}
@@ -115,94 +115,44 @@
                                             {{$value->phone_number}}
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
-                                            @if ($value->booking_status == 0)
-                                                Padding
-                                            @elseif ($value->booking_status == 1)
-                                                Scheduled
-                                            @endif
+                                            {{$value->request_status}}
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
                                             {{$value->doctor_first_name}} {{$value->doctor_last_name}}
                                         </td>
                                         <td class="p-4 whitespace-nowrap space-x-2">
-                                            <button type="button" data-twe-toggle="modal"
-                                                data-twe-target="#editUser{{ $value->id }}"
-                                                class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
-                                                <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z">
-                                                    </path>
-                                                    <path fill-rule="evenodd"
-                                                        d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Edit Doctor
-                                            </button>
-                                            <button type="button" data-twe-toggle="modal"
-                                                data-twe-target="#deleteUser{{ $value->id }}"
-                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
-                                                <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd"
-                                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Delete Doctor
-                                            </button>
+                                            <!-- Accept Button Form -->
+                                            <form action="{{ url('/appointment/list') }}" method="POST" class="inline">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $value->id }}">
+                                                <button type="submit" name="action" value="accept"
+                                                    class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
+                                                    <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
+                                                        <path fill-rule="evenodd"
+                                                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
+                                                    Accept
+                                                </button>
+                                            </form>
+
+                                            <!-- Reject Button Form -->
+                                            <form action="{{ url('/appointment/list') }}" method="POST" class="inline">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $value->id }}">
+                                                <button type="submit" name="action" value="reject"
+                                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
+                                                    <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd"
+                                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
+                                                    Reject
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
-
-                                    <!--delete user modal-->
-                                    <div class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-                                        id="deleteUser{{ $value->id }}" data-twe-modal-init tabindex="-1"
-                                        aria-modal="true">
-                                        <div data-twe-modal-dialog-ref
-                                            class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
-                                            <div
-                                                class="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-4 outline-none dark:bg-surface-dark">
-                                                <!-- Modal content -->
-                                                <div class="bg-white rounded-lg shadow relative">
-                                                    <!-- Modal header -->
-                                                    <div class="flex justify-end p-2">
-                                                        <button type="button" data-twe-modal-dismiss
-                                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                                                            data-modal-toggle="delete-user-modal">
-                                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path fill-rule="evenodd"
-                                                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                                    clip-rule="evenodd"></path>
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                    <!-- Modal body -->
-                                                    <div class="p-6 pt-0 text-center">
-                                                        <svg class="w-20 h-20 text-red-600 mx-auto" fill="none"
-                                                            stroke="currentColor" viewBox="0 0 24 24"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                                                            </path>
-                                                        </svg>
-                                                        <h3 class="text-xl font-normal text-gray-500 mt-5 mb-6">Are you
-                                                            sure you want to delete this doctor?
-                                                        </h3>
-                                                        <a href="{{ url('doctor/delete/'.$value->id)}}"
-                                                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2">
-                                                            Yes, I'm sure
-                                                        </a>
-                                                        <a href="#"
-                                                            class="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center"
-                                                            data-twe-modal-dismiss data-twe-ripple-init>
-                                                            No, cancel
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 @endforeach
                             </tbody>
                         </table>

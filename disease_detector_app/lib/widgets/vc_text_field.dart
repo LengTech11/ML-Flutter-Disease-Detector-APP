@@ -38,9 +38,7 @@ class VcTextField extends StatelessWidget {
       obscureText: visible,
       style: TextStyle(
         letterSpacing: 0.6,
-        color: dark
-            ? M3Theme.dark().primary
-            : M3Theme.light().primary,
+        color: dark ? M3Theme.dark().primary : M3Theme.light().primary,
       ),
       decoration: InputDecoration(
           iconColor: dark
@@ -64,18 +62,14 @@ class VcTextField extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30.r),
             borderSide: BorderSide(
-              color: dark
-                  ? M3Theme.dark().primary
-                  : M3Theme.light().primary,
+              color: dark ? M3Theme.dark().primary : M3Theme.light().primary,
               width: 2.w,
             ),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30.r),
             borderSide: BorderSide(
-              color: dark
-                  ? M3Theme.dark().error
-                  : M3Theme.light().error,
+              color: dark ? M3Theme.dark().error : M3Theme.light().error,
               width: 2.w,
             ),
           ),
@@ -100,9 +94,9 @@ class VcTextField extends StatelessWidget {
             color: dark
                 ? M3Theme.dark().onSurfaceVariant
                 : M3Theme.light().onSurfaceVariant,
-          )
-          // fillColor: AppColor.black,
-          ),
+            fontSize: AppSize.md,
+            fontWeight: FontWeight.w300,
+          )),
       validator: (value) {
         if (value!.isEmpty) {
           return 'Please ${hint.toLowerCase()}';

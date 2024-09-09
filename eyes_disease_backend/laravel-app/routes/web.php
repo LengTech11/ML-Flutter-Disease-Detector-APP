@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/doctor/list', [DoctorController::class, 'insert']);
     Route::get('/doctor/delete/{id}', [DoctorController::class, 'delete']);
     Route::get('/appointment/list', [AppointmentController::class, 'list']);
+    Route::post('/appointment/list', [AppointmentController::class, 'acceptAppointment']);
+
 });
 
 require __DIR__.'/auth.php';
