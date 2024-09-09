@@ -4,6 +4,7 @@ import 'package:disease_detector_app/provider/clinic_provider.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
 import 'package:disease_detector_app/provider/doctor_provider.dart';
 import 'package:disease_detector_app/provider/document_provider.dart';
+import 'package:disease_detector_app/screens/clinic/list_clinic_screen.dart';
 import 'package:disease_detector_app/screens/doctor/doctor_card.dart';
 import 'package:disease_detector_app/screens/doctor/doctor_screen.dart';
 import 'package:disease_detector_app/widgets/eca_listtile.dart';
@@ -70,7 +71,18 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Popular Clinics',
             trailing: VcTextButton(
               title: 'View All',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ListClinicScreen(
+                        clinicProvider: clinicProvider!,
+                      );
+                    },
+                  ),
+                );
+              },
             ),
           ),
           SingleChildScrollView(
