@@ -106,7 +106,7 @@
                                             </div>
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
-                                            {{$value->preferred_date}}
+                                            {{ \Carbon\Carbon::parse($value->preferred_date)->format('d M Y h:i A') }}
                                         </td>
                                         <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
                                             {{$value->user_first_name}} {{$value->user_last_name}}

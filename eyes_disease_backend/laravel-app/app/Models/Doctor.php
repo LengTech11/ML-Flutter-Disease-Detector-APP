@@ -13,4 +13,10 @@ class Doctor extends Model
     {
         return self::find($id);
     }
+
+    static public function getTotalDoctor()
+    {
+        return self::select('doctors.*')
+                        ->count();
+    }
 }
