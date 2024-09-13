@@ -73,21 +73,14 @@ showMessageDialog(BuildContext context, String msg) {
   );
 }
 
-showErrorMsg(BuildContext context, String msg, bool dark) {
+showErrorMsg(BuildContext context, String msg) {
   CupertinoAlertDialog alert = CupertinoAlertDialog(
     title: Center(
-      child: Text(
-        msg,
-        // style: dark
-        //     ? MyTextTheme.darkTextTheme.labelLarge
-        //     : MyTextTheme.lightTextTheme.labelLarge,
-      ),
+      child: Text(msg),
     ),
     actions: [
       TextButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
+        onPressed: () => Navigator.pop(context),
         child: const Text("Close"),
       ),
     ],

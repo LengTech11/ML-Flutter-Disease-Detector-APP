@@ -6,9 +6,7 @@ class AccountScreenOffline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text(
-        'No Internet Connection',
-      ),
+      child: Text('No Internet Connection'),
     );
   }
 }

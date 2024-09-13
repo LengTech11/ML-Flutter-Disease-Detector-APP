@@ -8,6 +8,7 @@ import 'package:disease_detector_app/provider/disease_provider.dart';
 import 'package:disease_detector_app/provider/document_provider.dart';
 import 'package:disease_detector_app/screens/validate/success_screen.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
+import 'package:disease_detector_app/utils/logger/logger.dart';
 import 'package:disease_detector_app/widgets/eca_listtile.dart';
 import 'package:disease_detector_app/widgets/eca_show_btm_sheet.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
@@ -170,7 +171,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
       );
 
       if (response.statusCode == 200) {
-        HelperFunctions.debug(response.data.toString());
+        printMe(response.data.toString());
         setState(
           () {
             _predictedClass = response.data['Predicted Class'].toString();
@@ -187,7 +188,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
         // ignore: use_build_context_synchronously
         _showPredictionBottomSheet(context);
       } else {
-        HelperFunctions.debug(response.data.toString());
+        printMe(response.data.toString());
         setState(
           () {
             _predictedClass = 'Failed to predict';
@@ -295,16 +296,10 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
                             children: [
                               TextSpan(
                                 text: '${entry.key}: ',
-                                // style: dark
-                                //     ? MyTextTheme.darkTextTheme.titleLarge
-                                //     : MyTextTheme.lightTextTheme.titleLarge,
                               ),
                               TextSpan(
                                 text:
                                     '${(entry.value * 100).toStringAsFixed(2)}%',
-                                // style: dark
-                                //     ? MyTextTheme.darkTextTheme.titleLarge
-                                //     : MyTextTheme.lightTextTheme.titleLarge,
                               ),
                             ],
                           ),
@@ -326,11 +321,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
                             Center(
                               child: Text(
                                 '${(entry.value * 100).toStringAsFixed(0)}%',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: dark ? Colors.white : Colors.black,
-                                ),
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ),
                           ],
@@ -397,9 +388,6 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
                               const TextSpan(text: 'Disease: '),
                               TextSpan(
                                 text: _predictedClass ?? 'Unknown',
-                                // style: dark
-                                //     ? MyTextTheme.darkTextTheme.titleLarge
-                                //     : MyTextTheme.lightTextTheme.titleLarge,
                               ),
                             ],
                           ),
@@ -706,11 +694,11 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
   }
 
   Widget buildUploadImageContent(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
+    // final dark = HelperFunctions.isDarkMode(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        buildUploadImageTitle(context, dark),
+        buildUploadImageTitle(context),
         const SizedBox(height: 20),
         buildDottedBorder(),
         const SizedBox(height: 30),
@@ -718,7 +706,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
     );
   }
 
-  Widget buildUploadImageTitle(BuildContext context, bool dark) {
+  Widget buildUploadImageTitle(BuildContext context) {
     return ListTile(
       leading: const Icon(
         Icons.note_alt_outlined,

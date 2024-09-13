@@ -1,4 +1,3 @@
-import 'package:disease_detector_app/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 
 class HelperFunctions {
@@ -32,9 +31,5 @@ class HelperFunctions {
   /// check is dark mode
   static bool isDarkMode(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark;
-  }
-
-  static void debug(String titile){
-    printMe("++++++++++++++++++++++++ $titile ++++++++++++++++++++++++");
   }
 }
