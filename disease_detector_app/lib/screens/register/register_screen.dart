@@ -3,6 +3,7 @@ import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/model/register_model/register_response_model.dart';
 import 'package:disease_detector_app/screens/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
+import 'package:disease_detector_app/utils/logger/logger.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,7 +12,6 @@ import 'package:iconsax/iconsax.dart';
 import '../../config/constants.dart';
 import '../../config/themes/app_size.dart';
 import '../../config/themes/color.dart';
-import '../../utils/helper/helper_function.dart';
 import '../../widgets/my_button.dart';
 import '../login/login_screen.dart';
 
@@ -80,7 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       required String age,
       required int? gender,
       required BuildContext context}) async {
-    final dark = HelperFunctions.isDarkMode(context);
+    // final dark = HelperFunctions.isDarkMode(context);
 
     try {
       RegisterResponseModel response = await registerApiService.postRegister(
@@ -98,15 +98,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
           MaterialPageRoute(builder: (context) => const BottomNavigationBarScreen()),
           (route) => false);
     } catch (e) {
-      HelperFunctions.debug(e.toString());
+      printMe(e.toString());
       Navigator.pop(context);
-      showErrorMsg(context, e.toString(), dark);
+      showErrorMsg(context, e.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -121,9 +120,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   Text(
                     AppLocalizations.of(context)?.register ?? 'Register',
-                    // style: dark
-                    //     ? MyTextTheme.darkTextTheme.headlineLarge
-                    //     : MyTextTheme.lightTextTheme.headlineLarge,
                   ),
                   SizedBox(
                     height: AppSize.md,
@@ -300,7 +296,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 50.h,
                       width: MediaQuery.of(context).size.width,
                       child: MyButton(
-                          dark: dark,
                           name: AppLocalizations.of(context)?.register ??
                               'Register',
                           onPress: () async {

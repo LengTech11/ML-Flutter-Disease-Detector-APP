@@ -1,9 +1,7 @@
 import 'package:disease_detector_app/api_service/api/change_password_api.dart';
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/model/change_password/change_password_response_model.dart';
-// import 'package:disease_detector_app/utils/custom_text_theme/custom_text_theme.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
-import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -30,7 +28,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   }) async {
     ChangePasswordApiService changePasswordApiService =
         ChangePasswordApiService();
-    final dark = HelperFunctions.isDarkMode(context);
     try {
       ChangePasswordResponseModel responseModel =
           await changePasswordApiService.postChangePassword(
@@ -52,7 +49,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorMsg(context, e.toString(), dark);
+        showErrorMsg(context, e.toString());
       }
     }
   }

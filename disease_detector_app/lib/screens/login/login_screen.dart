@@ -5,6 +5,7 @@ import 'package:disease_detector_app/screens/bottom_navigation_bar/bottom_naviga
 import 'package:disease_detector_app/screens/register/register_screen.dart';
 import 'package:disease_detector_app/storage/token_storage.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
+import 'package:disease_detector_app/utils/logger/logger.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -39,7 +40,6 @@ class _LoginScreenState extends State<LoginScreen> {
       {required String email,
       required String password,
       required BuildContext context}) async {
-    final dark = HelperFunctions.isDarkMode(context);
     try {
       LoginResponseModel response =
           await loginApiService.postLogin(email: email, password: password);
@@ -48,12 +48,13 @@ class _LoginScreenState extends State<LoginScreen> {
       TokenStorage.saveToken(AppConstant.userToken!);
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const BottomNavigationBarScreen()),
+          MaterialPageRoute(
+              builder: (context) => const BottomNavigationBarScreen()),
           (route) => false);
     } catch (e) {
-      HelperFunctions.debug(e.toString());
+      printMe(e.toString());
       Navigator.pop(context);
-      showErrorMsg(context, e.toString(), dark);
+      showErrorMsg(context, e.toString());
     }
   }
 
@@ -136,7 +137,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 50.h,
                   width: MediaQuery.of(context).size.width,
                   child: MyButton(
-                    dark: dark,
                     name: AppLocalizations.of(context)?.login ?? 'Login',
                     onPress: () async {
                       if (_formKey.currentState!.validate()) {

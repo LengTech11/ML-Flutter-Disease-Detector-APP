@@ -48,7 +48,7 @@ class AppointmentScreenState extends State<AppointmentScreen> {
         }
       }
     } catch (e) {
-      if (!mounted) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(e.toString()),

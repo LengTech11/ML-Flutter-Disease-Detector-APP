@@ -224,8 +224,8 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
                             ],
                           ),
                         ),
-                        const Divider(
-                          color: Colors.grey,
+                        Divider(
+                          color: Theme.of(context).colorScheme.outline,
                           height: 20,
                           thickness: 2,
                         ),
@@ -240,6 +240,8 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
                                     text: confidence != null
                                         ? '${confidence!.toStringAsFixed(2)}%'
                                         : 'N/A',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
                                   ),
                                 ],
                               ),
@@ -280,8 +282,8 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
                           ],
                         ),
                         const SizedBox(height: 10),
-                        const Divider(
-                          color: Colors.grey,
+                        Divider(
+                          color: Theme.of(context).colorScheme.outline,
                           height: 20,
                           thickness: 2,
                         ),
@@ -330,7 +332,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColor.ok,
+                              backgroundColor: AppColor.black,
                               minimumSize: const Size(double.infinity, 50),
                               padding: const EdgeInsets.symmetric(vertical: 12),
                               shape: RoundedRectangleBorder(
@@ -387,11 +389,10 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
   }
 
   Widget buildUploadImageContent(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        buildUploadImageTitle(context, dark),
+        buildUploadImageTitle(context),
         const SizedBox(height: 20),
         buildDottedBorder(),
         const SizedBox(height: 30),
@@ -399,7 +400,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
     );
   }
 
-  Widget buildUploadImageTitle(BuildContext context, bool dark) {
+  Widget buildUploadImageTitle(BuildContext context) {
     return ListTile(
       leading: const Icon(
         Icons.note_alt_outlined,
@@ -409,9 +410,6 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
       title: Text(
         AppLocalizations.of(context)?.upload_eye_disease_image ??
             'Upload Image',
-        // style: dark
-        //     ? MyTextTheme.darkTextTheme.titleLarge
-        //     : MyTextTheme.lightTextTheme.titleLarge,
       ),
     );
   }
@@ -424,7 +422,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
       child: Container(
         height: 260,
         width: 260,
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.outline,
         child: buildUploadImageButton(context),
       ),
     );

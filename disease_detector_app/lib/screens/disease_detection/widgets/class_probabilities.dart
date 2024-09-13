@@ -1,4 +1,3 @@
-import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 
 class ClassProbabilities extends StatelessWidget {
@@ -13,16 +12,20 @@ class ClassProbabilities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = HelperFunctions.isDarkMode(context);
-
     return Row(
       children: [
         Expanded(
           child: RichText(
             text: TextSpan(
               children: [
-                TextSpan(text: '$name: '),
-                TextSpan(text: '${confidence!.toStringAsFixed(2)}%'),
+                TextSpan(
+                  text: '$name: ',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                TextSpan(
+                  text: '${confidence!.toStringAsFixed(2)}%',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
               ],
             ),
           ),
@@ -43,19 +46,15 @@ class ClassProbabilities extends StatelessWidget {
               Center(
                 child: Text(
                   '${confidence!.toStringAsFixed(2)}%',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: dark ? Colors.white : Colors.black,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
             ],
           ),
         ),
         const SizedBox(height: 10),
-        const Divider(
-          color: Colors.grey,
+        Divider(
+          color: Theme.of(context).colorScheme.outline,
           height: 20,
           thickness: 2,
         ),

@@ -8,7 +8,7 @@ import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/user_profile_provider.dart';
 import 'package:disease_detector_app/screens/bottom_navigation_bar/bottom_navigation_bar_screen.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
-import 'package:disease_detector_app/utils/helper/helper_function.dart';
+import 'package:disease_detector_app/utils/logger/logger.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -98,12 +98,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             image = null;
           });
         }
-        HelperFunctions.debug('Image path: ${image?.path}');
+        printMe('Image path: ${image?.path}');
       } else {
-        HelperFunctions.debug('Response is null');
+        printMe('Response is null');
       }
     } catch (e) {
-      HelperFunctions.debug('Error: $e');
+      printMe('Error: $e');
     }
   }
 
@@ -113,7 +113,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
       return await downloadImage(url);
     } catch (e) {
-      HelperFunctions.debug('Error replacing image: $e');
+      printMe('Error replacing image: $e');
       rethrow;
     }
   }
@@ -130,7 +130,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         throw Exception('Failed to download image');
       }
     } catch (e) {
-      HelperFunctions.debug('Error downloading image: $e');
+      printMe('Error downloading image: $e');
       rethrow;
     }
   }
@@ -140,9 +140,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       final documentDirectory = await getApplicationDocumentsDirectory();
       final file = File('${documentDirectory.path}/profile_picture.jpg');
       file.deleteSync();
-      HelperFunctions.debug('Image deleted successfully');
+      printMe('Image deleted successfully');
     } catch (e) {
-      HelperFunctions.debug('Error deleting image: $e');
+      printMe('Error deleting image: $e');
     }
   }
 
