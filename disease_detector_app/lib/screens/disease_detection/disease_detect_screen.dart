@@ -296,12 +296,15 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
                             children: [
                               TextSpan(
                                 text: '${entry.key}: ',
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               TextSpan(
                                 text:
                                     '${(entry.value * 100).toStringAsFixed(2)}%',
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                             ],
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                       ),
@@ -385,11 +388,16 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
                         RichText(
                           text: TextSpan(
                             children: [
-                              const TextSpan(text: 'Disease: '),
+                              TextSpan(
+                                text: 'Disease: ',
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
                               TextSpan(
                                 text: _predictedClass ?? 'Unknown',
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                             ],
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                         const Divider(
@@ -403,11 +411,18 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
                             RichText(
                               text: TextSpan(
                                 children: [
-                                  const TextSpan(text: 'Confidence: '),
                                   TextSpan(
-                                      text: _confidence != null
-                                          ? '${(_confidence! * 100).toStringAsFixed(2)}%'
-                                          : 'N/A'),
+                                    text: 'Confidence: ',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  TextSpan(
+                                    text: _confidence != null
+                                        ? '${(_confidence! * 100).toStringAsFixed(2)}%'
+                                        : 'N/A',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
                                 ],
                               ),
                             ),
