@@ -7,6 +7,9 @@ use App\Http\Controllers\PredictionController;
 use App\Http\Controllers\Api\ClinicController;
 use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\AppointmentRequestController;
+use App\Http\Controllers\Api\NewsController;
+use App\Http\Controllers\Api\MessagesController;
+
 
 // Register
 Route::post("register", [ApiController::class, "register"]);
@@ -47,8 +50,14 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::put('/appointment-requests/{id}', [AppointmentRequestController::class, 'update']);
     Route::delete('/appointment-requests/{id}', [AppointmentRequestController::class, 'destroy']);
 
+    //the news routes
+    Route::apiResource('news', NewsController::class);
+    //the messages routes
+    Route::apiResource('messages', MessagesController::class);
+
 
 });
+
 
 // Public routes
 Route::get('/diseases', [ApiController::class, 'showDisease']);
