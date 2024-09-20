@@ -49,14 +49,12 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/appointment-requests/{id}', [AppointmentRequestController::class, 'show']);
     Route::put('/appointment-requests/{id}', [AppointmentRequestController::class, 'update']);
     Route::delete('/appointment-requests/{id}', [AppointmentRequestController::class, 'destroy']);
-
-    //the news routes
-    Route::apiResource('news', NewsController::class);
-    //the messages routes
-    Route::apiResource('messages', MessagesController::class);
-
-
 });
+
+ //the news routes
+ Route::apiResource('news', NewsController::class);
+ //the messages routes
+ Route::apiResource('messages', MessagesController::class);
 
 
 // Public routes
