@@ -36,7 +36,7 @@ class DoctorScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: GridView.builder(
-                    itemCount: doctors!.length,
+                    itemCount: doctors?.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -45,78 +45,76 @@ class DoctorScreen extends StatelessWidget {
                       mainAxisSpacing: 16,
                     ),
                     itemBuilder: (context, index) {
-                      final doctor = doctors[index];
-                      return Wrap(children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DoctorCardScreen(
-                                  doctorProvider: doctorListProvider,
-                                  id: doctor.id,
-                                ),
+                      final doctor = doctors?[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DoctorCardScreen(
+                                doctorProvider: doctorListProvider,
+                                id: doctor?.id ?? 0,
                               ),
-                            );
-                          },
-                          child: MouseRegion(
-                            cursor: SystemMouseCursors.click,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              elevation: 4,
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
-                                      child: Image.asset(
-                                        'assets/doctor/doctor2.png',
-                                        height: 100,
-                                        width: double.infinity,
-                                        fit: BoxFit.cover,
-                                      ),
+                            ),
+                          );
+                        },
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            elevation: 4,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: Image.asset(
+                                      'assets/doctor/doctor2.png',
+                                      height: 100,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
                                     ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      '${doctor.title}. ${doctor.firstName} ${doctor.lastName}',
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    '${doctor?.title}. ${doctor?.firstName} ${doctor?.lastName}',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
                                     ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      doctor.specialist,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                      ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    doctor?.specialist ?? 'ok',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      color: Colors.grey,
                                     ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'Experience: ${doctor.experience} years',
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                          // color: Colors.black,
-                                          ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'Patient: ${doctor.patient}',
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Experience: ${doctor?.experience} years',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        // color: Colors.black,
+                                        ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Patient: ${doctor?.patient}',
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
-                      ]);
+                      );
                     },
                   ),
                 ),

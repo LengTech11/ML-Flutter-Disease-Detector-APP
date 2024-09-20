@@ -27,7 +27,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
   DiseaseProvider provider = DiseaseProvider();
 
   ModelService modelService = ModelService();
-  List? _prediction;
+  List<double> _prediction = [];
 
   double? confidence;
   String? name;
@@ -52,7 +52,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
   void checkDisease(
     double diabetic,
     double normal,
-    double glaucuma,
+    // double glaucuma,
     double cataract,
   ) {
 // Finding the maximum value
@@ -61,9 +61,9 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
     if (normal > confidence!) {
       confidence = normal;
     }
-    if (glaucuma > confidence!) {
-      confidence = glaucuma;
-    }
+    // if (glaucuma > confidence!) {
+    //   confidence = glaucuma;
+    // }
     if (cataract > confidence!) {
       confidence = cataract;
     }
@@ -91,30 +91,31 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
       Uint8List imageBytes = await File(image.path).readAsBytes();
 
       try {
-        List result = await modelService.runModelOnImage(imageBytes);
+        List<double> result = await modelService.runModelOnImage(imageBytes);
+        print('result: $result');
+        // List result = await modelService.runModelOnImage(imageBytes);
 
         setState(() {
           _prediction = result;
         });
 
-        diabeticConfidence = _prediction?[0][0] * 100;
-        normalConfidence = _prediction?[0][1] * 100;
-        glaucumaConfidence = _prediction?[0][2] * 100;
-        cataractConfidence = _prediction?[0][3] * 100;
+        // diabeticConfidence = _prediction[1] * 100;
+        cataractConfidence = _prediction[0] * 100;
+        normalConfidence = _prediction[2] * 100;
+
+        glaucumaConfidence = _prediction[1] * 100;
 
         checkDisease(
           diabeticConfidence,
           normalConfidence,
           glaucumaConfidence,
-          cataractConfidence,
+          // cataractConfidence,
         );
 
-        if (confidence == diabeticConfidence) {
+        if (confidence == glaucumaConfidence) {
           name = 'Diabetic Retinopathy';
         } else if (confidence == normalConfidence) {
           name = 'Normal';
-        } else if (confidence == glaucumaConfidence) {
-          name = 'Glaucuma';
         } else {
           name = 'Cataract';
         }
@@ -215,14 +216,12 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
                         ),
                         const SizedBox(height: 16),
                         RichText(
-                          text: TextSpan(
-                            children: [
-                              const TextSpan(text: 'Disease: '),
-                              TextSpan(
-                                text: name ?? 'Unknown',
-                              ),
-                            ],
-                          ),
+                          text: TextSpan(children: [
+                            const TextSpan(text: 'Disease: '),
+                            TextSpan(
+                              text: name ?? 'Unknown',
+                            ),
+                          ], style: Theme.of(context).textTheme.bodyMedium),
                         ),
                         Divider(
                           color: Theme.of(context).colorScheme.outline,
@@ -233,18 +232,15 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
                         Row(
                           children: [
                             RichText(
-                              text: TextSpan(
-                                children: [
-                                  const TextSpan(text: 'Confidence: '),
-                                  TextSpan(
-                                    text: confidence != null
-                                        ? '${confidence!.toStringAsFixed(2)}%'
-                                        : 'N/A',
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ],
-                              ),
+                              text: TextSpan(children: [
+                                const TextSpan(text: 'Confidence: '),
+                                TextSpan(
+                                  text: confidence != null
+                                      ? '${confidence!.toStringAsFixed(2)}%'
+                                      : 'N/A',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ], style: Theme.of(context).textTheme.bodyMedium),
                             ),
                             const SizedBox(width: 10),
                             Expanded(
@@ -300,11 +296,11 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
                           name: 'Normal',
                           confidence: normalConfidence,
                         ),
-                        const SizedBox(height: 8),
-                        ClassProbabilities(
-                          name: 'Diabetic Retinopathy',
-                          confidence: diabeticConfidence,
-                        ),
+                        // const SizedBox(height: 8),
+                        // ClassProbabilities(
+                        //   name: 'Diabetic Retino',
+                        //   confidence: diabeticConfidence,
+                        // ),
                         const SizedBox(height: 8),
                         ClassProbabilities(
                           name: 'Glaucuma',

@@ -218,7 +218,7 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
   }
 
   Future<bool> savePrediction(String predictedClass, double confidence) async {
-    const String apiUrl = 'http://0.0.0.0:8000/api/save-history';
+    const String apiUrl = 'http://10.0.2.2:8000/api/save-history';
 
     String? token = AppConstant.userToken;
 
