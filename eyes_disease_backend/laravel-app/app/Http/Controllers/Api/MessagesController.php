@@ -10,7 +10,7 @@ class MessagesController extends Controller
 {
     public function index()
     {
-        return Message::all();
+        return Messages::all();
     }
 
     public function store(Request $request)
@@ -23,24 +23,24 @@ class MessagesController extends Controller
             'message' => 'required|string',
         ]);
 
-        $message = Message::create($request->all());
+        $message = Messages::create($request->all());
 
         return response()->json($message, 201);
     }
 
-    public function show(Message $message)
+    public function show(Messages $message)
     {
         return $message;
     }
 
-    public function update(Request $request, Message $message)
+    public function update(Request $request, Messages $message)
     {
         $message->update($request->all());
 
         return response()->json($message);
     }
 
-    public function destroy(Message $message)
+    public function destroy(Messages $message)
     {
         $message->delete();
 
