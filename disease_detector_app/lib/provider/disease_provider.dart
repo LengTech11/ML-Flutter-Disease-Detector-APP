@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 
 class DiseaseProvider extends ChangeNotifier {
   DiseaseModel? dis;
-  bool isLoading = true;
-
 
   Future<void> fetchDisease() async {
     final response = await DiseaseApiService().getDiseases();
@@ -14,7 +12,7 @@ class DiseaseProvider extends ChangeNotifier {
     } else {
       dis = null;
     }
-    isLoading = false;
+
     notifyListeners();
   }
 }

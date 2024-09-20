@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BottomNavigator extends StatefulWidget {
-  const BottomNavigator(
-      {super.key,
-      this.selectedIndex = 0,
-      this.onTabChange,
-      required this.tabs});
+  const BottomNavigator({
+    super.key,
+    this.selectedIndex = 0,
+    this.onTabChange,
+    required this.tabs,
+  });
 
   final int selectedIndex;
   final ValueChanged<int>? onTabChange;
@@ -149,7 +150,7 @@ class _TabButtonState extends State<TabButton> with TickerProviderStateMixin {
     var colorTween = ColorTween(
       end: widget.activeColor,
     );
-    var colorTweenAnimation = colorTween.animate(
+    colorTween.animate(
       CurvedAnimation(
         parent: expandController,
         curve: _expanded ? Curves.easeInExpo : Curves.easeOutCirc,
@@ -165,7 +166,8 @@ class _TabButtonState extends State<TabButton> with TickerProviderStateMixin {
 
     Widget icon = Icon(
       widget.icon,
-      color: colorTweenAnimation.value,
+      color:
+          widget.active! ? Theme.of(context).colorScheme.primary : Colors.white,
     );
 
     return InkWell(

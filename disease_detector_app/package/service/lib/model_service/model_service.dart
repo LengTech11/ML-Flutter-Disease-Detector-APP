@@ -54,7 +54,7 @@ class ModelService {
     return buffer;
   }
 
-  Future<List> runModelOnImage(Uint8List imageBytes) async {
+  Future<List<double>> runModelOnImage(Uint8List imageBytes) async {
     Uint8List input = preprocessImage(imageBytes);
 
     // Convert input to Float32List
@@ -65,11 +65,11 @@ class ModelService {
     var reshapedInput =
         Float32List.fromList(floatInput).reshape([1, 224, 224, 3]);
 
-    var output = List.generate(1, (index) => List.filled(4, 0.0));
+    var output = List.generate(1, (index) => List.filled(3, 0.0));
 
     // Run the model with the reshaped input
     interpreter.run(reshapedInput, output);
 
-    return output;
+    return output[0];
   }
 }

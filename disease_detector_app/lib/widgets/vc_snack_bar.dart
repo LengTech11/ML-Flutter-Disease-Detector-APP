@@ -1,5 +1,3 @@
-import 'package:disease_detector_app/config/themes/m3_theme.dart';
-import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:flutter/material.dart';
 
 class VcSnackBar extends SnackBar {
@@ -11,15 +9,11 @@ class VcSnackBar extends SnackBar {
   }) : super(
           behavior: SnackBarBehavior.floating,
           margin: const EdgeInsets.symmetric(horizontal: 10),
-          backgroundColor: HelperFunctions.isDarkMode(context)
-              ? M3Theme.dark().inverseSurface
-              : M3Theme.light().inverseSurface,
+          backgroundColor: Theme.of(context).colorScheme.inverseSurface,
           content: Text(
             content,
             style: TextStyle(
-              color: HelperFunctions.isDarkMode(context)
-                  ? M3Theme.dark().onInverseSurface
-                  : M3Theme.light().onInverseSurface,
+              color: Theme.of(context).colorScheme.onInverseSurface,
             ),
           ),
           shape: RoundedRectangleBorder(
@@ -28,13 +22,9 @@ class VcSnackBar extends SnackBar {
           action: SnackBarAction(
             label: 'Close',
             onPressed: onpressed,
-            textColor: HelperFunctions.isDarkMode(context)
-                ? M3Theme.dark().inversePrimary
-                : M3Theme.light().inversePrimary,
+            textColor: Theme.of(context).colorScheme.inversePrimary,
           ),
-          closeIconColor: HelperFunctions.isDarkMode(context)
-              ? M3Theme.dark().onInverseSurface
-              : M3Theme.light().onInverseSurface,
+          closeIconColor: Theme.of(context).colorScheme.onInverseSurface,
           animation: _createSnackBarAnimation(context),
         );
 
