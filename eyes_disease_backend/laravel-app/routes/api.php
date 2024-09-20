@@ -17,6 +17,14 @@ Route::post("register", [ApiController::class, "register"]);
 // Login
 Route::post("login", [ApiController::class, "login"]);
 
+// New routes for Clinic and Doctor
+Route::get('/clinics', [ClinicController::class, 'index']);
+Route::get('/clinics/{id}', [ClinicController::class, 'show']);
+
+// Get all doctors
+Route::get('/doctors', [DoctorController::class, 'index']);
+Route::get('/doctors/{id}', [DoctorController::class, 'show']);
+
 // Profile and other protected routes
 Route::group(['middleware' => ['auth:sanctum']], function() {
     // Profile
@@ -34,14 +42,6 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     // Delete User predictions history 1 and all
     Route::delete('/predictions/{id}', [PredictionController::class, 'destroy']);
     Route::delete('/predictions/all', [PredictionController::class, 'destroyAll']);
-
-    // New routes for Clinic and Doctor
-    Route::get('/clinics', [ClinicController::class, 'index']);
-    Route::get('/clinics/{id}', [ClinicController::class, 'show']);
-
-    // Get all doctors
-    Route::get('/doctors', [DoctorController::class, 'index']);
-    Route::get('/doctors/{id}', [DoctorController::class, 'show']);
 
     // Appointment API
     Route::post('/appointment-requests', [AppointmentRequestController::class, 'store']);
