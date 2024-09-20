@@ -6,10 +6,16 @@ import 'package:flutter/foundation.dart';
 class ClinicProvider extends ChangeNotifier {
   ListClinicModel? listClinic;
   ClinicModel? clinic;
+  bool isLoading = true;
 
   Future<void> fetchListClinics() async {
-    final response = await ClinicApiService().getClinicList();
-    listClinic = response;
+    try {
+      final response = await ClinicApiService().getClinicList();
+      listClinic = response;
+      isLoading = false;
+    } catch (e) {
+      rethrow;
+    }
     notifyListeners();
   }
 

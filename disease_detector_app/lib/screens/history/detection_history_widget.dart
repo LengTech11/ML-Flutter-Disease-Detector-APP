@@ -14,6 +14,7 @@ class DetectionHistoryWidget extends StatelessWidget {
 
     return Column(
       children: [
+        const SizedBox(height: 20,),
         Expanded(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(kDefaultBorderRaduis),

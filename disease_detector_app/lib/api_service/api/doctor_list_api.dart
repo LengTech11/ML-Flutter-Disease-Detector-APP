@@ -8,14 +8,6 @@ class DoctorListApi {
     return BaseApiService().onRequest(
       path: "/doctors",
       method: HttpMethod.get,
-      autoRefreshToken: true,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Accept-Encoding': 'Accept-Encoding',
-        'Connection': 'keep-alive',
-        'Authorization': 'Bearer ${AppConstant.userToken}'
-      },
       onSuccess: (response) {
         return DoctorListModel.fromJson(response.data);
       },
@@ -26,14 +18,6 @@ class DoctorListApi {
     return BaseApiService().onRequest(
       path: "/doctors/$id",
       method: HttpMethod.get,
-      autoRefreshToken: true,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Accept-Encoding': 'Accept-Encoding',
-        'Connection': 'keep-alive',
-        'Authorization': 'Bearer ${AppConstant.userToken}'
-      },
       onSuccess: (response) {
         return DoctorModel.fromJson(response.data);
       },

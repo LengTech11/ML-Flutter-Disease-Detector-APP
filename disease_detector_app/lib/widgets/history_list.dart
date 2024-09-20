@@ -48,7 +48,6 @@ class HistoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final dark = HelperFunctions.isDarkMode(context);
     return Dismissible(
       key: Key(_historyCard.id), // Unique key for each item
       direction: DismissDirection.endToStart, // Swipe from right to left
@@ -83,21 +82,12 @@ class HistoryTile extends StatelessWidget {
         );
       },
       onDismissed: (direction) {
-        // Perform the delete operation
         _deletePrediction(context, _historyCard.id);
       },
       child: Container(
         padding: EdgeInsets.all(kDefaultPadding * 0.5),
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              // color: dark
-              //     ? MyTheme.darkTheme.colorScheme.onError
-              //     : MyTheme.lightTheme.colorScheme.onError,
-              blurRadius: kDefaultBorderRaduis,
-            ),
-          ],
-          color: Theme.of(context).colorScheme.surface.withOpacity(0.7),
+          color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
         ),
         child: Row(
@@ -106,11 +96,11 @@ class HistoryTile extends StatelessWidget {
               height: packed ? 95.h : 130.h,
               width: packed ? 95.h : 130.h,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
+                borderRadius: BorderRadius.circular(5),
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage(
-                    'http://0.0.0.0:8000${_historyCard.imageUrl}',
+                    'http://10.0.2.2:8000${_historyCard.imageUrl}',
                   ),
                 ),
               ),
@@ -132,10 +122,7 @@ class HistoryTile extends StatelessWidget {
                     child: Text(
                       _historyCard.species,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onSurface),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                   Container(
@@ -144,12 +131,12 @@ class HistoryTile extends StatelessWidget {
                         vertical: kDefaultPadding * 0.2,
                         horizontal: kDefaultPadding * 0.5),
                     decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.circular(kDefaultBorderRaduis),
-                        color: (_historyCard.condition == 'Healthy'
-                                ? Theme.of(context).colorScheme.secondary
-                                : Theme.of(context).colorScheme.error)
-                            .withOpacity(0.1)),
+                      borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
+                      color: (_historyCard.condition == 'Healthy'
+                              ? Theme.of(context).colorScheme.secondary
+                              : Theme.of(context).colorScheme.error)
+                          .withOpacity(0.1),
+                    ),
                     child: Text(
                       _historyCard.condition,
                       style: TextStyle(
