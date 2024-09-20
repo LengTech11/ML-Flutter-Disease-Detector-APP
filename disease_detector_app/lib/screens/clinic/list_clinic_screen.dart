@@ -15,7 +15,6 @@ class ListClinicScreen extends StatefulWidget {
   State<ListClinicScreen> createState() => _ListClinicScreenState();
 }
 
-
 class _ListClinicScreenState extends State<ListClinicScreen> {
   @override
   void initState() {
@@ -23,6 +22,7 @@ class _ListClinicScreenState extends State<ListClinicScreen> {
     super.initState();
     widget.clinicProvider?.fetchListClinics();
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ClinicProvider>(
@@ -37,68 +37,78 @@ class _ListClinicScreenState extends State<ListClinicScreen> {
                     appBar: AppBar(
                       title: const Text('Clinic List'),
                     ),
-                    body: Padding(
-                      padding: appPadding,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: List.generate(
-                          clinic.data.length,
-                          (index) {
-                            final clinic = value.listClinic?.data[index];
-                            return Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(4),
-                                  child: Image.network(
-                                    ListClinicScreen.image,
-                                    width: 160,
-                                    height: 120,
-                                    fit: BoxFit.cover,
-                                    cacheWidth: 160,
-                                    cacheHeight: 120,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0,
+                    body: SingleChildScrollView(
+                      child: Padding(
+                        padding: appPadding,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: List.generate(
+                            clinic.data.length,
+                            (index) {
+                              final clinic = value.listClinic?.data[index];
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: Image.network(
+                                        ListClinicScreen.image,
+                                        width: 160,
+                                        height: 120,
+                                        fit: BoxFit.cover,
+                                        cacheWidth: 160,
+                                        cacheHeight: 120,
+                                      ),
                                     ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${clinic!.firstName} ${clinic.lastName}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleLarge,
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0,
                                         ),
-                                        const SizedBox(height: 8.0),
-                                        Text(
-                                          'Age: ${clinic.age.toString()}',
-                                        ),
-                                        const SizedBox(height: 8.0),
-                                        Row(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            const Icon(
-                                              Icons.email_outlined,
-                                              size: 20,
-                                            ),
                                             Text(
-                                              ': ${clinic.email}',
+                                              '${clinic!.firstName} ${clinic.lastName}',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge,
                                               overflow: TextOverflow.ellipsis,
+                                            ),
+                                            const SizedBox(height: 8.0),
+                                            Text(
+                                              'Age: ${clinic.age.toString()}',
+                                            ),
+                                            const SizedBox(height: 8.0),
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.email_outlined,
+                                                  size: 20,
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    ': ${clinic.email}',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),

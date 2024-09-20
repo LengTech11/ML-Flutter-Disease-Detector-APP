@@ -14,7 +14,7 @@ class VcDoctorCard extends StatefulWidget {
   final String? headline;
   final String? subHeadline;
   final String? supportingText;
-  final String imageUrl;
+  final String? imageUrl;
   final void Function() onTap;
 
   @override
@@ -59,8 +59,8 @@ class _VcClinicCardState extends State<VcDoctorCard> {
                   topLeft: Radius.circular(12),
                   bottomLeft: Radius.circular(12),
                 ),
-                image: DecorationImage(
-                  image: NetworkImage(widget.imageUrl),
+                image: const DecorationImage(
+                  image: AssetImage('assets/doctor/doctor1.png'),
                   fit: BoxFit.cover,
                 ),
               ),

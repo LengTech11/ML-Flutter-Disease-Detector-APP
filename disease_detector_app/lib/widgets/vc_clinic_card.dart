@@ -15,7 +15,7 @@ class VcClinicCard extends StatefulWidget {
   final String? headline;
   final String? subHeadline;
   final String? supportingText;
-  final String imageUrl;
+  final String? imageUrl;
   final void Function() onTap;
 
   @override
@@ -60,7 +60,11 @@ class _VcClinicCardState extends State<VcClinicCard> {
                   Radius.circular(12),
                 ),
                 image: DecorationImage(
-                  image: NetworkImage(widget.imageUrl),
+                  image: widget.imageUrl == null
+                      ? const AssetImage('assets/doctor/cl1.jpeg')
+                      : NetworkImage(
+                              'http://127.0.0.1:8000/storage/images/${widget.imageUrl}')
+                          as ImageProvider,
                   fit: BoxFit.cover,
                 ),
               ),
