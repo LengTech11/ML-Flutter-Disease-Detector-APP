@@ -27,12 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   DoctorProvider? doctorProvider;
   ClinicProvider? clinicProvider;
 
-  String doctorImage =
-      'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1725408000&semt=ais_hybrid';
-
-  // String clinicImg =
-  //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfj5u4Bp_IBF-l7ZX_w_QX7TQKaV1GTi4e_Q&s';
-
   @override
   void initState() {
     super.initState();
@@ -92,8 +86,10 @@ class _HomeScreenState extends State<HomeScreen> {
               builder:
                   (BuildContext context, ClinicProvider value, Widget? child) {
                 return value.listClinic == null
-                    ? const Center(
-                        child: CircularProgressIndicator(),
+                    ? Container(
+                        width: DeviceUtils.getScreenWidth(context),
+                        alignment: Alignment.center,
+                        child: const CircularProgressIndicator(),
                       )
                     : value.listClinic!.data != []
                         ? Row(
@@ -152,13 +148,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Consumer<DoctorProvider>(
               builder: (context, value, child) {
                 var doctors = value.doctors;
-                return value.doctors == null
-                    ? Container(
-                        width: DeviceUtils.getScreenWidth(context),
-                        alignment: Alignment.center,
-                        child: const CircularProgressIndicator(),
-                      )
-                    : doctors!.data!.isNotEmpty
+                return doctors != null
+                    ? doctors.data!.isNotEmpty
                         ? Row(
                             children: List.generate(
                               doctors.data!.length,
@@ -197,7 +188,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: const Text(
                               'No Doctor Found',
                             ),
-                          );
+                          )
+                    : Container(
+                        width: DeviceUtils.getScreenWidth(context),
+                        alignment: Alignment.center,
+                        child: const CircularProgressIndicator(),
+                      );
               },
             ),
           ),

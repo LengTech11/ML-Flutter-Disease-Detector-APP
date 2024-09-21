@@ -22,3 +22,4 @@ export 'package:disease_detector_app/widgets/vc_snack_bar.dart';
 export 'package:disease_detector_app/widgets/vc_standart_icon_button.dart';
 export 'package:disease_detector_app/widgets/vc_text_button.dart';
 export 'package:disease_detector_app/widgets/vc_text_field.dart';
+export 'package:disease_detector_app/widgets/cache_image.dart';

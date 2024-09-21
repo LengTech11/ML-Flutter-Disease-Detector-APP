@@ -296,11 +296,6 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
                           name: 'Normal',
                           confidence: normalConfidence,
                         ),
-                        // const SizedBox(height: 8),
-                        // ClassProbabilities(
-                        //   name: 'Diabetic Retino',
-                        //   confidence: diabeticConfidence,
-                        // ),
                         const SizedBox(height: 8),
                         ClassProbabilities(
                           name: 'Glaucuma',

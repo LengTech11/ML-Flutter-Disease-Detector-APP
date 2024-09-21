@@ -1,5 +1,6 @@
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/utils/device/device_utility.dart';
+import 'package:disease_detector_app/widgets/cache_image.dart';
 import 'package:flutter/material.dart';
 
 class VcClinicCard extends StatefulWidget {
@@ -59,15 +60,11 @@ class _VcClinicCardState extends State<VcClinicCard> {
                 borderRadius: const BorderRadius.all(
                   Radius.circular(12),
                 ),
-                image: DecorationImage(
-                  image: widget.imageUrl == null
-                      ? const AssetImage('assets/doctor/cl1.jpeg')
-                      : NetworkImage(
-                              'http://127.0.0.1:8000/storage/images/${widget.imageUrl}')
-                          as ImageProvider,
-                  fit: BoxFit.cover,
-                ),
+                // image: DecorationImage(
+                //   image: CachedNetworkImageProvider(child: CacheImage(image: widget.imageUrl)),
+                // ),
               ),
+              child: CacheImage(imageUrl: widget.imageUrl),
             ),
             Ink(
               padding: appPadding,
