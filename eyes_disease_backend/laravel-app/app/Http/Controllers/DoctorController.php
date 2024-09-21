@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 
 class DoctorController extends Controller
@@ -33,52 +34,53 @@ class DoctorController extends Controller
 
     public function insert(Request $request)
     {
+        $validatedStatus = $request->validate([
+            'status' => 'required|boolean',
+            'profile_pic' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
         if($request->input('form_type') === 'add')
         {
-
-            $validatedStatus = $request->validate([
-                'status' => 'required|boolean',
-            ]);
-
             $doctor = new Doctor;
-            $doctor->title = trim($request->title);
-            $doctor->first_name = trim($request->first_name);
-            $doctor->last_name = trim($request->last_name);
-            $doctor->user_id = auth()->user()->id;
-            $doctor->specialist = trim($request->specialist);
-            $doctor->description = trim($request->description);
-            $doctor->phone_number = trim($request->phone_number);
-            $doctor->telegram = trim($request->telegram);
-            $doctor->experience = trim($request->experience);
-            $doctor->profile_pic = trim($request->profile_pic);
-            $doctor->status = $validatedStatus['status'];
-
-            $doctor->save();
-
-            return redirect('doctor/list')->with('success', 'Account has been saved.');
         }
         elseif ($request->input('form_type') === 'edit') {
-
-            $validatedStatus = $request->validate([
-                'status' => 'required|boolean',
-            ]);
-
             $doctor = Doctor::find($request->input('id'));
-            $doctor->title = trim($request->title);
-            $doctor->first_name = trim($request->first_name);
-            $doctor->last_name = trim($request->last_name);
-            $doctor->specialist = trim($request->specialist);
-            $doctor->description = trim($request->description);
-            $doctor->phone_number = trim($request->phone_number);
-            $doctor->telegram = trim($request->telegram);
-            $doctor->experience = trim($request->experience);
-            $doctor->profile_pic = trim($request->profile_pic);
-            $doctor->status = $validatedStatus['status'];
-            $doctor->save();
 
-            return redirect('doctor/list')->with('success', 'Account has been edited.');
+            // Delete the old profile image
+            if ($doctor->profile_pic) {
+                Storage::delete('public/' . $doctor->profile_pic);
+            }
         }
+
+        // Handle the profile image upload
+        if ($request->hasFile('profile_pic')) {
+            $file = $request->file('profile_pic');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+
+            // Store the image in the 'public' disk under the 'profiles' directory
+            $imagePath = $file->storeAs('profiles', $filename, 'public');
+
+            $doctor->profile_pic = $imagePath;
+        } else if ($request->input('profile_pic') === null) {
+            // If the profile_pic is set as null, delete the old profile image
+            $doctor->profile_pic = null;
+        }
+
+        $doctor->title = trim($request->title);
+        $doctor->first_name = trim($request->first_name);
+        $doctor->last_name = trim($request->last_name);
+        $doctor->user_id = auth()->user()->id;
+        $doctor->specialist = trim($request->specialist);
+        $doctor->description = trim($request->description);
+        $doctor->phone_number = trim($request->phone_number);
+        $doctor->telegram = trim($request->telegram);
+        $doctor->experience = trim($request->experience);
+        $doctor->status = $validatedStatus['status'];
+        $doctor->save();
+
+        $message = $request->input('form_type') === 'add' ? 'Account has been saved.' : 'Account has been edited.';
+
+        return redirect('doctor/list')->with('success', $message);
     }
 
     public function delete($id)
