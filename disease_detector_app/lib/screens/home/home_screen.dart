@@ -30,8 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String doctorImage =
       'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1725408000&semt=ais_hybrid';
 
-  String clinicImg =
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfj5u4Bp_IBF-l7ZX_w_QX7TQKaV1GTi4e_Q&s';
+  // String clinicImg =
+  //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfj5u4Bp_IBF-l7ZX_w_QX7TQKaV1GTi4e_Q&s';
 
   @override
   void initState() {
@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
-                    : value.listClinic!.data == []
+                    : value.listClinic!.data != []
                         ? Row(
                             children: List.generate(
                               value.listClinic?.data.length ?? 0,
@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         '${clinic?[index].firstName} ${clinic?[index].lastName}',
                                     subHeadline: clinic?[index].age.toString(),
                                     supportingText: clinic?[index].email,
-                                    imageUrl: clinicImg,
+                                    imageUrl: clinic?[index].profile,
                                     onTap: () {},
                                   ),
                                 );
@@ -152,26 +152,26 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Consumer<DoctorProvider>(
               builder: (context, value, child) {
                 var doctors = value.doctors;
-                return value.isLoading
+                return value.doctors == null
                     ? Container(
                         width: DeviceUtils.getScreenWidth(context),
                         alignment: Alignment.center,
                         child: const CircularProgressIndicator(),
                       )
-                    : doctors != null
+                    : doctors!.data!.isNotEmpty
                         ? Row(
                             children: List.generate(
-                              doctors.data.length,
+                              doctors.data!.length,
                               (index) {
-                                var doctor = doctors.data[index];
+                                var doctor = doctors.data![index];
                                 return Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: VcDoctorCard(
                                     headline:
-                                        '${doctor.title}. ${doctor.firstName} ${doctor.lastName}',
+                                        '${doctor!.title}. ${doctor.firstName} ${doctor.lastName}',
                                     subHeadline: doctor.specialist,
                                     supportingText: doctor.description,
-                                    imageUrl: clinicImg,
+                                    imageUrl: doctor.profilePic,
                                     onTap: () {
                                       Navigator.push(
                                         context,
