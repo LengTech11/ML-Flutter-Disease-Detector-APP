@@ -12,16 +12,11 @@ class DoctorProvider extends ChangeNotifier {
   Future<void> fetchDotorList() async {
     try {
       final response = await DoctorListApi().getDoctorsList();
-      if (response.data!.isNotEmpty) {
-        doctors = response;
-        isLoading = false;
-      } else {
-        doctors = null;
-        isLoading = false;
-      }
+      doctors = response;
+      isLoading = false;
     } catch (error) {
       isLoading = false;
-      rethrow; 
+      rethrow;
     }
     notifyListeners();
   }
@@ -31,7 +26,7 @@ class DoctorProvider extends ChangeNotifier {
       final response = await DoctorListApi().getDoctorById(id);
       doctor = response;
     } catch (error) {
-      rethrow; 
+      rethrow;
     }
     notifyListeners();
   }
