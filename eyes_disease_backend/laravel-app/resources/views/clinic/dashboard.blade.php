@@ -49,43 +49,49 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 2xl:grid-cols-2 xl:gap-4 my-4">
+        <div class="grid grid-cols-1 2xl:grid-cols-1 xl:gap-4 my-4">
             <!-- Top Sales Card -->
             <div class="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-xl font-bold leading-none text-gray-900">Upcoming Appointment</h3>
-                    <a href=" {{url('clinic/appointment/list')}} "
-                        class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2">
+                    <h3 class="text-xl font-bold leading-none text-gray-900">Upcoming Appointments</h3>
+                    <a href=" {{url('appointment/list')}}"
+                       class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2">
                         View all
                     </a>
                 </div>
                 <div class="flow-root">
-                    <ul role="list" class="divide-y divide-gray-200">
-                        {{-- @foreach ($getRecord->take(4) as $value) --}}
-                        <li class="py-3 sm:py-4">
-                            <div class="flex items-center space-x-4">
-                                <div class="flex-1 min-w-0">
-                                    <p class="text-sm font-medium text-gray-900 truncate">
-
-                                    </p>
-                                    <p class="text-sm text-gray-500 truncate">
-
-                                    </p>
-                                </div>
-                                <div class="inline-flex items-center text-base font-semibold text-gray-900">
-
-                                </div>
-                            </div>
-                        </li>
-
-                    </ul>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doctor Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Specialization</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Appointment Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Appointment Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach ($getRecord->take(4) as $value)
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{$value->doctor_first_name}} {{$value->doctor_last_name}}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{$value->specialist}}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($value->preferred_date)->format('d/m/Y') }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{$value->user_id}}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="{{ $value->request_status === 'Approved' ? 'text-green-600' : ($value->request_status === 'Rejected' ? 'text-red-600' : 'text-yellow-600') }}">
+                                                {{ $value->request_status }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <!-- Sessions by device Card -->
-            <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
 
-                <!-- Card Title -->
-                {{-- <h3 class="text-xl leading-none font-bold text-gray-900 mb-10">Dataset Overview</h3> --}}
+            {{-- <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                 <div class="flex  justify-between mb-8">
                     <h3 class="text-xl font-bold leading-none text-gray-900">Top Doctor</h3>
                     <a href=" {{url('disease/list')}} "
@@ -93,7 +99,7 @@
                         View all
                     </a>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </main>

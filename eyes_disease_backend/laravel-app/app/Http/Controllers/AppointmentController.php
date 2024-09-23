@@ -8,6 +8,7 @@ use App\Models\Appointment;
 use App\Models\AppointmentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
@@ -22,7 +23,8 @@ class AppointmentController extends Controller
                                     'users.last_name as user_last_name')
                         ->join('doctors', 'appointment_requests.doctor_id', '=', 'doctors.id')
                         ->join('users', 'appointment_requests.user_id', '=', 'users.id')
-                        ->orderBy('appointment_requests.id', 'desc');
+                        ->where('appointment_requests.user_id', Auth::id())
+                        ->orderBy('appointment_requests.preferred_date', 'desc');
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
@@ -35,7 +37,6 @@ class AppointmentController extends Controller
 
         $perPage = $request->input('per_page', 10);
         $data['getRecord'] = $query->orderBy('id', 'desc')->paginate($perPage);
-
 
         return view('appointment/list', $data);
     }
@@ -53,8 +54,6 @@ class AppointmentController extends Controller
             $message = 'Appointment has been rejected.';
         }
 
-        // DB::table('appointment_requests')
-        //     ->update(['	request_status' => $appointment->preffered_status]);
         $appointment->save();
 
         return redirect('appointment/list')->with('success', $message);
