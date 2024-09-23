@@ -16,6 +16,7 @@ class DoctorController extends Controller
 
         $search = $request->input('search');
         $query = Doctor::select('doctors.*')
+                        ->where('user_id', Auth::id())
                         ->orderBy('id', 'desc');
 
         if (!empty($search)) {

@@ -246,7 +246,7 @@
                                         </td>
                                         <td class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
                                             <img class="h-10 w-10 rounded-full"
-                                                src="{{ $value->profile ? asset('storage/profiles/' . $value->profile) : 'https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=' }}"
+                                                src="{{ $value->profile_pic ? asset('storage/' . $value->profile_pic) : 'https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=' }}"
                                                 alt="">
                                             <div class="text-sm font-normal text-gray-500">
                                                 <div class="text-base font-semibold text-gray-900"> {{$value->title}} {{ $value->first_name }}
@@ -362,10 +362,7 @@
                                                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                                                                     placeholder="Green" required>
                                                             </div>
-                                                            <div class="col-span-6 sm:col-span-3">
-                                                                <label for="profile_pic" class="text-sm font-medium text-gray-900 block mb-2">Profile Picture</label>
-                                                                <input type="file" id="profile_pic" name="profile_pic" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
-                                                            </div>
+
                                                             <div class="col-span-6 sm:col-span-3">
                                                                 <label for="specialist"
                                                                     class="text-sm font-medium text-gray-900 block mb-2">Specialist</label>
@@ -409,6 +406,10 @@
                                                                         <option value="0" {{ $value->status == '0' ? 'selected' : '' }}>Unavailable</option>
                                                                         <option value="1" {{ $value->status == '1' ? 'selected' : '' }}>Available</option>
                                                                     </select>
+                                                            </div>
+                                                            <div class="col-span-6 sm:col-span-6">
+                                                                <label for="profile_pic" class="text-sm font-medium text-gray-900 block mb-2">Profile Picture</label>
+                                                                <input type="file" id="profile_pic" name="profile_pic" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full">
                                                             </div>
                                                             <div class="col-span-8 sm:col-span-6">
                                                                 <label class="text-sm font-medium text-gray-900 block mb-2">Description</label>
