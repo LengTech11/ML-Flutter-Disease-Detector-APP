@@ -125,25 +125,30 @@ class HistoryTile extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.symmetric(
                         vertical: kDefaultPadding * 0.2,
                         horizontal: kDefaultPadding * 0.5),
                     decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: _historyCard.color ??
+                            Theme.of(context).colorScheme.primary,
+                      ),
                       borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-                      color: (_historyCard.condition == 'Healthy'
-                              ? Theme.of(context).colorScheme.secondary
-                              : Theme.of(context).colorScheme.error)
+                      color: (_historyCard.color ??
+                              Theme.of(context).colorScheme.primary)
                           .withOpacity(0.1),
                     ),
                     child: Text(
                       _historyCard.condition,
                       style: TextStyle(
                         fontSize: 12.sp,
-                        color: _historyCard.condition == 'Healthy'
-                            ? Theme.of(context).colorScheme.secondary
-                            : Theme.of(context).colorScheme.error,
+                        color: _historyCard.color ?? Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -163,8 +168,10 @@ class HistoryItem {
   final String imageUrl;
   final String species;
   final String condition;
+  final Color? color;
 
-  const HistoryItem({
+  const HistoryItem(
+    this.color, {
     required this.id,
     required this.imageUrl,
     required this.species,

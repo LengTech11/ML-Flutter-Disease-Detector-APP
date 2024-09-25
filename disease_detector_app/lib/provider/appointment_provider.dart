@@ -11,10 +11,12 @@ class AppointmentProvider extends ChangeNotifier {
     try {
       var response = await AppointmentApiService().getAppointmenList();
       appointment = response;
+      isLoading = false;
     } catch (e) {
+      isLoading = false;
       printMe(e);
     }
-    isLoading = false;
+
     notifyListeners();
   }
 }

@@ -1,5 +1,4 @@
 import 'package:disease_detector_app/config/constants.dart';
-import 'package:disease_detector_app/widgets/cache_image.dart';
 import 'package:flutter/material.dart';
 
 class VcDoctorCard extends StatefulWidget {
@@ -32,6 +31,8 @@ class _VcClinicCardState extends State<VcDoctorCard> {
       ),
       onTap: widget.onTap,
       child: Ink(
+        width: MediaQuery.of(context).size.width * .86,
+        height: 150,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surfaceContainerLow,
           border: Border.all(
@@ -51,53 +52,55 @@ class _VcClinicCardState extends State<VcDoctorCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Ink(
-              width: 100,
-              height: 150,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.tertiary,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  bottomLeft: Radius.circular(12),
+            Expanded(
+              child: Ink(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    bottomLeft: Radius.circular(12),
+                  ),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                      'http://10.0.2.2:8000${widget.imageUrl}',
+                    ),
+                  ),
                 ),
               ),
-              child: CacheImage(imageUrl: widget.imageUrl),
             ),
-            Ink(
-              padding: appPadding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.headline ?? '',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+            Expanded(
+              child: Ink(
+                padding: appPadding,
+                child: Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.headline ?? '',
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Icon(Icons.visibility, size: 20,),
+                          Expanded(
+                            child: Text(
+                              ': ${widget.subHeadline}',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                      // const SizedBox(height: 16),
+                      // Text(
+                      //   widget.supportingText ?? '',
+                      //   overflow: TextOverflow.ellipsis,
+                      // ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    widget.subHeadline ?? '',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    widget.supportingText ?? '',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ],

@@ -59,7 +59,9 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
     checkIsLogin();
 
     networkProvider = Provider.of<NetworkProvider>(context, listen: false);
+    networkProvider.initConnectivity();
     networkProvider.updateStatus();
+    networkProvider.connectivitySubscription;
   }
 
   @override

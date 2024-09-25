@@ -1,5 +1,6 @@
 
-export 'model_service/model_service.dart';
+export 'model_service/binary_model.dart';
+export 'model_service/predict_model.dart';
 
 /// A Calculator.
 class Calculator {

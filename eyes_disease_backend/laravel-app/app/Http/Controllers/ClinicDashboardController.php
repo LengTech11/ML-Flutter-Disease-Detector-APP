@@ -25,7 +25,7 @@ class ClinicDashboardController extends Controller
                                     'users.last_name as user_last_name')
                             ->join('doctors', 'appointment_requests.doctor_id', '=', 'doctors.id')
                             ->join('users', 'appointment_requests.user_id', '=', 'users.id')
-                            ->where('appointment_requests.user_id', Auth::id())
+                            // ->where('appointment_requests.user_id', Auth::id())
                             ->orderBy('appointment_requests.preferred_date', 'desc')
                             ->get();
 

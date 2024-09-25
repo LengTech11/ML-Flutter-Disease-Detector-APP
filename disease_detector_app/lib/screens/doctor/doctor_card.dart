@@ -1,7 +1,6 @@
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/doctor_provider.dart';
 import 'package:disease_detector_app/screens/doctor/appointment.dart';
-import 'package:disease_detector_app/widgets/vc_filled_button.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -60,11 +59,17 @@ class _DoctorCardScreenState extends State<DoctorCardScreen> {
                       children: [
                         Row(
                           children: [
-                            const CircleAvatar(
-                              radius: 50.0,
-                              backgroundImage: AssetImage(
-                                'assets/doctor/doctor1.png',
+
+                            Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50)
                               ),
+                              child: CacheImage(
+                                  imageUrl:
+                                      'http://10.0.2.2:8000/storage/${doctor?.data?.profilePic}',
+                                ),
                             ),
                             const SizedBox(width: 20.0),
                             Expanded(

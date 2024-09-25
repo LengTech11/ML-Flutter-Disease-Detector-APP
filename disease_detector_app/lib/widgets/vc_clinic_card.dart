@@ -54,17 +54,17 @@ class _VcClinicCardState extends State<VcClinicCard> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Ink(
+              width: DeviceUtils.getScreenWidth(context) * 0.65,
               height: 150,
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.tertiary,
                 borderRadius: const BorderRadius.all(
                   Radius.circular(12),
                 ),
-                // image: DecorationImage(
-                //   image: CachedNetworkImageProvider(child: CacheImage(image: widget.imageUrl)),
-                // ),
               ),
-              child: CacheImage(imageUrl: widget.imageUrl),
+              child: CacheImage(
+                imageUrl: 'http://10.0.2.2:8000${widget.imageUrl}',
+              ),
             ),
             Ink(
               padding: appPadding,

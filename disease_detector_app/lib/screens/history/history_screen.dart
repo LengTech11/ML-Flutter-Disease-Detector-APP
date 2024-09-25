@@ -25,6 +25,8 @@ class _HistoryScreenState extends State<HistoryScreen>
 
   @override
   void initState() {
+    super.initState();
+
     getHistoryProvider = Provider.of(context, listen: false);
     getHistoryProvider.getHistory();
     _tabController =
@@ -32,12 +34,14 @@ class _HistoryScreenState extends State<HistoryScreen>
     _tabController.addListener(() {
       setState(() {});
     });
-    super.initState();
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    getHistoryProvider = Provider.of(context, listen: false);
+    getHistoryProvider.getHistory();
+
     super.dispose();
   }
 

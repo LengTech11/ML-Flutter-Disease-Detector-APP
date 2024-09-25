@@ -12,50 +12,51 @@ class DetectionHistoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final histories = getHistoryProvider?.history;
 
-    return Column(
-      children: [
-        const SizedBox(height: 20,),
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
-            child: getHistoryProvider!.isloading
-                ? const Center(
-                    child: CircularProgressIndicator(),
+    return Expanded(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(kDefaultBorderRaduis),
+        child: getHistoryProvider!.isloading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : histories == null
+                ? Center(
+                    child: Text(
+                      AppLocalizations.of(context)?.no_history ?? 'No History',
+                    ),
                   )
-                : histories == null
+                : histories.isEmpty
                     ? Center(
                         child: Text(
                           AppLocalizations.of(context)?.no_history ??
                               'No History',
                         ),
                       )
-                    : histories.isEmpty
-                        ? Center(
-                            child: Text(
-                              AppLocalizations.of(context)?.no_history ??
-                                  'No History',
-                            ),
-                          )
-                        : ListView.separated(
-                            itemBuilder: (context, index) {
-                              HistoryItem historyItem = HistoryItem(
-                                id: histories[index].id.toString(),
-                                imageUrl: histories[index].imageUrl ?? '',
-                                species: histories[index].predictedClass ?? '',
-                                condition: histories[index].confidence ?? '',
-                              );
-                              return HistoryTile(historyCard: historyItem);
-                            },
-                            itemCount: histories.length,
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(
-                                height: 8,
-                              );
-                            },
-                          ),
-          ),
-        ),
-      ],
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 16,
+                          horizontal: 8,
+                        ),
+                        child: ListView.separated(
+                          itemBuilder: (context, index) {
+                            HistoryItem historyItem = HistoryItem(
+                              null,
+                              id: histories[index].id.toString(),
+                              imageUrl: histories[index].imageUrl ?? '',
+                              species: histories[index].predictedClass ?? '',
+                              condition: histories[index].confidence ?? '',
+                            );
+                            return HistoryTile(historyCard: historyItem);
+                          },
+                          itemCount: histories.length,
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(
+                              height: 8,
+                            );
+                          },
+                        ),
+                      ),
+      ),
     );
   }
 }

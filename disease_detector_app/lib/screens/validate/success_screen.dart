@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
+import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatelessWidget {
   const SuccessScreen({super.key});
@@ -8,22 +8,29 @@ class SuccessScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Success'),
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text(
+          'Success',
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(color: Colors.white),
+        ),
         backgroundColor: AppColor.primary,
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.check_circle,
               size: 100,
-              color: AppColor.ok,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               'Prediction saved successfully!',
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
         ),

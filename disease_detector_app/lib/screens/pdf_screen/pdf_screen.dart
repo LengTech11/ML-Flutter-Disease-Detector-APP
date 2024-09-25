@@ -77,15 +77,7 @@ class PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Document"),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text("Document")),
       body: Stack(
         children: <Widget>[
           pathPDF == null

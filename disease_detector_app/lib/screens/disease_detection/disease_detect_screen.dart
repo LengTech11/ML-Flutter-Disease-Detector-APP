@@ -5,12 +5,9 @@ import 'package:disease_detector_app/config/app_config/app_config.dart';
 import 'package:disease_detector_app/config/app_constants/app_constants.dart';
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
-import 'package:disease_detector_app/provider/document_provider.dart';
 import 'package:disease_detector_app/screens/validate/success_screen.dart';
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/utils/logger/logger.dart';
-import 'package:disease_detector_app/widgets/eca_listtile.dart';
-import 'package:disease_detector_app/widgets/eca_show_btm_sheet.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/foundation.dart';
@@ -44,9 +41,8 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
 
   @override
   void dispose() {
-    super.dispose();
-    provider = Provider.of<DiseaseProvider>(context, listen: false);
     provider.fetchDisease();
+    super.dispose();
   }
 
   void show(BuildContext context, String headline, List<Widget> action,
@@ -626,66 +622,6 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
     );
   }
 
-  Widget buildListDiseases(BuildContext context) {
-    final documentProvider =
-        Provider.of<DocumentProvider>(context, listen: false);
-    return Consumer<DiseaseProvider>(
-      builder: (context, value, _) {
-        return value.dis == null
-            ? SizedBox(
-                height: 200,
-                child: Center(
-                  child: Text(
-                    AppLocalizations.of(context)?.internal_server_error ??
-                        'Internal Server Error',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface,
-                        fontSize: 16),
-                  ),
-                ),
-              )
-            : ListView.builder(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: value.dis?.data!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var disease = value.dis?.data![index];
-                  documentProvider.fetchDocument(disease!.title);
-                  return value.dis!.data!.isEmpty
-                      ? const Center(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8),
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Consumer<DocumentProvider>(
-                            builder: (context, doc, _) {
-                              return EcaListtile(
-                                leading: const Icon(
-                                  Icons.visibility,
-                                  color: AppColor.primary,
-                                ),
-                                title: Text(disease.title),
-                                onTap: () {
-                                  ECABtmSheet().ecaShowBtmSheet(
-                                    context: context,
-                                    title: disease.title,
-                                    description: disease.description,
-                                    fileName: disease.title,
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        );
-                },
-              );
-      },
-    );
-  }
-
   Widget buildContent(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -696,8 +632,6 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreen> {
           buildUploadImageContent(context),
           const SizedBox(height: 20),
           buildDescription(context),
-          const SizedBox(height: 20),
-          buildListDiseases(context),
           const SizedBox(height: 20),
           if (_isLoading)
             const Center(
