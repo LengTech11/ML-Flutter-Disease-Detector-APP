@@ -1,6 +1,7 @@
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/provider/doctor_provider.dart';
 import 'package:disease_detector_app/screens/doctor/doctor_card.dart';
+import 'package:disease_detector_app/widgets/cache_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -74,13 +75,13 @@ class _DoctorScreenState extends State<DoctorScreen> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(4),
-                            child: Image.asset(
-                              'assets/doctor/doctor1.png',
+                            child: SizedBox(
                               width: 160,
                               height: 120,
-                              fit: BoxFit.cover,
-                              cacheWidth: 160,
-                              cacheHeight: 120,
+                              child: CacheImage(
+                                imageUrl:
+                                    'http://10.0.2.2:8000${doctors?.profilePic}',
+                              ),
                             ),
                           ),
                           Expanded(
@@ -99,13 +100,13 @@ class _DoctorScreenState extends State<DoctorScreen> {
                                   ),
                                   const SizedBox(height: 8.0),
                                   Text(
-                                    'Age: ${doctors.experience.toString()}',
+                                    'Experience: ${doctors.experience.toString()}',
                                   ),
                                   const SizedBox(height: 8.0),
                                   Row(
                                     children: [
                                       const Icon(
-                                        Icons.email_outlined,
+                                        Icons.telegram,
                                         size: 20,
                                       ),
                                       Expanded(

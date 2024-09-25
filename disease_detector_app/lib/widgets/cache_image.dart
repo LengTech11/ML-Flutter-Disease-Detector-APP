@@ -17,9 +17,19 @@ class CacheImage extends StatelessWidget {
           )
         : CachedNetworkImage(
             imageUrl: imageUrl!,
-            placeholder: (context, url) =>
-                const CircularProgressIndicator(strokeWidth: 2),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
+            placeholder: (context, url) => const Center(
+              child: SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                ),
+              ),
+            ),
+            errorWidget: (context, url, error) => Image.asset(
+              'assets/images/blank_image.jpg',
+              fit: BoxFit.cover,
+            ),
             fit: BoxFit.cover,
           );
   }

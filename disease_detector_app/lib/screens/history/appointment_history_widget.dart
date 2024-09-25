@@ -1,9 +1,9 @@
-import 'package:app_ui/app_ui.dart';
 import 'package:disease_detector_app/config/constants.dart';
 import 'package:disease_detector_app/provider/appointment_provider.dart';
+import 'package:disease_detector_app/provider/doctor_provider.dart';
+import 'package:disease_detector_app/screens/history/widget/appointment_history_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class AppointmentHistoryWidget extends StatefulWidget {
@@ -16,6 +16,7 @@ class AppointmentHistoryWidget extends StatefulWidget {
 
 class _AppointmentHistoryWidgetState extends State<AppointmentHistoryWidget> {
   AppointmentProvider appointmentProvider = AppointmentProvider();
+  DoctorProvider doctorProvider = DoctorProvider();
   String imageUrl =
       'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 
@@ -26,6 +27,8 @@ class _AppointmentHistoryWidgetState extends State<AppointmentHistoryWidget> {
     appointmentProvider =
         Provider.of<AppointmentProvider>(context, listen: false);
     appointmentProvider.getAppointment();
+
+    doctorProvider = Provider.of<DoctorProvider>(context, listen: false);
   }
 
   @override
@@ -36,7 +39,6 @@ class _AppointmentHistoryWidgetState extends State<AppointmentHistoryWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final dark = Theme.of(context).brightness == Brightness.dark;
     return Consumer<AppointmentProvider>(
       builder: (context, value, child) {
         final histories = value.appointment?.data;
@@ -63,94 +65,29 @@ class _AppointmentHistoryWidgetState extends State<AppointmentHistoryWidget> {
                                       'No History',
                                 ),
                               )
-                            : ListView.separated(
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                          child: Image.network(
-                                            imageUrl,
-                                            width: 100,
-                                            height: 100,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 16.0,
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                DateFormat('dd-MMMM-yyyy-hh:mm')
-                                                    .format(
-                                                  histories[index]
-                                                      .preferredDate,
-                                                ),
-                                                style: Theme.of(context).textTheme.titleMedium,
-                                              ),
-                                              const SizedBox(
-                                                height: 8,
-                                              ),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  vertical: 4,
-                                                  horizontal: 8,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.yellow
-                                                      .withOpacity(0.1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(18),
-                                                ),
-                                                child: Text(
-                                                  histories[index]
-                                                      .requestStatus,
-                                                  style: dark
-                                                      ? const AppDarkTheme()
-                                                          .textTheme
-                                                          .labelSmall!
-                                                          .copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color:
-                                                                Colors.yellow,
-                                                          )
-                                                      : const AppTheme()
-                                                          .textTheme
-                                                          .labelSmall!
-                                                          .copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color:
-                                                                Colors.yellow,
-                                                          ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                                itemCount: histories.length,
-                                separatorBuilder: (context, index) {
-                                  return const SizedBox(
-                                    height: 8,
-                                  );
-                                },
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
+                                  horizontal: 8,
+                                ),
+                                child: ListView.separated(
+                                  itemCount:
+                                      value.appointment!.data?.length ?? 0,
+                                  itemBuilder: (context, index) {
+                                    return AppointmentHistoryTile(
+                                      doctorId: histories[index].doctorId,
+                                      preferredDate:
+                                          histories[index].preferredDate,
+                                      statuse: histories[index].requestStatus,
+                                      phoneNumber: histories[index].phoneNumber,
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return const SizedBox(
+                                      height: 8,
+                                    );
+                                  },
+                                ),
                               ),
               ),
             ),

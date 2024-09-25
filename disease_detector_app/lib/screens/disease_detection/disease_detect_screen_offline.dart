@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:disease_detector_app/config/themes/color.dart';
 import 'package:disease_detector_app/provider/disease_provider.dart';
@@ -7,6 +6,7 @@ import 'package:disease_detector_app/screens/disease_detection/widgets/class_pro
 import 'package:disease_detector_app/utils/helper/helper_function.dart';
 import 'package:disease_detector_app/widgets/widgets.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,7 +26,10 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
   bool isLoading = false;
   DiseaseProvider provider = DiseaseProvider();
 
-  ModelService modelService = ModelService();
+  BinaryModel binaryModel = BinaryModel();
+  List<double> _binaryPrediction = [];
+
+  PredictModel modelService = PredictModel();
   List<double> _prediction = [];
 
   double? confidence;
@@ -34,12 +37,12 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
 
   double diabeticConfidence = 0;
   double normalConfidence = 0;
-  double glaucumaConfidence = 0;
   double cataractConfidence = 0;
 
   @override
   void initState() {
     super.initState();
+    loadBinaryModel();
     loadModel();
   }
 
@@ -49,22 +52,22 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
     loadModel();
   }
 
+  Future<void> loadBinaryModel() async {
+    await binaryModel.loadModel();
+  }
+
   void checkDisease(
     double diabetic,
     double normal,
-    // double glaucuma,
     double cataract,
   ) {
 // Finding the maximum value
-    confidence = diabetic;
 
-    if (normal > confidence!) {
+    if (diabetic >= normal && diabetic >= cataract) {
+      confidence = diabetic;
+    } else if (normal >= diabetic && normal >= cataract) {
       confidence = normal;
-    }
-    // if (glaucuma > confidence!) {
-    //   confidence = glaucuma;
-    // }
-    if (cataract > confidence!) {
+    } else if (cataract >= diabetic && cataract >= normal) {
       confidence = cataract;
     }
   }
@@ -85,6 +88,23 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
     );
   }
 
+  Future<void> predictBinary(File? image) async {
+    if (image != null) {
+      Uint8List imageBytes = await File(image.path).readAsBytes();
+      try {
+        List<double> binaryResult =
+            await binaryModel.runModelOnImage(imageBytes);
+        setState(() {
+          _binaryPrediction = binaryResult;
+        });
+      } catch (e) {
+        if (kDebugMode) {
+          print(e);
+        }
+      }
+    }
+  }
+
   Future<void> predictImage(File? image) async {
     if (image != null) {
       // Load image bytes from an asset or other source
@@ -101,29 +121,30 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
 
         // diabeticConfidence = _prediction[1] * 100;
         cataractConfidence = _prediction[0] * 100;
+        diabeticConfidence = _prediction[1] * 100;
         normalConfidence = _prediction[2] * 100;
-
-        glaucumaConfidence = _prediction[1] * 100;
 
         checkDisease(
           diabeticConfidence,
           normalConfidence,
-          glaucumaConfidence,
-          // cataractConfidence,
+          cataractConfidence,
         );
 
-        if (confidence == glaucumaConfidence) {
+        if (confidence == diabeticConfidence) {
           name = 'Diabetic Retinopathy';
         } else if (confidence == normalConfidence) {
           name = 'Normal';
-        } else {
+        } else if (confidence == cataractConfidence) {
           name = 'Cataract';
+        } else {
+          name = 'Unknown';
         }
 
         if (!mounted) return;
         _showPredictionBottomSheet(context);
       } catch (e) {
         if (!mounted) return;
+        print(e);
         show(
           context,
           'Error',
@@ -145,15 +166,26 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
     try {
       final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
-        setState(
-          () {
-            _image = File(pickedFile.path);
-          },
-        );
-        await predictImage(_image);
+        _image = File(pickedFile.path);
+        await predictBinary(_image);
+        setState(() {});
+
+        // if (_binaryPrediction.isNotEmpty && _binaryPrediction.length > 1) {
+        if (_binaryPrediction[0] >= 0.95) {
+          predictImage(_image);
+        } else {
+          name = 'Not Eye';
+          confidence = _binaryPrediction[1] * 100;
+          if (!mounted) return;
+          _showPredictionBottomSheet(context);
+        }
+        // } else {
+        //   print('Invalid prediction results');
+        // }
       }
     } catch (e) {
       if (!mounted) return;
+      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error picking image: $e')),
       );
@@ -201,7 +233,9 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
                   controller: scrollController,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 16.0),
+                      horizontal: 16.0,
+                      vertical: 16.0,
+                    ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -292,20 +326,36 @@ class _DiseaseDetectScreenState extends State<DiseaseDetectScreenOffline> {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        ClassProbabilities(
-                          name: 'Normal',
-                          confidence: normalConfidence,
-                        ),
+                        if (_binaryPrediction[0] < 0.95)
+                          ClassProbabilities(
+                            name: 'Not Eye Probabilities',
+                            confidence: _binaryPrediction[1] * 100,
+                          ),
+                        if (_binaryPrediction[0] < 0.95)
+                          const SizedBox(height: 8),
+                        if (_binaryPrediction[0] < 0.95)
+                          ClassProbabilities(
+                            name: 'Eye Probabilities',
+                            confidence: _binaryPrediction[0] * 100,
+                          ),
+                        if (_binaryPrediction[0] >= 0.95)
+                          ClassProbabilities(
+                            name: 'Normal',
+                            confidence: normalConfidence,
+                          ),
                         const SizedBox(height: 8),
-                        ClassProbabilities(
-                          name: 'Glaucuma',
-                          confidence: glaucumaConfidence,
-                        ),
-                        const SizedBox(height: 8),
-                        ClassProbabilities(
-                          name: 'Cataract',
-                          confidence: cataractConfidence,
-                        ),
+                        if (_binaryPrediction[0] >= 0.95)
+                          ClassProbabilities(
+                            name: 'Diabetic Ratinopathy',
+                            confidence: diabeticConfidence,
+                          ),
+                        if (_binaryPrediction[0] >= 0.95)
+                          const SizedBox(height: 8),
+                        if (_binaryPrediction[0] >= 0.95)
+                          ClassProbabilities(
+                            name: 'Cataract',
+                            confidence: cataractConfidence,
+                          ),
                         const SizedBox(height: 20),
                       ],
                     ),

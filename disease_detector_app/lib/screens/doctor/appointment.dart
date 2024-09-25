@@ -2,8 +2,8 @@ import 'package:disease_detector_app/api_service/api/appointment_api.dart';
 import 'package:disease_detector_app/model/appointment_model/appointment_model.dart';
 import 'package:disease_detector_app/widgets/vc_outlined_button.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class AppointmentScreen extends StatefulWidget {
   const AppointmentScreen({
@@ -41,7 +41,7 @@ class AppointmentScreenState extends State<AppointmentScreen> {
 
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Password Changed Successfully'),
+              content: Text('Appointment doctor Successfully'),
               backgroundColor: Colors.green,
             ),
           );
